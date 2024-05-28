@@ -1,6 +1,11 @@
 type ObjectId = import("mongodb").ObjectId;
 
-type ExpressRequest = import("express").Request;
+type ExpressRequest<Query, Body> = import("express").Request<
+  object,
+  object,
+  Body,
+  Query
+>;
 
 declare namespace MonkeyTypes {
   type DecodedToken = {
@@ -14,9 +19,9 @@ declare namespace MonkeyTypes {
     decodedToken: DecodedToken;
   };
 
-  type Request = {
+  type Request<Query = undefined, Body = undefined> = {
     ctx: Readonly<Context>;
-  } & ExpressRequest;
+  } & ExpressRequest<Query, Body>;
 
   type DBUser = Omit<
     SharedTypes.User,

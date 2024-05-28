@@ -37,7 +37,10 @@ async function verifyCaptcha(captcha: string): Promise<void> {
 }
 
 export async function createNewUser(
-  req: MonkeyTypes.Request
+  req: MonkeyTypes.Request<
+    never,
+    SharedTypes.ApiSchemas.Users.CreateNewUserBody
+  >
 ): Promise<MonkeyResponse> {
   const { name, captcha } = req.body;
   const { email, uid } = req.ctx.decodedToken;
@@ -387,7 +390,10 @@ function getRelevantUserInfo(
 }
 
 export async function getUser(
-  req: MonkeyTypes.Request
+  req: MonkeyTypes.Request<
+    SharedTypes.ApiSchemas.Users.GetUserQuery,
+    SharedTypes.ApiSchemas.Users.GetUserBody
+  >
 ): Promise<MonkeyResponse> {
   const { uid } = req.ctx.decodedToken;
 
