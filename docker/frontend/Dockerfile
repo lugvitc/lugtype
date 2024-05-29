@@ -9,7 +9,7 @@ ENV RECAPTCHA_SITE_KEY=###RECAPTCHA_SITE_KEY###
 COPY .eslintrc.json .eslintrc.json
 COPY package.json package.json
 COPY package-lock.json package-lock.json
-COPY shared-types shared-types
+COPY shared shared
 COPY frontend frontend
 COPY docker/frontend/firebase-config-live.ts frontend/src/ts/constants/firebase-config.ts
 COPY docker/frontend/firebase-config-live.ts frontend/src/ts/constants/firebase-config-live.ts

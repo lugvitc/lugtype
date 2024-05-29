@@ -6,7 +6,7 @@ COPY .eslintignore .eslintignore
 COPY .eslintrc.json .eslintrc.json
 COPY package.json package.json
 COPY package-lock.json package-lock.json
-COPY shared-types shared-types
+COPY shared shared
 COPY backend backend
 
 #build
