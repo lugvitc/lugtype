@@ -1,24 +1,20 @@
 import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
 
-//TODO FIX ANYS
-
-export class MonkeyResponse {
+export class MonkeyResponse<DataType> {
   message: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: DataType;
   status: number;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor(message?: string, data?: any, status = 200) {
+  constructor(message: string, data: DataType, status = 200) {
     this.message = message ?? "ok";
-    this.data = data ?? null;
+    this.data = data;
     this.status = status;
   }
 }
 
-export function handleMonkeyResponse(
-  monkeyResponse: MonkeyResponse,
+export function handleMonkeyResponse<DataType = unknown>(
+  monkeyResponse: MonkeyResponse<DataType>,
   res: Response
 ): void {
   const { message, data, status } = monkeyResponse;
@@ -31,6 +27,7 @@ export function handleMonkeyResponse(
   //@ts-expect-error ignored so that we can see message in swagger stats
   res.monkeyMessage = message;
   if ([301, 302].includes(status)) {
+    //@ts-expect-error TODO FIND OUT WHY THIS IS USING DATA????
     return res.redirect(data);
   }
 

@@ -29,6 +29,7 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
+import * as SharedUserSchemas from "../../../../shared/api-schemas/users";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {
@@ -37,11 +38,8 @@ async function verifyCaptcha(captcha: string): Promise<void> {
 }
 
 export async function createNewUser(
-  req: MonkeyTypes.Request<
-    never,
-    SharedTypes.ApiSchemas.Users.CreateNewUserBody
-  >
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request<undefined, SharedUserSchemas.CreateNewUserBodyType>
+): Promise<MonkeyResponse<SharedUserSchemas.CreateNewUserResponseType>> {
   const { name, captcha } = req.body;
   const { email, uid } = req.ctx.decodedToken;
 
@@ -65,7 +63,7 @@ export async function createNewUser(
     await UserDAL.addUser(name, email, uid);
     void Logger.logToDb("user_created", `${name} ${email}`, uid);
 
-    return new MonkeyResponse("User created");
+    return new MonkeyResponse("User created", null);
   } catch (e) {
     //user was created in firebase from the frontend, remove it
     await firebaseDeleteUserIgnoreError(uid);

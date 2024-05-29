@@ -1,4 +1,5 @@
 const BASE_PATH = "/users";
+import * as SharedApiSchemasUsers from "../../../../../shared/api-schemas/users";
 
 export default class Users {
   constructor(private httpClient: Ape.HttpClient) {
@@ -12,9 +13,9 @@ export default class Users {
   async create(
     name: string,
     captcha: string,
-    email?: string,
-    uid?: string
-  ): Ape.EndpointResponse<null> {
+    email: string,
+    uid: string
+  ): Ape.EndpointResponse<SharedApiSchemasUsers.CreateNewUserResponseType> {
     const payload = {
       email,
       name,
@@ -22,7 +23,11 @@ export default class Users {
       captcha,
     };
 
-    return await this.httpClient.post(`${BASE_PATH}/signup`, { payload });
+    return await this.httpClient.post<
+      undefined,
+      SharedApiSchemasUsers.CreateNewUserBodyType,
+      SharedApiSchemasUsers.CreateNewUserResponseType
+    >(`${BASE_PATH}/signup`, { payload });
   }
 
   async getNameAvailability(name: string): Ape.EndpointResponse<null> {
