@@ -1,28 +1,28 @@
 import _ from "lodash";
 import MonkeyError from "../utils/error";
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import rateLimit, { Options } from "express-rate-limit";
 import { isDevEnvironment } from "../utils/misc";
 
 const REQUEST_MULTIPLIER = isDevEnvironment() ? 100 : 1;
 
-const getKey = (req: MonkeyTypes.Request, _res: Response): string => {
+const getKey = (req: Request, _res: Response): string => {
   return ((req.headers["cf-connecting-ip"] as string) ||
     (req.headers["x-forwarded-for"] as string) ||
     (req.ip as string) ||
     "255.255.255.255") as string;
 };
 
-const getKeyWithUid = (req: MonkeyTypes.Request, _res: Response): string => {
-  const uid = req?.ctx?.decodedToken?.uid;
+const getKeyWithUid = (req: Request, _res: Response): string => {
+  const uid = (req as unknown as MonkeyTypes.Request)?.ctx?.decodedToken?.uid;
   const useUid = uid !== undefined && uid !== "";
 
   return useUid ? uid : getKey(req, _res);
 };
 
 export const customHandler = (
-  _req: MonkeyTypes.Request,
+  _req: Request,
   _res: Response,
   _next: NextFunction,
   _options: Options
@@ -54,12 +54,12 @@ const badAuthRateLimiter = new RateLimiterMemory({
 });
 
 export async function badAuthRateLimiterHandler(
-  req: MonkeyTypes.Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  const badAuthEnabled =
-    req?.ctx?.configuration?.rateLimiting?.badAuthentication?.enabled;
+  const badAuthEnabled = (req as unknown as MonkeyTypes.Request)?.ctx
+    ?.configuration?.rateLimiting?.badAuthentication?.enabled;
   if (!badAuthEnabled) {
     return next();
   }
@@ -82,12 +82,13 @@ export async function badAuthRateLimiterHandler(
 }
 
 export async function incrementBadAuth(
-  req: MonkeyTypes.Request,
+  req: Request,
   res: Response,
   status: number
 ): Promise<void> {
   const { enabled, penalty, flaggedStatusCodes } =
-    req?.ctx?.configuration?.rateLimiting?.badAuthentication ?? {};
+    (req as unknown as MonkeyTypes.Request)?.ctx?.configuration?.rateLimiting
+      ?.badAuthentication ?? {};
 
   if (!enabled || !flaggedStatusCodes.includes(status)) {
     return;
