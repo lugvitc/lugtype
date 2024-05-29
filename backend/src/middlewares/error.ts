@@ -30,49 +30,47 @@ async function errorHandlingMiddleware(
   try {
     const monkeyError = error as MonkeyError;
 
-    const monkeyResponse = new MonkeyResponse();
-    monkeyResponse.status = 500;
-    monkeyResponse.data = {
+    let message = "";
+    let status = 500;
+    const data: {
+      errorId?: string;
+      uid: string;
+    } = {
       errorId: monkeyError.errorId ?? uuidv4(),
       uid: monkeyError.uid ?? req.ctx?.decodedToken?.uid,
     };
 
     if (/ECONNREFUSED.*27017/i.test(error.message)) {
-      monkeyResponse.message =
-        "Could not connect to the database. It may be down.";
+      message = "Could not connect to the database. It may be down.";
     } else if (error instanceof URIError || error instanceof SyntaxError) {
-      monkeyResponse.status = 400;
-      monkeyResponse.message = "Unprocessable request";
+      status = 400;
+      message = "Unprocessable request";
     } else if (error instanceof MonkeyError) {
-      monkeyResponse.message = error.message;
-      monkeyResponse.status = error.status;
+      message = error.message;
+      status = error.status;
     } else {
-      monkeyResponse.message = `Oops! Our monkeys dropped their bananas. Please try again later. - ${monkeyResponse.data.errorId}`;
+      message = `Oops! Our monkeys dropped their bananas. Please try again later. - ${data.errorId}`;
     }
 
-    await incrementBadAuth(req, res, monkeyResponse.status);
+    await incrementBadAuth(req, res, status);
 
-    if (monkeyResponse.status >= 400 && monkeyResponse.status < 500) {
+    if (status >= 400 && status < 500) {
       recordClientErrorByVersion(req.headers["x-client-version"] as string);
     }
 
-    if (
-      !isDevEnvironment() &&
-      monkeyResponse.status >= 500 &&
-      monkeyResponse.status !== 503
-    ) {
-      const { uid, errorId } = monkeyResponse.data;
+    if (!isDevEnvironment() && status >= 500 && status !== 503) {
+      const { uid, errorId } = data;
 
       try {
         await Logger.logToDb(
           "system_error",
-          `${monkeyResponse.status} ${errorId} ${error.message} ${error.stack}`,
+          `${status} ${errorId} ${error.message} ${error.stack}`,
           uid
         );
         await db.collection<DBError>("errors").insertOne({
-          _id: errorId,
+          _id: new ObjectId(errorId),
           timestamp: Date.now(),
-          status: monkeyResponse.status,
+          status: status,
           uid,
           message: error.message,
           stack: error.stack,
@@ -88,9 +86,11 @@ async function errorHandlingMiddleware(
       Logger.error(`Error: ${error.message} Stack: ${error.stack}`);
     }
 
-    if (monkeyResponse.status < 500) {
-      delete monkeyResponse.data.errorId;
+    if (status < 500) {
+      delete data.errorId;
     }
+
+    const monkeyResponse = new MonkeyResponse(message, data, status);
 
     return handleMonkeyResponse(monkeyResponse, res);
   } catch (e) {
