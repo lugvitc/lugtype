@@ -16,18 +16,14 @@ export default class Users {
     email: string,
     uid: string
   ): Ape.EndpointResponse<SharedApiSchemasUsers.CreateNewUserResponseType> {
-    const payload = {
+    const payload: SharedApiSchemasUsers.CreateNewUserBodyType = {
       email,
       name,
       uid,
       captcha,
     };
 
-    return await this.httpClient.post<
-      undefined,
-      SharedApiSchemasUsers.CreateNewUserBodyType,
-      SharedApiSchemasUsers.CreateNewUserResponseType
-    >(`${BASE_PATH}/signup`, { payload });
+    return await this.httpClient.post(`${BASE_PATH}/signup`, { payload });
   }
 
   async getNameAvailability(name: string): Ape.EndpointResponse<null> {
