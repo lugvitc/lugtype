@@ -1,7 +1,7 @@
 import _ from "lodash";
 import joi from "joi";
 import MonkeyError from "../utils/error";
-import { Response, NextFunction, RequestHandler } from "express";
+import { Response, NextFunction } from "express";
 import { handleMonkeyResponse, MonkeyResponse } from "../utils/monkey-response";
 import { getUser } from "../dal/user";
 import { isAdmin } from "../dal/admin-uids";
@@ -12,9 +12,9 @@ type ValidationOptions<T> = {
   invalidMessage?: string;
 };
 
-const emptyMiddleware = (
-  _req: MonkeyTypes.Request,
-  _res: Response,
+const emptyMiddleware = <TReqQuery, TReqBody, TRes>(
+  _req: MonkeyTypes.Request<TReqQuery, TReqBody>,
+  _res: Response<TRes>,
   next: NextFunction
 ): void => next();
 
@@ -22,15 +22,19 @@ const emptyMiddleware = (
  * This utility checks that the server's configuration matches
  * the criteria.
  */
-function validateConfiguration(
+function validateConfiguration<TReqQuery, TReqBody, TRes>(
   options: ValidationOptions<SharedTypes.Configuration>
-): RequestHandler {
+): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes> {
   const {
     criteria,
     invalidMessage = "This service is currently unavailable.",
   } = options;
 
-  return (req: MonkeyTypes.Request, _res: Response, next: NextFunction) => {
+  return (
+    req: MonkeyTypes.Request<TReqQuery, TReqBody>,
+    _res: Response<TRes>,
+    next: NextFunction
+  ) => {
     const configuration = req.ctx.configuration;
 
     const validated = criteria(configuration);
@@ -46,10 +50,14 @@ function validateConfiguration(
  * Check if the user is an admin before handling request.
  * Note that this middleware must be used after authentication in the middleware stack.
  */
-function checkIfUserIsAdmin(): RequestHandler {
+function checkIfUserIsAdmin<
+  TReqQuery,
+  TReqBody,
+  TRes
+>(): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes> {
   return async (
-    req: MonkeyTypes.Request,
-    _res: Response,
+    req: MonkeyTypes.Request<TReqQuery, TReqBody>,
+    _res: Response<TRes>,
     next: NextFunction
   ) => {
     try {
@@ -71,15 +79,15 @@ function checkIfUserIsAdmin(): RequestHandler {
  * Check user permissions before handling request.
  * Note that this middleware must be used after authentication in the middleware stack.
  */
-function checkUserPermissions(
+function checkUserPermissions<TReqQuery, TReqBody, TRes>(
   options: ValidationOptions<MonkeyTypes.DBUser>
-): RequestHandler {
+): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes> {
   const { criteria, invalidMessage = "You don't have permission to do this." } =
     options;
 
   return async (
-    req: MonkeyTypes.Request,
-    _res: Response,
+    req: MonkeyTypes.Request<TReqQuery, TReqBody>,
+    _res: Response<TRes>,
     next: NextFunction
   ) => {
     try {
@@ -102,7 +110,7 @@ function checkUserPermissions(
 type AsyncHandler<TReqQuery, TReqBody, TRes> = (
   req: MonkeyTypes.Request<TReqQuery, TReqBody>,
   res?: Response<TRes>
-) => Promise<MonkeyResponse<unknown>>;
+) => Promise<MonkeyResponse<TRes>>;
 
 /**
  * This utility serves as an alternative to wrapping express handlers with try/catch statements.
@@ -112,7 +120,7 @@ type AsyncHandler<TReqQuery, TReqBody, TRes> = (
  */
 function asyncHandler<TReqQuery, TReqBody, TRes>(
   handler: AsyncHandler<TReqQuery, TReqBody, TRes>
-): RequestHandler {
+): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes> {
   return async (
     req: MonkeyTypes.Request<TReqQuery, TReqBody>,
     res: Response<TRes>,
@@ -153,10 +161,10 @@ const VALIDATION_SCHEMA_DEFAULT_OPTIONS: ValidationSchemaOptions = {
   query: { allowUnknown: false },
 };
 
-function validateRequest(
+function validateRequest<TReqQuery, TReqBody, TRes>(
   validationSchema: ValidationSchema,
   validationOptions: ValidationSchemaOptions = VALIDATION_SCHEMA_DEFAULT_OPTIONS
-): RequestHandler {
+): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes> {
   const options = {
     ...VALIDATION_SCHEMA_DEFAULT_OPTIONS,
     ...validationOptions,
@@ -167,7 +175,11 @@ function validateRequest(
     "validationErrorMessage"
   );
 
-  return (req: MonkeyTypes.Request, _res: Response, next: NextFunction) => {
+  return (
+    req: MonkeyTypes.Request<TReqQuery, TReqBody>,
+    _res: Response<TRes>,
+    next: NextFunction
+  ) => {
     _.each(
       normalizedValidationSchema,
       (schema: object, key: keyof ValidationSchema) => {
@@ -195,7 +207,9 @@ function validateRequest(
 /**
  * Uses the middlewares only in production. Otherwise, uses an empty middleware.
  */
-function useInProduction(middlewares: RequestHandler[]): RequestHandler[] {
+function useInProduction<TReqQuery, TReqBody, TRes>(
+  middlewares: MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes>[]
+): MonkeyTypes.RequestHandlerWithCtx<TReqQuery, TReqBody, TRes>[] {
   return middlewares.map((middleware) =>
     isDevEnvironment() ? emptyMiddleware : middleware
   );

@@ -19,6 +19,12 @@ declare namespace MonkeyTypes {
     decodedToken: DecodedToken;
   };
 
+  type RequestHandlerWithCtx<TQ, TB, TR> = (
+    req: Request<TQ, TB>,
+    res: import("express").Response<TR>,
+    next: import("express").NextFunction
+  ) => void;
+
   type Request<Query = undefined, Body = undefined> = {
     ctx: Readonly<Context>;
   } & ExpressRequest<Query, Body>;
