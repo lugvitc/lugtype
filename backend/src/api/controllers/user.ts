@@ -2,7 +2,10 @@ import _ from "lodash";
 import * as UserDAL from "../../dal/user";
 import MonkeyError from "../../utils/error";
 import Logger from "../../utils/logger";
-import { MonkeyResponse } from "../../utils/monkey-response";
+import {
+  EmptyMonkeyResponse2,
+  MonkeyResponse,
+} from "../../utils/monkey-response";
 import * as DiscordUtils from "../../utils/discord";
 import {
   MILLISECONDS_IN_DAY,
@@ -29,11 +32,21 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
+import { UserCreateType } from "../schemas/user.contract";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {
     throw new MonkeyError(422, "Captcha check failed");
   }
+}
+
+export async function createNewUserV2({
+  email,
+}: UserCreateType): Promise<EmptyMonkeyResponse2 | MonkeyError> {
+  if (email.endsWith("@tidal.lol") || email.endsWith("@selfbot.cc")) {
+    return new MonkeyError(400, "Invalid domain v2");
+  }
+  return new MonkeyResponse("User created v2");
 }
 
 export async function createNewUser(

@@ -8,6 +8,7 @@ import {
   badAuthRateLimiterHandler,
   rootRateLimiter,
 } from "./middlewares/rate-limit";
+import { applyApiRoutes } from "./api/routes/index2";
 
 function buildApp(): express.Application {
   const app = express();
@@ -24,6 +25,7 @@ function buildApp(): express.Application {
   app.use(badAuthRateLimiterHandler);
   app.use(rootRateLimiter);
 
+  applyApiRoutes(app);
   addApiRoutes(app);
 
   app.use(errorHandlingMiddleware);

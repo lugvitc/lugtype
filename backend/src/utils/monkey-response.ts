@@ -1,6 +1,10 @@
 import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
+import { MonkeyResonseType as MonkeyResponseType } from "../api/schemas/common.contract";
 
+export type MonkeyStatusAware = {
+  status: number;
+};
 //TODO FIX ANYS
 
 export class MonkeyResponse {
@@ -35,4 +39,30 @@ export function handleMonkeyResponse(
   }
 
   res.json({ message, data });
+}
+
+export class MonkeyResponse2<T>
+  implements MonkeyResponseType, MonkeyStatusAware
+{
+  message: string;
+  data?: T;
+  status: number;
+
+  constructor(message?: string, data?: T, status = 200) {
+    this.message = message ?? "ok";
+    this.data = data;
+    this.status = status;
+  }
+}
+
+export class EmptyMonkeyResponse2
+  implements MonkeyResponseType, MonkeyStatusAware
+{
+  message: string;
+  status: number;
+
+  constructor(message?: string, status = 200) {
+    this.message = message ?? "ok";
+    this.status = status;
+  }
 }

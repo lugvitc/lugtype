@@ -121,7 +121,7 @@ function addApiRoutes(app: Application): void {
     app.use(apiRoute, router);
   });
 
-  app.use(
+  /*  app.use(
     asyncHandler(async (req, _res) => {
       return new MonkeyResponse(
         `Unknown request URL (${req.method}: ${req.path})`,
@@ -130,6 +130,7 @@ function addApiRoutes(app: Application): void {
       );
     })
   );
+*/
 }
 
 export default addApiRoutes;
