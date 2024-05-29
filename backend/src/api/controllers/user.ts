@@ -5,6 +5,7 @@ import Logger from "../../utils/logger";
 import {
   EmptyMonkeyResponse2,
   MonkeyResponse,
+  MonkeyResponse2,
 } from "../../utils/monkey-response";
 import * as DiscordUtils from "../../utils/discord";
 import {
@@ -32,7 +33,7 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
-import { UserCreateType } from "../schemas/user.contract";
+import { UserCreateType, UserType } from "../schemas/user.contract";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {
@@ -40,11 +41,15 @@ async function verifyCaptcha(captcha: string): Promise<void> {
   }
 }
 
-export async function createNewUserV2({
-  email,
-}: UserCreateType): Promise<EmptyMonkeyResponse2 | MonkeyError> {
+export async function createNewUserV2(
+  req: MonkeyTypes.Request,
+  body: UserCreateType
+): Promise<EmptyMonkeyResponse2> {
+  const { name, captcha } = body;
+  const { email, uid } = req.ctx.decodedToken;
+  console.log({ email, uid, name, captcha });
   if (email.endsWith("@tidal.lol") || email.endsWith("@selfbot.cc")) {
-    return new MonkeyError(400, "Invalid domain v2");
+    throw new MonkeyError(400, "Invalid domain v2");
   }
   return new MonkeyResponse("User created v2");
 }

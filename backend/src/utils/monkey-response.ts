@@ -2,12 +2,12 @@ import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
 import { MonkeyResonseType as MonkeyResponseType } from "../api/schemas/common.contract";
 
-export type MonkeyStatusAware = {
+export interface MonkeyStatusAware {
   status: number;
-};
+}
 //TODO FIX ANYS
 
-export class MonkeyResponse {
+export class MonkeyResponse implements MonkeyStatusAware {
   message: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;

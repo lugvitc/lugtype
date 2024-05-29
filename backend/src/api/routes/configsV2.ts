@@ -1,11 +1,11 @@
 import { initServer } from "@ts-rest/express";
-
 import { MonkeyResponse2 } from "../../utils/monkey-response";
 import {
   ConfigType,
   GetConfigType,
   configContract as configsContract,
 } from "../schemas/config.contract.";
+
 const s = initServer();
 export const configRoutes = s.router(configsContract, {
   get: async () => {

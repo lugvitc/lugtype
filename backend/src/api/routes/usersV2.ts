@@ -1,34 +1,56 @@
 import { initServer } from "@ts-rest/express";
 
-import { MonkeyResponse2 } from "../../utils/monkey-response";
+import { validateConfiguration } from "../../middlewares/api-utils";
+import { authenticateRequest } from "../../middlewares/auth";
+import * as RateLimit from "../../middlewares/rate-limit";
+
 import * as UserController from "../controllers/user";
-import MonkeyError from "../../utils/error";
-import { GetUserType, UserType, userContract } from "../schemas/user.contract";
+import {
+  GetUserType,
+  UserCreateType,
+  userContract,
+} from "../schemas/user.contract";
+import { callHandler, wrap2 } from "./index2";
+import {
+  EmptyMonkeyResponse2,
+  MonkeyResponse2,
+  MonkeyStatusAware,
+} from "../../utils/monkey-response";
+
 const s = initServer();
 export const userRoutes = s.router(userContract, {
-  signup: async ({ body }) => {
-    console.log(body);
-    const result = await UserController.createNewUserV2(body);
+  signup: {
+    middleware: [
+      validateConfiguration({
+        criteria: (configuration) => configuration.users.signUp,
+        invalidMessage: "Sign up is temporarily disabled",
+      }),
+      authenticateRequest(),
+      RateLimit.userSignup,
+    ],
+    handler: async ({ req, body }) => {
+      const result = await UserController.createNewUserV2(
+        req as unknown as MonkeyTypes.Request,
+        body as unknown as UserCreateType
+      );
 
-    if (result.status === 200) {
       return {
         status: 200,
         body: result,
       };
-    }
-    return {
-      status: 400,
-      body: result as MonkeyError,
-    };
+    },
   },
-  get: async () => {
-    return {
-      status: 200,
-      body: new MonkeyResponse2<UserType>(
-        "getUser",
-        { uid: "new", name: "name", email: "email" },
-        200
-      ) as GetUserType,
-    };
+  get: {
+    middleware: [authenticateRequest(), RateLimit.userGet],
+    //handler: callHandler(UserController.getUser),
+    handler: wrap(UserController.getUser),
   },
 });
+
+function wrap(
+  handler: (req: MonkeyTypes.Request) => Promise<MonkeyStatusAware>
+): (all: any) => Promise<any> {
+  return async (it) => {
+    return await callHandler(handler)(it);
+  };
+}
