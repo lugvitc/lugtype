@@ -15,6 +15,8 @@ import { init as initFirebaseAdmin } from "./init/firebase-admin";
 
 import { createIndicies as leaderboardDbSetup } from "./dal/leaderboards";
 import { createIndicies as blocklistDbSetup } from "./dal/blocklist";
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
 
 async function bootServer(port: number): Promise<Server> {
   try {
@@ -79,6 +81,11 @@ async function bootServer(port: number): Promise<Server> {
     console.error(error);
     return process.exit(1);
   }
+
+  const nestApp = await NestFactory.create(AppModule);
+  await nestApp.listen(PORT + 1).then(() => {
+    Logger.success(`Nest API server listening on port ${port + 1}`);
+  });
 
   return app.listen(PORT, () => {
     Logger.success(`API server listening on port ${port}`);
