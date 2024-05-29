@@ -5,17 +5,8 @@ import { authenticateRequest } from "../../middlewares/auth";
 import * as RateLimit from "../../middlewares/rate-limit";
 
 import * as UserController from "../controllers/user";
-import {
-  GetUserType,
-  UserCreateType,
-  userContract,
-} from "../schemas/user.contract";
-import { callHandler, wrap2 } from "./index2";
-import {
-  EmptyMonkeyResponse2,
-  MonkeyResponse2,
-  MonkeyStatusAware,
-} from "../../utils/monkey-response";
+import { userContract } from "../schemas/user.contract";
+import { callHandler, callHandlerWithBody } from "./index2";
 
 const s = initServer();
 export const userRoutes = s.router(userContract, {
@@ -28,29 +19,11 @@ export const userRoutes = s.router(userContract, {
       authenticateRequest(),
       RateLimit.userSignup,
     ],
-    handler: async ({ req, body }) => {
-      const result = await UserController.createNewUserV2(
-        req as unknown as MonkeyTypes.Request,
-        body as unknown as UserCreateType
-      );
-
-      return {
-        status: 200,
-        body: result,
-      };
-    },
+    handler: (r) => callHandlerWithBody(UserController.createNewUserV2)(r),
   },
   get: {
     middleware: [authenticateRequest(), RateLimit.userGet],
     //handler: callHandler(UserController.getUser),
-    handler: wrap(UserController.getUser),
+    handler: (r) => callHandler(UserController.getUser)(r),
   },
 });
-
-function wrap(
-  handler: (req: MonkeyTypes.Request) => Promise<MonkeyStatusAware>
-): (all: any) => Promise<any> {
-  return async (it) => {
-    return await callHandler(handler)(it);
-  };
-}

@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import { userContract } from "./user.contract";
-import { configContract } from "./config.contract.";
+import { configContract } from "./config.contract";
 
 const c = initContract();
 

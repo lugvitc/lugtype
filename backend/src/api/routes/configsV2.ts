@@ -1,21 +1,14 @@
 import { initServer } from "@ts-rest/express";
-import { MonkeyResponse2 } from "../../utils/monkey-response";
-import {
-  ConfigType,
-  GetConfigType,
-  configContract as configsContract,
-} from "../schemas/config.contract.";
+import { authenticateRequest } from "../../middlewares/auth";
+import * as RateLimit from "../../middlewares/rate-limit";
+import * as ConfigController from "../controllers/config";
+import { configContract as configsContract } from "../schemas/config.contract";
+import { callHandler } from "./index2";
 
 const s = initServer();
 export const configRoutes = s.router(configsContract, {
-  get: async () => {
-    return {
-      status: 200,
-      body: new MonkeyResponse2<ConfigType>(
-        "get Config",
-        { test: "true" },
-        200
-      ) as GetConfigType,
-    };
+  get: {
+    middleware: [authenticateRequest(), RateLimit.configGet],
+    handler: (r) => callHandler(ConfigController.getConfig)(r),
   },
 });
