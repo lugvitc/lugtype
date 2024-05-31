@@ -42,10 +42,9 @@ async function verifyCaptcha(captcha: string): Promise<void> {
 }
 
 export async function createNewUserV2(
-  req: MonkeyTypes.Request,
-  body: UserCreateType
-): Promise<EmptyMonkeyResponse2> {
-  const { name, captcha } = body;
+  req: MonkeyTypes.Request2<UserCreateType>
+): Promise<MonkeyResponse2<undefined>> {
+  const { name, captcha } = req.body;
   const { email, uid } = req.ctx.decodedToken;
   console.log({ email, uid, name, captcha });
   if (email.endsWith("@tidal.lol") || email.endsWith("@selfbot.cc")) {
@@ -402,6 +401,22 @@ function getRelevantUserInfo(
     "ips",
     "testActivity",
   ]);
+}
+
+export async function getUserV2(
+  req: MonkeyTypes.Request2
+): Promise<MonkeyResponse2<UserType>> {
+  const { uid } = req.ctx.decodedToken;
+  const userData: UserType = {
+    name: "Kevin",
+    email: "kevin@example.com",
+    uid,
+  };
+
+  const agentLog = buildAgentLog(req.raw);
+  void Logger.logToDb("user_data_requested", agentLog, uid);
+
+  return new MonkeyResponse2("User data retrieved", userData);
 }
 
 export async function getUser(

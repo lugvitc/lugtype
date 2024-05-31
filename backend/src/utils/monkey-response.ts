@@ -54,15 +54,3 @@ export class MonkeyResponse2<T>
     this.status = status;
   }
 }
-
-export class EmptyMonkeyResponse2
-  implements MonkeyResponseType, MonkeyStatusAware
-{
-  message: string;
-  status: number;
-
-  constructor(message?: string, status = 200) {
-    this.message = message ?? "ok";
-    this.status = status;
-  }
-}

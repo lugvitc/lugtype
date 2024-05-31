@@ -4,6 +4,7 @@ import { Response, NextFunction } from "express";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import rateLimit, { Options } from "express-rate-limit";
 import { isDevEnvironment } from "../utils/misc";
+import { MonkeyTypes } from "../types/types";
 
 const REQUEST_MULTIPLIER = isDevEnvironment() ? 100 : 1;
 
@@ -116,7 +117,7 @@ export const configUpdate = rateLimit({
 
 export const configGet = rateLimit({
   windowMs: ONE_HOUR_MS,
-  max: 120 * REQUEST_MULTIPLIER,
+  max: 1 * REQUEST_MULTIPLIER,
   keyGenerator: getKeyWithUid,
   handler: customHandler,
 });

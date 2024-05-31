@@ -13,6 +13,9 @@ import {
 } from "../utils/prometheus";
 import crypto from "crypto";
 import { performance } from "perf_hooks";
+import { TsRestRequest, TsRestRequestHandler } from "@ts-rest/express";
+import { AppRoute, AppRouter } from "@ts-rest/core";
+import { MonkeyTypes } from "../types/types";
 
 type RequestAuthenticationOptions = {
   isPublic?: boolean;
@@ -26,6 +29,84 @@ const DEFAULT_OPTIONS: RequestAuthenticationOptions = {
   acceptApeKeys: false,
   requireFreshToken: false,
 };
+
+export function authenticateRequestV2<T extends AppRouter | AppRoute>(
+  authOptions = DEFAULT_OPTIONS
+): TsRestRequestHandler<T> {
+  const options = {
+    ...DEFAULT_OPTIONS,
+    ...authOptions,
+  };
+
+  return async (
+    req: MonkeyTypes.RequestTsRest<T>,
+    _res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const startTime = performance.now();
+    let token: MonkeyTypes.DecodedToken;
+    let authType = "None";
+
+    const { authorization: authHeader } = req.headers;
+
+    try {
+      if (authHeader !== undefined && authHeader !== "") {
+        token = await authenticateWithAuthHeader(
+          authHeader,
+          req.ctx.configuration,
+          options
+        );
+      } else if (options.isPublic === true) {
+        token = {
+          type: "None",
+          uid: "",
+          email: "",
+        };
+      } else {
+        throw new MonkeyError(
+          401,
+          "Unauthorized",
+          `endpoint: ${req.baseUrl} no authorization header found`
+        );
+      }
+
+      incrementAuth(token.type);
+
+      req.ctx = {
+        ...req.ctx,
+        decodedToken: token,
+      };
+    } catch (error) {
+      authType = authHeader?.split(" ")[0] ?? "None";
+
+      recordAuthTime(
+        authType,
+        "failure",
+        Math.round(performance.now() - startTime),
+        req
+      );
+
+      return next(error);
+    }
+    recordAuthTime(
+      token.type,
+      "success",
+      Math.round(performance.now() - startTime),
+      req
+    );
+
+    const country = req.headers["cf-ipcountry"] as string;
+    if (country) {
+      recordRequestCountry(country, req);
+    }
+
+    // if (req.method !== "OPTIONS" && req?.ctx?.decodedToken?.uid) {
+    //   recordRequestForUid(req.ctx.decodedToken.uid);
+    // }
+
+    next();
+  };
+}
 
 function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
   const options = {
