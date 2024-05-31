@@ -1,6 +1,6 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { TsRestExpressOptions, TsRestRequest } from "@ts-rest/express";
+import { TsRestRequest } from "@ts-rest/express";
 
 //todo split this file into smaller util files (grouped by functionality)
 
@@ -52,6 +52,7 @@ type AgentLog = {
   device?: string;
 };
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export function buildAgentLog(
   req: MonkeyTypes.Request | TsRestRequest<any>
 ): AgentLog {
@@ -76,6 +77,7 @@ export function buildAgentLog(
 
   return agentLog;
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */
 
 export function padNumbers(
   numbers: number[],

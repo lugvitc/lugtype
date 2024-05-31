@@ -2,9 +2,9 @@ import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
 import { MonkeyResonseType as MonkeyResponseType } from "@shared/contract/common.contract";
 
-export interface MonkeyStatusAware {
+export type MonkeyStatusAware = {
   status: number;
-}
+};
 //TODO FIX ANYS
 
 export class MonkeyResponse implements MonkeyStatusAware {

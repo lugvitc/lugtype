@@ -1,5 +1,6 @@
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
 import { IRouter } from "express";
+
 import { MonkeyResponse2 } from "../../utils/monkey-response";
 import { contract } from "./../../../../shared/contract/index.contract";
 import { configRoutes } from "./configsV2";
@@ -15,6 +16,7 @@ export function applyApiRoutes(app: IRouter): void {
   createExpressEndpoints(contract, router, app, { jsonQuery: true });
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export function callController<
   TInput,
   TBody,
@@ -23,7 +25,7 @@ export function callController<
   TResponse extends MonkeyResponse2<any>
 >(
   handler: (
-    req: MonkeyTypes.Request2<TBody, TQuery, TParams>
+    req: MonkeyTypes.Request2<TQuery, TBody, TParams>
   ) => Promise<TResponse>
 ): (all: TInput) => Promise<any> {
   return async (all) => {
@@ -38,3 +40,5 @@ export function callController<
     return { status: result.status, body: result };
   };
 }
+
+/* eslint-enable  @typescript-eslint/no-explicit-any */

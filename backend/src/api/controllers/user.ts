@@ -38,7 +38,7 @@ async function verifyCaptcha(captcha: string): Promise<void> {
 }
 
 export async function createNewUserV2(
-  req: MonkeyTypes.Request2<UserCreateType>
+  req: MonkeyTypes.Request2<unknown, UserCreateType>
 ): Promise<MonkeyResponse2<undefined>> {
   const { name, captcha } = req.body;
   const { email, uid } = req.ctx.decodedToken;

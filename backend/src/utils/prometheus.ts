@@ -199,6 +199,7 @@ const authTime = new Histogram({
   ],
 });
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export function recordAuthTime(
   type: string,
   status: "success" | "failure",
@@ -238,6 +239,7 @@ export function recordRequestCountry(
 
   requestCountry.inc({ path: pathNoGet, country });
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */
 
 const tokenCacheAccess = new Counter({
   name: "api_token_cache_access",

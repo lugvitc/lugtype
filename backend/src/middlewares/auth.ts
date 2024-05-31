@@ -13,7 +13,7 @@ import {
 } from "../utils/prometheus";
 import crypto from "crypto";
 import { performance } from "perf_hooks";
-import { TsRestRequest, TsRestRequestHandler } from "@ts-rest/express";
+import { TsRestRequestHandler } from "@ts-rest/express";
 import { AppRoute, AppRouter } from "@ts-rest/core";
 
 type RequestAuthenticationOptions = {
@@ -38,7 +38,7 @@ export function authenticateRequestV2<T extends AppRouter | AppRoute>(
   };
 
   return async (
-    req: MonkeyTypes.RequestTsRest<T>,
+    req: MonkeyTypes.RequestTsRest,
     _res: Response,
     next: NextFunction
   ): Promise<void> => {
@@ -61,8 +61,8 @@ export function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
   };
 }
 
-async function _authenticateRequestInternal<T>(
-  req: MonkeyTypes.Request | MonkeyTypes.RequestTsRest<any>,
+async function _authenticateRequestInternal(
+  req: MonkeyTypes.Request | MonkeyTypes.RequestTsRest,
   _res: Response,
   next: NextFunction,
   options: RequestAuthenticationOptions

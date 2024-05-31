@@ -46,7 +46,6 @@ function buildApp(): express.Application {
   app.use("/v2/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
   const openApiJson = JSON.stringify(openApiDocument);
-  console.log(json);
   app.use("/v2/swagger.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(openApiJson);

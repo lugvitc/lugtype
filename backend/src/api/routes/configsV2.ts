@@ -12,10 +12,12 @@ const s = initServer();
 export const configRoutes = s.router(configContract, {
   get: {
     middleware: [authenticateRequest(), RateLimit.configGet],
-    handler: (r) => callController(ConfigController.getConfigV2)(r),
+    handler: async (r) => callController(ConfigController.getConfigV2)(r),
   },
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   getTest: {
     middleware: [authenticateRequestV2(), RateLimit.configGet as any],
-    handler: (r) => callController(ConfigController.getTestConfigV2)(r),
+    handler: async (r) => callController(ConfigController.getTestConfigV2)(r),
   },
+  /* eslint-enable  @typescript-eslint/no-explicit-any */
 });

@@ -1,6 +1,8 @@
 type ObjectId = import("mongodb").ObjectId;
 type ExpressRequest = import("express").Request;
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 type TsRestRequest = import("@ts-rest/express").TsRestRequest<any>;
+/* eslint-enable  @typescript-eslint/no-explicit-any */
 type AppRoute = import("@ts-rest/core").AppRoute;
 type AppRouter = import("@ts-rest/core").AppRouter;
 
@@ -20,15 +22,15 @@ declare namespace MonkeyTypes {
     ctx: Readonly<Context>;
   } & ExpressRequest;
 
-  type Request2<TBody = any, TQuery = any, TParams = any> = {
-    body: Readonly<TBody>;
+  type Request2<TQuery = unknown, TBody = unknown, TParams = unknown> = {
     query: Readonly<TQuery>;
+    body: Readonly<TBody>;
     params: TParams;
     ctx: Readonly<Context>;
     raw: TsRestRequest;
   };
 
-  type RequestTsRest<T extends AppRoute | AppRouter = any> = {
+  type RequestTsRest = {
     ctx: Readonly<Context>;
   } & TsRestRequest;
 

@@ -25,7 +25,7 @@ export async function getConfigV2(
 }
 
 export async function getTestConfigV2(
-  req: MonkeyTypes.Request2<never, GetTestConfigQuery, GetTestConfigParams>
+  req: MonkeyTypes.Request2<GetTestConfigQuery, unknown, GetTestConfigParams>
 ): Promise<MonkeyResponse2<GetConfig>> {
   const { noCache, includes } = req.query;
   const { id } = req.params;
