@@ -42,72 +42,11 @@ export function authenticateRequestV2<T extends AppRouter | AppRoute>(
     _res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const startTime = performance.now();
-    let token: MonkeyTypes.DecodedToken;
-    let authType = "None";
-
-    const { authorization: authHeader } = req.headers;
-
-    try {
-      if (authHeader !== undefined && authHeader !== "") {
-        token = await authenticateWithAuthHeader(
-          authHeader,
-          req.ctx.configuration,
-          options
-        );
-      } else if (options.isPublic === true) {
-        token = {
-          type: "None",
-          uid: "",
-          email: "",
-        };
-      } else {
-        throw new MonkeyError(
-          401,
-          "Unauthorized",
-          `endpoint: ${req.baseUrl} no authorization header found`
-        );
-      }
-
-      incrementAuth(token.type);
-
-      req.ctx = {
-        ...req.ctx,
-        decodedToken: token,
-      };
-    } catch (error) {
-      authType = authHeader?.split(" ")[0] ?? "None";
-
-      recordAuthTime(
-        authType,
-        "failure",
-        Math.round(performance.now() - startTime),
-        req
-      );
-
-      return next(error);
-    }
-    recordAuthTime(
-      token.type,
-      "success",
-      Math.round(performance.now() - startTime),
-      req
-    );
-
-    const country = req.headers["cf-ipcountry"] as string;
-    if (country) {
-      recordRequestCountry(country, req);
-    }
-
-    // if (req.method !== "OPTIONS" && req?.ctx?.decodedToken?.uid) {
-    //   recordRequestForUid(req.ctx.decodedToken.uid);
-    // }
-
-    next();
+    return _authenticateRequestInternal(req, _res, next, options);
   };
 }
 
-function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
+export function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
   const options = {
     ...DEFAULT_OPTIONS,
     ...authOptions,
@@ -118,69 +57,78 @@ function authenticateRequest(authOptions = DEFAULT_OPTIONS): Handler {
     _res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const startTime = performance.now();
-    let token: MonkeyTypes.DecodedToken;
-    let authType = "None";
+    return _authenticateRequestInternal(req, _res, next, options);
+  };
+}
 
-    const { authorization: authHeader } = req.headers;
+async function _authenticateRequestInternal<T>(
+  req: MonkeyTypes.Request | MonkeyTypes.RequestTsRest<any>,
+  _res: Response,
+  next: NextFunction,
+  options: RequestAuthenticationOptions
+): Promise<void> {
+  const startTime = performance.now();
+  let token: MonkeyTypes.DecodedToken;
+  let authType = "None";
 
-    try {
-      if (authHeader !== undefined && authHeader !== "") {
-        token = await authenticateWithAuthHeader(
-          authHeader,
-          req.ctx.configuration,
-          options
-        );
-      } else if (options.isPublic === true) {
-        token = {
-          type: "None",
-          uid: "",
-          email: "",
-        };
-      } else {
-        throw new MonkeyError(
-          401,
-          "Unauthorized",
-          `endpoint: ${req.baseUrl} no authorization header found`
-        );
-      }
+  const { authorization: authHeader } = req.headers;
 
-      incrementAuth(token.type);
-
-      req.ctx = {
-        ...req.ctx,
-        decodedToken: token,
-      };
-    } catch (error) {
-      authType = authHeader?.split(" ")[0] ?? "None";
-
-      recordAuthTime(
-        authType,
-        "failure",
-        Math.round(performance.now() - startTime),
-        req
+  try {
+    if (authHeader !== undefined && authHeader !== "") {
+      token = await authenticateWithAuthHeader(
+        authHeader,
+        req.ctx.configuration,
+        options
       );
-
-      return next(error);
+    } else if (options.isPublic === true) {
+      token = {
+        type: "None",
+        uid: "",
+        email: "",
+      };
+    } else {
+      throw new MonkeyError(
+        401,
+        "Unauthorized",
+        `endpoint: ${req.baseUrl} no authorization header found`
+      );
     }
+
+    incrementAuth(token.type);
+
+    req.ctx = {
+      ...req.ctx,
+      decodedToken: token,
+    };
+  } catch (error) {
+    authType = authHeader?.split(" ")[0] ?? "None";
+
     recordAuthTime(
-      token.type,
-      "success",
+      authType,
+      "failure",
       Math.round(performance.now() - startTime),
       req
     );
 
-    const country = req.headers["cf-ipcountry"] as string;
-    if (country) {
-      recordRequestCountry(country, req as MonkeyTypes.Request);
-    }
+    return next(error);
+  }
+  recordAuthTime(
+    token.type,
+    "success",
+    Math.round(performance.now() - startTime),
+    req
+  );
 
-    // if (req.method !== "OPTIONS" && req?.ctx?.decodedToken?.uid) {
-    //   recordRequestForUid(req.ctx.decodedToken.uid);
-    // }
+  const country = req.headers["cf-ipcountry"] as string;
+  if (country) {
+    recordRequestCountry(country, req);
+  }
 
-    next();
-  };
+  // if (req.method !== "OPTIONS" && req?.ctx?.decodedToken?.uid) {
+  //   recordRequestForUid(req.ctx.decodedToken.uid);
+  // }
+
+  next();
 }
 
 async function authenticateWithAuthHeader(
@@ -377,7 +325,7 @@ async function authenticateWithUid(
   };
 }
 
-function authenticateGithubWebhook(): Handler {
+export function authenticateGithubWebhook(): Handler {
   return async (
     req: MonkeyTypes.Request,
     _res: Response,
@@ -417,5 +365,3 @@ function authenticateGithubWebhook(): Handler {
     next();
   };
 }
-
-export { authenticateRequest, authenticateGithubWebhook };

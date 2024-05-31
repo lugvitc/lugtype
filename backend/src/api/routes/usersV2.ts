@@ -6,7 +6,7 @@ import * as RateLimit from "../../middlewares/rate-limit";
 
 import * as UserController from "../controllers/user";
 import { userContract } from "./../../../../shared/contract/user.contract";
-import { callHandler } from "./index2";
+import { callController } from "./index2";
 
 const s = initServer();
 export const userRoutes = s.router(userContract, {
@@ -19,15 +19,15 @@ export const userRoutes = s.router(userContract, {
       authenticateRequest(),
       RateLimit.userSignup,
     ],
-    handler: (r) => callHandler(UserController.createNewUserV2)(r),
+    handler: (r) => callController(UserController.createNewUserV2)(r),
   },
   get: {
     middleware: [authenticateRequest(), RateLimit.userGet],
     //handler: callHandler(UserController.getUser),
-    handler: (r) => callHandler(UserController.getUserV2)(r),
+    handler: (r) => callController(UserController.getUserV2)(r),
   },
 });
 
 function wrap(handler: (req: any) => Promise<any>): (all: any) => Promise<any> {
-  return (all) => callHandler(handler)(all);
+  return (all) => callController(handler)(all);
 }
