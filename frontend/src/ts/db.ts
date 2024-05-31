@@ -61,7 +61,7 @@ export async function initSnapshot(): Promise<
     // LoadingPage.updateText("Downloading user...");
 
     const [userResponse, configResponse, presetsResponse] = await Promise.all([
-      Ape.users.getData(),
+      Ape.usersV2.getData(),
       Ape.configs.get(),
       Ape.presets.get(),
     ]);

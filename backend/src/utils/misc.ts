@@ -1,5 +1,7 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
+import { ExpressRequest, MonkeyTypes } from "../types/types";
+import { TsRestExpressOptions, TsRestRequest } from "@ts-rest/express";
 
 //todo split this file into smaller util files (grouped by functionality)
 
@@ -52,7 +54,7 @@ type AgentLog = {
 };
 
 export function buildAgentLog(
-  req: MonkeyTypes.Request | ExpressRequest
+  req: MonkeyTypes.Request | TsRestRequest<any>
 ): AgentLog {
   const agent = uaparser(req.headers["user-agent"]);
 

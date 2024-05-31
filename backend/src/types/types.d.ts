@@ -30,7 +30,7 @@ declare namespace MonkeyTypes {
     ctx: Readonly<Context>;
   } & ExpressRequest;
 
-  type RequestTsRest<T extends AppRoute | AppRouter> = {
+  type RequestTsRest<T extends AppRoute | AppRouter = any> = {
     ctx: Readonly<Context>;
   } & TsRestRequest<T>;
 
