@@ -9,6 +9,9 @@ import {
   rootRateLimiter,
 } from "./middlewares/rate-limit";
 import { applyApiRoutes } from "./api/routes/index2";
+import { contract } from "./../../shared/contract/index.contract";
+import { generateOpenApi } from "@ts-rest/open-api";
+import * as swaggerUi from "swagger-ui-express";
 
 function buildApp(): express.Application {
   const app = express();
@@ -29,6 +32,18 @@ function buildApp(): express.Application {
   addApiRoutes(app);
 
   app.use(errorHandlingMiddleware);
+
+  const openApiDocument = generateOpenApi(
+    contract,
+    {
+      info: {
+        title: "MonkeyType API",
+        version: "1.0.0",
+      },
+    },
+    { jsonQuery: true, setOperationId: "concatenated-path" }
+  );
+  app.use("/v2/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
   return app;
 }
