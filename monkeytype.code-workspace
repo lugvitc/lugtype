@@ -9,24 +9,19 @@
       "path": "frontend"
     },
     {
-      "name": "shared-types",
-      "path": "shared-types"
-    },
-    {
-      "name": "contract",
-      "path": "contract"
+      "name": "shared",
+      "path": "shared"
     },
     {
       "name": "root",
-      "path": "./"
+      "path": "."
     }
   ],
   "settings": {
     "files.exclude": {
       "frontend": true,
       "backend": true,
-      "shared-types": true,
-      "contract": true
+      "shared": true
     },
     "search.exclude": {
       //defaults

@@ -53,6 +53,16 @@ export async function initSnapshot(): Promise<
   const snap = { ...defaultSnap };
   try {
     if (!isAuthenticated()) return false;
+    //EXAMPLE call
+    const testConfig = await Ape.configsV2.getTest({
+      params: { id: "456" },
+      query: {
+        includes: ["client", "server"],
+        noCache: true,
+      },
+    });
+
+    console.log("####", testConfig.body);
     // if (ActivePage.get() === "loading") {
     //   LoadingPage.updateBar(22.5);
     // } else {
@@ -61,8 +71,8 @@ export async function initSnapshot(): Promise<
     // LoadingPage.updateText("Downloading user...");
 
     const [userResponse, configResponse, presetsResponse] = await Promise.all([
-      Ape.usersV2.getData(),
-      Ape.configs.get(),
+      Ape.usersV2.get(),
+      Ape.configsV2.get(),
       Ape.presets.get(),
     ]);
 
@@ -70,14 +80,14 @@ export async function initSnapshot(): Promise<
     if (userResponse.status !== 200) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw {
-        message: `${userResponse.message} (user)`,
+        message: `${userResponse.body.message} (user)`,
         responseCode: userResponse.status,
       };
     }
     if (configResponse.status !== 200) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw {
-        message: `${configResponse.message} (config)`,
+        message: `${configResponse.body.message} (config)`,
         responseCode: configResponse.status,
       };
     }
@@ -89,8 +99,8 @@ export async function initSnapshot(): Promise<
       };
     }
 
-    const userData = userResponse.data;
-    const configData = configResponse.data;
+    const userData = userResponse.body.data as any; //TODO
+    const configData = configResponse.body.data;
     const presetsData = presetsResponse.data;
 
     if (userData === null) {

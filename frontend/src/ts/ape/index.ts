@@ -25,7 +25,8 @@ const Ape = {
   publicStats: new endpoints.Public(httpClient),
   apeKeys: new endpoints.ApeKeys(httpClient),
   configuration: new endpoints.Configuration(httpClient),
-  usersV2: new endpoints.UsersV2(BASE_URL, axiosClient),
+  usersV2: new endpoints.UsersV2(BASE_URL, axiosClient).getClient(),
+  configsV2: new endpoints.ConfigsV2(BASE_URL, axiosClient).getClient(),
 };
 
 export default Ape;

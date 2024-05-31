@@ -7,8 +7,6 @@ const c = initContract();
 const ConfigSchema = z.object({
   test: z.string().readonly(),
 });
-export type ConfigType = z.infer<typeof ConfigSchema>;
-
 const GetConfigSchema = MonkeyResponseSchema.extend({ data: ConfigSchema });
 export type GetConfig = z.infer<typeof GetConfigSchema>;
 

@@ -1,8 +1,8 @@
 import { initClient } from "@ts-rest/core";
 import {
-  GetUserType,
-  userContract,
-} from "./../../../../../shared/contract/user.contract";
+  GetConfig,
+  configContract,
+} from "./../../../../../shared/contract/config.contract";
 import { getAuthenticatedUser, isAuthenticated } from "../../firebase";
 import { getIdToken } from "firebase/auth";
 import { Axios, AxiosError, AxiosResponse, Method, isAxiosError } from "axios";
@@ -11,7 +11,7 @@ export default class Users {
   private client;
 
   constructor(baseUrl: string, axios: Axios) {
-    this.client = initClient(userContract, {
+    this.client = initClient(configContract, {
       baseUrl,
       jsonQuery: true,
       //TODO extract
@@ -50,7 +50,7 @@ export default class Users {
     });
   }
 
-  async getData(): Promise<GetUserType> {
+  async get(): Promise<GetConfig> {
     return (await this.client.get()).body;
   }
 

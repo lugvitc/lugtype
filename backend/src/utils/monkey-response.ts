@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
-import { MonkeyResonseType as MonkeyResponseType } from "../api/schemas/common.contract";
+import { MonkeyResonseType as MonkeyResponseType } from "@shared/contract/common.contract";
 
 export interface MonkeyStatusAware {
   status: number;

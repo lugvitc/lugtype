@@ -5,7 +5,7 @@ import { authenticateRequest } from "../../middlewares/auth";
 import * as RateLimit from "../../middlewares/rate-limit";
 
 import * as UserController from "../controllers/user";
-import { userContract } from "../schemas/user.contract";
+import { userContract } from "./../../../../shared/contract/user.contract";
 import { callHandler } from "./index2";
 
 const s = initServer();

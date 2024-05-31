@@ -9,6 +9,7 @@ import ApeKeys from "./ape-keys";
 import Public from "./public";
 import Configuration from "./configuration";
 import UsersV2 from "./usersV2";
+import ConfigsV2 from "./configsV2";
 
 export default {
   Configs,
@@ -22,4 +23,5 @@ export default {
   ApeKeys,
   Configuration,
   UsersV2,
+  ConfigsV2,
 };

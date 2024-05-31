@@ -15,7 +15,6 @@ import crypto from "crypto";
 import { performance } from "perf_hooks";
 import { TsRestRequest, TsRestRequestHandler } from "@ts-rest/express";
 import { AppRoute, AppRouter } from "@ts-rest/core";
-import { MonkeyTypes } from "../types/types";
 
 type RequestAuthenticationOptions = {
   isPublic?: boolean;

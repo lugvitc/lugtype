@@ -2,11 +2,7 @@ import _ from "lodash";
 import * as UserDAL from "../../dal/user";
 import MonkeyError from "../../utils/error";
 import Logger from "../../utils/logger";
-import {
-  EmptyMonkeyResponse2,
-  MonkeyResponse,
-  MonkeyResponse2,
-} from "../../utils/monkey-response";
+import { MonkeyResponse, MonkeyResponse2 } from "../../utils/monkey-response";
 import * as DiscordUtils from "../../utils/discord";
 import {
   MILLISECONDS_IN_DAY,
@@ -33,8 +29,7 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
-import { UserCreateType, UserType } from "../schemas/user.contract";
-import { MonkeyTypes } from "../../types/types";
+import { UserCreateType, UserType } from "@shared/contract/user.contract";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {

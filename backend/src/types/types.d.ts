@@ -1,10 +1,8 @@
-import { AppRoute, AppRouter, Prettify } from "@ts-rest/core";
-import { TsRestRequest } from "@ts-rest/express";
-import { Router } from "express";
-
 type ObjectId = import("mongodb").ObjectId;
-
 type ExpressRequest = import("express").Request;
+type TsRestRequest = import("@ts-rest/express").TsRestRequest<any>;
+type AppRoute = import("@ts-rest/core").AppRoute;
+type AppRouter = import("@ts-rest/core").AppRouter;
 
 declare namespace MonkeyTypes {
   type DecodedToken = {
@@ -18,21 +16,21 @@ declare namespace MonkeyTypes {
     decodedToken: DecodedToken;
   };
 
-  type Request2<TBody = never, TQuery = never, TParams = never> = {
-    body: Readonly<TBody>;
-    query: Readonly<TQuery>;
-    params: TParams;
-    ctx: Readonly<Context>;
-    raw: TsRestRequest<any>;
-  };
-
   type Request = {
     ctx: Readonly<Context>;
   } & ExpressRequest;
 
+  type Request2<TBody = any, TQuery = any, TParams = any> = {
+    body: Readonly<TBody>;
+    query: Readonly<TQuery>;
+    params: TParams;
+    ctx: Readonly<Context>;
+    raw: TsRestRequest;
+  };
+
   type RequestTsRest<T extends AppRoute | AppRouter = any> = {
     ctx: Readonly<Context>;
-  } & TsRestRequest<T>;
+  } & TsRestRequest;
 
   type DBUser = Omit<
     SharedTypes.User,

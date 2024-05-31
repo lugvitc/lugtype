@@ -1,11 +1,10 @@
 import * as ConfigDAL from "../../dal/config";
-import { MonkeyTypes } from "../../types/types";
 import { MonkeyResponse, MonkeyResponse2 } from "../../utils/monkey-response";
 import {
-  ConfigType,
+  GetConfig,
   GetTestConfigParams,
   GetTestConfigQuery,
-} from "../schemas/config.contract";
+} from "@shared/contract/config.contract";
 
 export async function getConfig(
   req: MonkeyTypes.Request
@@ -18,7 +17,7 @@ export async function getConfig(
 
 export async function getConfigV2(
   req: MonkeyTypes.Request2
-): Promise<MonkeyResponse2<ConfigType>> {
+): Promise<MonkeyResponse2<GetConfig>> {
   const { uid } = req.ctx.decodedToken;
 
   const data = await ConfigDAL.getConfig(uid);
@@ -27,7 +26,7 @@ export async function getConfigV2(
 
 export async function getTestConfigV2(
   req: MonkeyTypes.Request2<never, GetTestConfigQuery, GetTestConfigParams>
-): Promise<MonkeyResponse2<ConfigType>> {
+): Promise<MonkeyResponse2<GetConfig>> {
   const { noCache, includes } = req.query;
   const { id } = req.params;
   const { uid } = req.ctx.decodedToken;

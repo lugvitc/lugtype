@@ -1,6 +1,5 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { ExpressRequest, MonkeyTypes } from "../types/types";
 import { TsRestExpressOptions, TsRestRequest } from "@ts-rest/express";
 
 //todo split this file into smaller util files (grouped by functionality)

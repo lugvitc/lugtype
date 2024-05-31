@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { Counter, Histogram, Gauge } from "prom-client";
-import { ExpressRequest, MonkeyTypes } from "../types/types";
 import { TsRestRequest } from "@ts-rest/express";
 
 const auth = new Counter({

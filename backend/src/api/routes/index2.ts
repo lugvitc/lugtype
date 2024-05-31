@@ -1,20 +1,15 @@
+import { AppRoute, AppRouter } from "@ts-rest/core";
 import {
-  TsRestRequest,
   TsRestRequestHandler,
   createExpressEndpoints,
   initServer,
 } from "@ts-rest/express";
 import { IRouter, NextFunction } from "express";
-import {
-  MonkeyResponse2,
-  MonkeyStatusAware,
-} from "../../utils/monkey-response";
-import { contract } from "../schemas/index.contract";
+import { RateLimitRequestHandler } from "express-rate-limit";
+import { MonkeyResponse2 } from "../../utils/monkey-response";
 import { configRoutes } from "./configsV2";
 import { userRoutes } from "./usersV2";
-import { MonkeyTypes } from "../../types/types";
-import { RateLimitRequestHandler } from "express-rate-limit";
-import { AppRoute, AppRouter } from "@ts-rest/core";
+import { contract } from "./../../../../shared/contract/index.contract";
 
 const s = initServer();
 const router = s.router(contract, {
