@@ -116,7 +116,7 @@ export const configUpdate = rateLimit({
 
 export const configGet = rateLimit({
   windowMs: ONE_HOUR_MS,
-  max: 1 * REQUEST_MULTIPLIER,
+  max: 120 * REQUEST_MULTIPLIER,
   keyGenerator: getKeyWithUid,
   handler: customHandler,
 });

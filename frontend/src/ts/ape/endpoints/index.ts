@@ -1,15 +1,13 @@
+import ApeKeys from "./ape-keys";
 import Configs from "./configs";
+import Configuration from "./configuration";
 import Leaderboards from "./leaderboards";
 import Presets from "./presets";
 import Psas from "./psas";
+import Public from "./public";
 import Quotes from "./quotes";
 import Results from "./results";
 import Users from "./users";
-import ApeKeys from "./ape-keys";
-import Public from "./public";
-import Configuration from "./configuration";
-import UsersV2 from "./usersV2";
-import ConfigsV2 from "./configsV2";
 
 export default {
   Configs,
@@ -22,6 +20,4 @@ export default {
   Users,
   ApeKeys,
   Configuration,
-  UsersV2,
-  ConfigsV2,
 };
