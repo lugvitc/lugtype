@@ -1,16 +1,14 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
-import { MonkeyResponseSchema } from "./common.contract";
+import { MonkeyErrorSchema, MonkeyResponseSchema } from "./common.contract";
 
 const c = initContract();
 
 const ConfigSchema = z.object({
   test: z.string().readonly(),
 });
-const GetConfigSchema = MonkeyResponseSchema.extend({
-  data: ConfigSchema,
-});
-export type GetConfig = z.infer<typeof GetConfigSchema>;
+
+export type Config = z.infer<typeof ConfigSchema>;
 
 const GetTestConfigParamsSchema = z.object({
   id: z.string(),
@@ -31,7 +29,8 @@ export const configContract = c.router(
       method: "GET",
       path: "/",
       responses: {
-        200: GetConfigSchema,
+        200: MonkeyResponseSchema.extend({ data: ConfigSchema }),
+        400: MonkeyErrorSchema,
       },
     },
     getTest: {
@@ -40,7 +39,8 @@ export const configContract = c.router(
       pathParams: GetTestConfigParamsSchema,
       query: GetTestConfigQuerySchema,
       responses: {
-        200: GetConfigSchema,
+        200: MonkeyResponseSchema.extend({ data: ConfigSchema }),
+        400: MonkeyErrorSchema,
       },
     },
   },

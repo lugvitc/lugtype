@@ -29,7 +29,7 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
-import { UserCreateType, UserType } from "@shared/contract/user.contract";
+import { UserCreateBody, User } from "@shared/contract/user.contract";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {
@@ -38,15 +38,15 @@ async function verifyCaptcha(captcha: string): Promise<void> {
 }
 
 export async function createNewUserV2(
-  req: MonkeyTypes.Request2<unknown, UserCreateType>
-): Promise<MonkeyResponse2<undefined>> {
+  req: MonkeyTypes.Request2<never, UserCreateBody>
+): Promise<MonkeyResponse2<never>> {
   const { name, captcha } = req.body;
   const { email, uid } = req.ctx.decodedToken;
   console.log({ email, uid, name, captcha });
   if (email.endsWith("@tidal.lol") || email.endsWith("@selfbot.cc")) {
     throw new MonkeyError(400, "Invalid domain v2");
   }
-  return new MonkeyResponse("User created v2");
+  return new MonkeyResponse2("User created v2");
 }
 
 export async function createNewUser(
@@ -401,7 +401,7 @@ function getRelevantUserInfo(
 
 export async function getUserV2(
   req: MonkeyTypes.Request2
-): Promise<MonkeyResponse2<UserType>> {
+): Promise<MonkeyResponse2<User>> {
   const { uid } = req.ctx.decodedToken;
 
   let userInfo: MonkeyTypes.DBUser;
@@ -472,7 +472,10 @@ export async function getUserV2(
     testActivity,
   };
 
-  return new MonkeyResponse("User data retrieved", userData);
+  return new MonkeyResponse2(
+    "User data retrieved",
+    userData as unknown as User
+  ); //TOOD cleanup mapping
 }
 
 export async function getUser(

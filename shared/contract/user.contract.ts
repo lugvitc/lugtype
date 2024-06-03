@@ -9,25 +9,22 @@ const UserSchema = z.object({
   name: z.string(),
   email: z.string().email(),
 });
-export type UserType = z.infer<typeof UserSchema>;
+export type User = z.infer<typeof UserSchema>;
 
-const UserCreateSchema = UserSchema.pick({
+const UserCreateBodySchema = UserSchema.pick({
   name: true,
   email: true,
 }).extend({
   captcha: z.string(),
 });
-export type UserCreateType = z.infer<typeof UserCreateSchema>;
-
-const GetUserSchema = MonkeyResponseSchema.extend({ data: UserSchema });
-export type GetUserType = z.infer<typeof GetUserSchema>;
+export type UserCreateBody = z.infer<typeof UserCreateBodySchema>;
 
 export const userContract = c.router(
   {
     signup: {
       method: "POST",
       path: "/signup",
-      body: UserCreateSchema,
+      body: UserCreateBodySchema,
       responses: {
         200: MonkeyResponseSchema,
         400: MonkeyErrorSchema,
@@ -37,8 +34,8 @@ export const userContract = c.router(
       method: "GET",
       path: "/",
       responses: {
-        200: GetUserSchema,
-        //404: MonkeyErrorSchema,
+        200: MonkeyResponseSchema.extend({ data: UserSchema }),
+        400: MonkeyErrorSchema,
       },
     },
   },

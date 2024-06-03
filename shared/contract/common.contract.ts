@@ -7,6 +7,7 @@ export const MonkeyResponseSchema = z.object({
 export type MonkeyResonseType = z.infer<typeof MonkeyResponseSchema>;
 
 export const MonkeyErrorSchema = z.object({
+  message: z.string(),
   status: z.number().int(),
   errorId: z.string(),
   uid: z.string().optional(),
