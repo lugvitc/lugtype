@@ -14,6 +14,8 @@ import {
   ModifiableTestActivityCalendar,
 } from "./elements/test-activity-calendar";
 import * as Loader from "./elements/loader";
+import { CompletedEvent, Result } from "@shared/contract/results.contract";
+import { MonkeyErrorType } from "@shared/contract/common.contract";
 
 let dbSnapshot: MonkeyTypes.Snapshot | undefined;
 
@@ -275,15 +277,17 @@ export async function getUserResults(offset?: number): Promise<boolean> {
     LoadingPage.updateBar(90);
   }
 
-  const response = await Ape.results.get(offset);
+  const response = await Ape.results.get({ query: { offset: 0 } });
 
   if (response.status !== 200) {
-    Notifications.add("Error getting results: " + response.message, -1);
+    Notifications.add(
+      "Error getting results: " + (response.body as MonkeyErrorType).message,
+      -1
+    );
     return false;
   }
 
-  const results =
-    response.data as SharedTypes.DBResult<SharedTypes.Config.Mode>[];
+  const results = response.body.data;
   results?.sort((a, b) => b.timestamp - a.timestamp);
   results.forEach((result) => {
     if (result.bailedOut === undefined) result.bailedOut = false;
@@ -910,7 +914,7 @@ export async function saveConfig(config: SharedTypes.Config): Promise<void> {
 }
 
 export function saveLocalResult(
-  result: SharedTypes.Result<SharedTypes.Config.Mode>
+  result: SharedTypes.Result<SharedTypes.Config.Mode> | CompletedEvent
 ): void {
   const snapshot = getSnapshot();
   if (!snapshot) return;

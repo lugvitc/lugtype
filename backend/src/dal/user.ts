@@ -9,6 +9,7 @@ import { flattenObjectDeep, isToday, isYesterday } from "../utils/misc";
 import { getCachedConfiguration } from "../init/configuration";
 import { getDayOfYear } from "date-fns";
 import { UTCDate } from "@date-fns/utc";
+import type { Result as ResultType } from "../../../shared/contract/results.contract";
 
 const SECONDS_PER_HOUR = 3600;
 
@@ -417,7 +418,7 @@ export async function updateLbMemory(
 export async function checkIfPb(
   uid: string,
   user: MonkeyTypes.DBUser,
-  result: Result
+  result: ResultType
 ): Promise<boolean> {
   const { mode } = result;
 
@@ -460,7 +461,7 @@ export async function checkIfPb(
 export async function checkIfTagPb(
   uid: string,
   user: MonkeyTypes.DBUser,
-  result: Result
+  result: ResultType | Result
 ): Promise<string[]> {
   if (user.tags === undefined || user.tags.length === 0) {
     return [];

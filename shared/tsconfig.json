@@ -13,5 +13,6 @@
     "types": ["node"],
     "declaration": true
   },
+  "include": ["./types/**/*"],
   "exclude": ["node_modules", "./dist/**/*"]
 }

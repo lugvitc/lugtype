@@ -12,9 +12,9 @@ declare namespace SharedTypes.Config {
     | "underline"
     | "carrot"
     | "banana";
-  type Difficulty = "normal" | "expert" | "master";
-  type Mode = keyof PersonalBests;
-  type Mode2<M extends Mode> = M extends M ? keyof PersonalBests[M] : never;
+  type Difficulty = "normal" | "expert" | "master"; //TODO moved to contract/common
+  type Mode = keyof PersonalBests; //TODO moved to contract/common
+  type Mode2<M extends Mode> = M extends M ? keyof PersonalBests[M] : never; //TODO moved to contract/common
   type Mode2Custom<M extends Mode> = Mode2<M> | "custom";
   type ConfidenceMode = "off" | "on" | "max";
   type IndicateTypos = "off" | "below" | "replace";

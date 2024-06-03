@@ -44,6 +44,7 @@ import {
 import * as ConnectionState from "../states/connection";
 import { navigate } from "./route-controller";
 import { getHtmlByUserFlags } from "./user-flag-controller";
+import { MonkeyErrorType } from "@shared/contract/common.contract";
 
 let signedOutThisSession = false;
 
@@ -211,11 +212,14 @@ export async function loadUser(user: UserType): Promise<void> {
   if (TestLogic.notSignedInLastResult !== null && !signedOutThisSession) {
     TestLogic.setNotSignedInUid(user.uid);
 
-    const response = await Ape.results.save(TestLogic.notSignedInLastResult);
+    const response = await Ape.results.save({
+      body: { result: TestLogic.notSignedInLastResult },
+    });
 
     if (response.status !== 200) {
       return Notifications.add(
-        "Failed to save last result: " + response.message,
+        "Failed to save last result: " +
+          (response.body as MonkeyErrorType).message,
         -1
       );
     }
@@ -602,7 +606,9 @@ async function signUp(): Promise<void> {
     if (TestLogic.notSignedInLastResult !== null) {
       TestLogic.setNotSignedInUid(createdAuthUser.user.uid);
 
-      const response = await Ape.results.save(TestLogic.notSignedInLastResult);
+      const response = await Ape.results.save({
+        body: { result: TestLogic.notSignedInLastResult },
+      });
 
       if (response.status === 200) {
         const result = TestLogic.notSignedInLastResult;

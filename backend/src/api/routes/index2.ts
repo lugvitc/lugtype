@@ -5,11 +5,13 @@ import { MonkeyResponse2 } from "../../utils/monkey-response";
 import { contract } from "./../../../../shared/contract/index.contract";
 import { configRoutes } from "./configsV2";
 import { userRoutes } from "./usersV2";
+import { resultsRoutes } from "./results";
 
 const s = initServer();
 const router = s.router(contract, {
   users: userRoutes,
   configs: configRoutes,
+  results: resultsRoutes,
 });
 
 export function applyApiRoutes(app: IRouter): void {

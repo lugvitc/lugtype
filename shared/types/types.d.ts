@@ -1,4 +1,6 @@
 // Shared types between server/client.
+//const ResultSchemas = import("../contract/results.contract");
+
 declare namespace SharedTypes {
   interface ValidModeRule {
     language: string;
@@ -111,9 +113,10 @@ declare namespace SharedTypes {
     };
   }
 
-  type StringNumber = `${number}`;
+  type StringNumber = `${number}`; //TODO moved to contract/custom
 
   interface PersonalBest {
+    //TODO moved to contract/custom
     acc: number;
     consistency?: number;
     difficulty: SharedTypes.Config.Difficulty;
@@ -127,6 +130,7 @@ declare namespace SharedTypes {
   }
 
   interface PersonalBests {
+    //TODO moved to contract/custom
     time: Record<StringNumber, PersonalBest[]>;
     words: Record<StringNumber, PersonalBest[]>;
     quote: Record<StringNumber, PersonalBest[]>;
@@ -146,6 +150,7 @@ declare namespace SharedTypes {
   }
 
   interface KeyStats {
+    //TODO moved to contracts/common
     average: number;
     sd: number;
   }
@@ -184,7 +189,7 @@ declare namespace SharedTypes {
   }
 
   type DBResult<T extends SharedTypes.Config.Mode> = Omit<
-    SharedTypes.Result<T>,
+    Result<T>,
     | "bailedOut"
     | "blindMode"
     | "lazyMode"
@@ -226,6 +231,7 @@ declare namespace SharedTypes {
   };
 
   interface CompletedEvent extends Result<SharedTypes.Config.Mode> {
+    //TODO moved to contracts/result
     keySpacing: number[] | "toolong";
     keyDuration: number[] | "toolong";
     customText?: CustomTextDataWithTextLen;
@@ -240,8 +246,8 @@ declare namespace SharedTypes {
     stopOnLetter: boolean;
   }
 
-  type CustomTextMode = "repeat" | "random" | "shuffle";
-  type CustomTextLimitMode = "word" | "time" | "section";
+  type CustomTextMode = "repeat" | "random" | "shuffle"; //TODO  moved to contract/common
+  type CustomTextLimitMode = "word" | "time" | "section"; //TODO moved to contract/common
   type CustomTextLimit = {
     value: number;
     mode: CustomTextLimitMode;
@@ -463,6 +469,7 @@ declare namespace SharedTypes {
   }
 
   type PostResultResponse = {
+    //TODO moved to contracts/results
     isPb: boolean;
     tagPbs: string[];
     insertedId: string;

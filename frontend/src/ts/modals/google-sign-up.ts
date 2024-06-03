@@ -95,9 +95,9 @@ async function apply(): Promise<void> {
       if (TestLogic.notSignedInLastResult !== null) {
         TestLogic.setNotSignedInUid(signedInUser.user.uid);
 
-        const resultsSaveResponse = await Ape.results.save(
-          TestLogic.notSignedInLastResult
-        );
+        const resultsSaveResponse = await Ape.results.save({
+          body: { result: TestLogic.notSignedInLastResult },
+        });
 
         if (resultsSaveResponse.status === 200) {
           const result = TestLogic.notSignedInLastResult;

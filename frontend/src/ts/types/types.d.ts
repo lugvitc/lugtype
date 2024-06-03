@@ -1,3 +1,5 @@
+import { CompletedEvent } from "@shared/contract/results.contract";
+
 declare namespace MonkeyTypes {
   type PageName =
     | "loading"
@@ -235,7 +237,7 @@ declare namespace MonkeyTypes {
     config: SharedTypes.Config;
     tags: UserTag[];
     presets: SnapshotPreset[];
-    results?: SharedTypes.Result<SharedTypes.Config.Mode>[];
+    results?: SharedTypes.Result<SharedTypes.Config.Mode>[] | CompletedEvent[];
     xp: number;
     testActivity?: ModifiableTestActivityCalendar;
     testActivityByYear?: { [key: string]: TestActivityCalendar };

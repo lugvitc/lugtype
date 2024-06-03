@@ -1,87 +1,45 @@
-import * as ResultController from "../controllers/result";
-import resultSchema from "../schemas/result-schema";
-import {
-  asyncHandler,
-  validateRequest,
-  validateConfiguration,
-} from "../../middlewares/api-utils";
-import * as RateLimit from "../../middlewares/rate-limit";
-import { Router } from "express";
-import { authenticateRequest } from "../../middlewares/auth";
-import joi from "joi";
+import { initServer } from "@ts-rest/express";
+import { resultsContract } from "../../../../shared/contract/results.contract";
 import { withApeRateLimiter } from "../../middlewares/ape-rate-limit";
+import { validateConfiguration } from "../../middlewares/api-utils";
+import { authenticateRequestV2 } from "../../middlewares/auth";
+import * as RateLimit from "../../middlewares/rate-limit";
+import * as ResultController from "../controllers/result";
+import { callController } from "./index2";
 
-const router = Router();
+const s = initServer();
+export const resultsRoutes = s.router(resultsContract, {
+  get: {
+    middleware: [
+      authenticateRequestV2({ acceptApeKeys: true }),
+      withApeRateLimiter(RateLimit.resultsGet, RateLimit.resultsGetApe) as any, //TODO
+    ],
+    handler: async (r) => callController(ResultController.getResults)(r),
+  },
+  save: {
+    middleware: [
+      validateConfiguration({
+        criteria: (configuration) => {
+          return configuration.results.savingEnabled;
+        },
+        invalidMessage: "Results are not being saved at this time.",
+      }),
+      authenticateRequestV2(),
+      RateLimit.resultsAdd,
+    ],
+    handler: async (r) => callController(ResultController.addResult)(r),
+  },
 
-router.get(
-  "/",
-  authenticateRequest({
-    acceptApeKeys: true,
-  }),
-  withApeRateLimiter(RateLimit.resultsGet, RateLimit.resultsGetApe),
-  validateRequest({
-    query: {
-      onOrAfterTimestamp: joi.number().integer().min(1589428800000),
-      limit: joi.number().integer().min(0).max(1000),
-      offset: joi.number().integer().min(0),
-    },
-  }),
-  asyncHandler(ResultController.getResults)
-);
-
-router.post(
-  "/",
-  validateConfiguration({
-    criteria: (configuration) => {
-      return configuration.results.savingEnabled;
-    },
-    invalidMessage: "Results are not being saved at this time.",
-  }),
-  authenticateRequest(),
-  RateLimit.resultsAdd,
-  validateRequest({
-    body: {
-      result: resultSchema,
-    },
-  }),
-  asyncHandler(ResultController.addResult)
-);
-
-router.patch(
-  "/tags",
-  authenticateRequest(),
-  RateLimit.resultsTagsUpdate,
-  validateRequest({
-    body: {
-      tagIds: joi
-        .array()
-        .items(joi.string().regex(/^[a-f\d]{24}$/i))
-        .required(),
-      resultId: joi
-        .string()
-        .regex(/^[a-f\d]{24}$/i)
-        .required(),
-    },
-  }),
-  asyncHandler(ResultController.updateTags)
-);
-
-router.delete(
-  "/",
-  authenticateRequest({
-    requireFreshToken: true,
-  }),
-  RateLimit.resultsDeleteAll,
-  asyncHandler(ResultController.deleteAll)
-);
-
-router.get(
-  "/last",
-  authenticateRequest({
-    acceptApeKeys: true,
-  }),
-  withApeRateLimiter(RateLimit.resultsGet),
-  asyncHandler(ResultController.getLastResult)
-);
-
-export default router;
+  updateTags: {
+    middleware: [authenticateRequestV2(), RateLimit.resultsTagsUpdate],
+    handler: async (r) => callController(ResultController.updateTags)(r),
+  },
+  delete: {
+    middleware: [authenticateRequestV2()],
+    handler: async (r) => callController(ResultController.deleteAll)(r),
+  },
+  getLast: {
+    middleware: [authenticateRequestV2({ acceptApeKeys: true })],
+    handler: async (r) => callController(ResultController.getLastResult)(r),
+  },
+});

@@ -41,6 +41,5 @@ export const userContract = c.router(
   },
   {
     pathPrefix: "/v2/users",
-    strictStatusCodes: true,
   }
 );

@@ -6,7 +6,7 @@ import Presets from "./presets";
 import Psas from "./psas";
 import Public from "./public";
 import Quotes from "./quotes";
-import Results from "./results";
+//import Results from "./results";
 import Users from "./users";
 
 export default {
@@ -16,7 +16,7 @@ export default {
   Psas,
   Public,
   Quotes,
-  Results,
+  //Results,
   Users,
   ApeKeys,
   Configuration,

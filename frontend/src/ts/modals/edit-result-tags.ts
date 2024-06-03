@@ -7,6 +7,7 @@ import * as ConnectionState from "../states/connection";
 import { areUnsortedArraysEqual } from "../utils/arrays";
 import * as Result from "../test/result";
 import AnimatedModal from "../utils/animated-modal";
+import { MonkeyErrorType } from "@shared/contract/common.contract";
 
 type State = {
   resultId: string;
@@ -104,7 +105,9 @@ function toggleTag(tagId: string): void {
 
 async function save(): Promise<void> {
   Loader.show();
-  const response = await Ape.results.updateTags(state.resultId, state.tags);
+  const response = await Ape.results.updateTags({
+    body: { resultId: state.resultId, tagIds: state.tags },
+  });
   Loader.hide();
 
   //if got no freaking idea why this is needed
@@ -114,13 +117,14 @@ async function save(): Promise<void> {
 
   if (response.status !== 200) {
     return Notifications.add(
-      "Failed to update result tags: " + response.message,
+      "Failed to update result tags: " +
+        (response.body as MonkeyErrorType).message,
       -1
     );
   }
 
   //can do this because the response will not be null if the status is 200
-  const responseTagPbs = response.data?.tagPbs ?? [];
+  const responseTagPbs = response.body.data?.tagPbs ?? [];
 
   Notifications.add("Tags updated", 1, {
     duration: 2,

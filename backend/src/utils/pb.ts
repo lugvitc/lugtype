@@ -1,5 +1,6 @@
 import _ from "lodash";
 import FunboxList from "../constants/funbox-list";
+import type { Result as ResultType } from "../../../shared/contract/results.contract";
 
 type CheckAndUpdatePbResult = {
   isPb: boolean;
@@ -12,7 +13,7 @@ type Result = Omit<
   "_id" | "name"
 >;
 
-export function canFunboxGetPb(result: Result): boolean {
+export function canFunboxGetPb(result: ResultType | Result): boolean {
   const funbox = result.funbox;
   if (funbox === undefined || funbox === "" || funbox === "none") return true;
 
@@ -32,7 +33,7 @@ export function canFunboxGetPb(result: Result): boolean {
 export function checkAndUpdatePb(
   userPersonalBests: SharedTypes.PersonalBests,
   lbPersonalBests: MonkeyTypes.LbPersonalBests | undefined,
-  result: Result
+  result: ResultType | Result
 ): CheckAndUpdatePbResult {
   const mode = result.mode;
   const mode2 = result.mode2 as SharedTypes.Config.Mode2<"time">;
@@ -66,7 +67,7 @@ export function checkAndUpdatePb(
 }
 
 function matchesPersonalBest(
-  result: Result,
+  result: ResultType | Result,
   personalBest: SharedTypes.PersonalBest
 ): boolean {
   if (
@@ -99,7 +100,7 @@ function matchesPersonalBest(
 
 function updatePersonalBest(
   personalBest: SharedTypes.PersonalBest,
-  result: Result
+  result: ResultType | Result
 ): boolean {
   if (personalBest.wpm >= result.wpm) {
     return false;
@@ -133,7 +134,9 @@ function updatePersonalBest(
   return true;
 }
 
-function buildPersonalBest(result: Result): SharedTypes.PersonalBest {
+function buildPersonalBest(
+  result: ResultType | Result
+): SharedTypes.PersonalBest {
   if (
     result.difficulty === undefined ||
     result.language === undefined ||
@@ -164,7 +167,7 @@ function buildPersonalBest(result: Result): SharedTypes.PersonalBest {
 function updateLeaderboardPersonalBests(
   userPersonalBests: SharedTypes.PersonalBests,
   lbPersonalBests: MonkeyTypes.LbPersonalBests,
-  result: Result
+  result: ResultType | Result
 ): void {
   if (!shouldUpdateLeaderboardPersonalBests(result)) {
     return;
@@ -207,7 +210,7 @@ function updateLeaderboardPersonalBests(
   );
 }
 
-function shouldUpdateLeaderboardPersonalBests(result: Result): boolean {
+function shouldUpdateLeaderboardPersonalBests(result: ResultType): boolean {
   const isValidTimeMode =
     result.mode === "time" && (result.mode2 === "15" || result.mode2 === "60");
   return isValidTimeMode && !result.lazyMode;

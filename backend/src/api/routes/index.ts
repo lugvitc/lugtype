@@ -5,7 +5,7 @@ import users from "./users";
 import { join } from "path";
 import quotes from "./quotes";
 import configs from "./configs";
-import results from "./results";
+//import results from "./results";
 import presets from "./presets";
 import apeKeys from "./ape-keys";
 import admin from "./admin";
@@ -35,7 +35,7 @@ const APP_START_TIME = Date.now();
 const API_ROUTE_MAP = {
   "/users": users,
   "/configs": configs,
-  "/results": results,
+  //"/results": results,
   "/presets": presets,
   "/psas": psas,
   "/public": publicStats,

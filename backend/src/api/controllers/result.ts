@@ -7,12 +7,11 @@ import {
   mapRange,
   roundTo2,
   stdDev,
-  stringToNumberOrDefault,
 } from "../../utils/misc";
 import objectHash from "object-hash";
 import Logger from "../../utils/logger";
 import "dotenv/config";
-import { MonkeyResponse } from "../../utils/monkey-response";
+import { MonkeyResponse2 } from "../../utils/monkey-response";
 import MonkeyError from "../../utils/error";
 import { areFunboxesCompatible, isTestTooShort } from "../../utils/validation";
 import {
@@ -36,6 +35,16 @@ import * as WeeklyXpLeaderboard from "../../services/weekly-xp-leaderboard";
 import { UAParser } from "ua-parser-js";
 import { canFunboxGetPb } from "../../utils/pb";
 import { buildDbResult } from "../../utils/result";
+import {
+  CompletedEvent,
+  CreateResult,
+  CreateResultBody,
+  GetResults,
+  GetResultsQuery,
+  Result,
+  UpdateTags,
+  UpdateTagsBody,
+} from "../../../../shared/contract/results.contract";
 
 try {
   if (!anticheatImplemented()) throw new Error("undefined");
@@ -54,8 +63,8 @@ try {
 }
 
 export async function getResults(
-  req: MonkeyTypes.Request
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request2<GetResultsQuery>
+): Promise<MonkeyResponse2<GetResults>> {
   const { uid } = req.ctx.decodedToken;
   const premiumFeaturesEnabled = req.ctx.configuration.users.premium.enabled;
   const userHasPremium = await UserDAL.checkIfUserIsPremium(uid);
@@ -65,15 +74,12 @@ export async function getResults(
       ? req.ctx.configuration.results.limits.premiumUser
       : req.ctx.configuration.results.limits.regularUser;
 
-  const onOrAfterTimestamp = parseInt(
-    req.query["onOrAfterTimestamp"] as string,
-    10
-  );
-  let limit = stringToNumberOrDefault(
-    req.query["limit"] as string,
-    Math.min(req.ctx.configuration.results.maxBatchSize, maxLimit)
-  );
-  const offset = stringToNumberOrDefault(req.query["offset"] as string, 0);
+  const onOrAfterTimestamp = req.query.onOrAfterTimestamp;
+  let limit =
+    req.query.limit ??
+    Math.min(req.ctx.configuration.results.maxBatchSize, maxLimit);
+
+  const offset = req.query.offset ?? 0;
 
   //check if premium features are disabled and current call exceeds the limit for regular users
   if (
@@ -93,11 +99,11 @@ export async function getResults(
     }
   }
 
-  const results = await ResultDAL.getResults(uid, {
+  const results = (await ResultDAL.getResults(uid, {
     onOrAfterTimestamp,
     limit,
     offset,
-  });
+  })) as unknown as Result[]; //TOOD clean mapping
   void Logger.logToDb(
     "user_results_requested",
     {
@@ -108,30 +114,30 @@ export async function getResults(
     },
     uid
   );
-  return new MonkeyResponse("Results retrieved", results);
+  return new MonkeyResponse2("Results retrieved", results);
 }
 
 export async function getLastResult(
-  req: MonkeyTypes.Request
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request2
+): Promise<MonkeyResponse2<Result>> {
   const { uid } = req.ctx.decodedToken;
-  const results = await ResultDAL.getLastResult(uid);
-  return new MonkeyResponse("Result retrieved", results);
+  const result = (await ResultDAL.getLastResult(uid)) as unknown as Result; //TODO clean mapping
+  return new MonkeyResponse2("Result retrieved", result);
 }
 
 export async function deleteAll(
-  req: MonkeyTypes.Request
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request2
+): Promise<MonkeyResponse2<UpdateTags>> {
   const { uid } = req.ctx.decodedToken;
 
   await ResultDAL.deleteAll(uid);
   void Logger.logToDb("user_results_deleted", "", uid);
-  return new MonkeyResponse("All results deleted");
+  return new MonkeyResponse2("All results deleted");
 }
 
 export async function updateTags(
-  req: MonkeyTypes.Request
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request2<never, UpdateTagsBody>
+): Promise<MonkeyResponse2<UpdateTags>> {
   const { uid } = req.ctx.decodedToken;
   const { tagIds, resultId } = req.body;
 
@@ -159,14 +165,14 @@ export async function updateTags(
 
   const user = await UserDAL.getUser(uid, "update tags");
   const tagPbs = await UserDAL.checkIfTagPb(uid, user, result);
-  return new MonkeyResponse("Result tags updated", {
+  return new MonkeyResponse2("Result tags updated", {
     tagPbs,
   });
 }
 
 export async function addResult(
-  req: MonkeyTypes.Request
-): Promise<MonkeyResponse> {
+  req: MonkeyTypes.Request2<never, CreateResultBody>
+): Promise<MonkeyResponse2<CreateResult>> {
   const { uid } = req.ctx.decodedToken;
 
   const user = await UserDAL.getUser(uid, "add result");
@@ -178,10 +184,8 @@ export async function addResult(
     );
   }
 
-  const completedEvent = Object.assign(
-    {},
-    req.body.result
-  ) as SharedTypes.CompletedEvent;
+  const completedEvent = Object.assign({}, req.body.result) as CompletedEvent &
+    Result;
   if (!user.lbOptOut && completedEvent.acc < 75) {
     throw new MonkeyError(
       400,
@@ -199,7 +203,7 @@ export async function addResult(
     throw new MonkeyError(400, "Missing result hash");
   }
   delete completedEvent.hash;
-  delete completedEvent.stringified;
+  //delete completedEvent.stringified;
   if (req.ctx.configuration.results.objectHashCheckEnabled) {
     const serverhash = objectHash(completedEvent);
     if (serverhash !== resulthash) {
@@ -230,6 +234,7 @@ export async function addResult(
 
   if (
     completedEvent.keySpacing !== "toolong" &&
+    completedEvent.keySpacing !== undefined &&
     completedEvent.keySpacing.length > 0
   ) {
     completedEvent.keySpacingStats = {
@@ -243,6 +248,7 @@ export async function addResult(
 
   if (
     completedEvent.keyDuration !== "toolong" &&
+    completedEvent.keyDuration !== undefined &&
     completedEvent.keyDuration.length > 0
   ) {
     completedEvent.keyDurationStats = {
@@ -258,9 +264,9 @@ export async function addResult(
     if (
       !validateResult(
         completedEvent,
-        ((req.headers["x-client-version"] as string) ||
-          req.headers["client-version"]) as string,
-        JSON.stringify(new UAParser(req.headers["user-agent"]).getResult()),
+        ((req.raw.headers["x-client-version"] as string) ||
+          req.raw.headers["client-version"]) as string,
+        JSON.stringify(new UAParser(req.raw.headers["user-agent"]).getResult()),
         user.lbOptOut === true
       )
     ) {
@@ -582,7 +588,7 @@ export async function addResult(
     );
   }
 
-  const dbresult = buildDbResult(completedEvent, user.name, isPb);
+  const dbresult = buildDbResult(completedEvent as any, user.name, isPb); //TODO fix
   const addedResult = await ResultDAL.addResult(uid, dbresult);
 
   await UserDAL.incrementXp(uid, xpGained.xp);
@@ -622,7 +628,7 @@ export async function addResult(
 
   incrementResult(completedEvent);
 
-  return new MonkeyResponse("Result saved", data);
+  return new MonkeyResponse2("Result saved", data as unknown as CreateResult); //TODO clean mapping
 }
 
 type XpResult = {
@@ -632,7 +638,7 @@ type XpResult = {
 };
 
 async function calculateXp(
-  result: SharedTypes.CompletedEvent,
+  result: Result,
   xpConfiguration: SharedTypes.Configuration["users"]["xp"],
   uid: string,
   currentTotalXp: number,

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Counter, Histogram, Gauge } from "prom-client";
 import { TsRestRequest } from "@ts-rest/express";
+import { Result } from "@shared/contract/results.contract";
 
 const auth = new Counter({
   name: "api_request_auth_total",
@@ -89,9 +90,7 @@ export function setLeaderboard(
   leaderboardUpdate.set({ language, mode, mode2, step: "index" }, times[3]);
 }
 
-export function incrementResult(
-  res: SharedTypes.Result<SharedTypes.Config.Mode>
-): void {
+export function incrementResult(res: Result): void {
   const {
     mode,
     mode2,
