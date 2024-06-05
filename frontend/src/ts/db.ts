@@ -53,16 +53,7 @@ export async function initSnapshot(): Promise<
   const snap = { ...defaultSnap };
   try {
     if (!isAuthenticated()) return false;
-    //EXAMPLE call
-    const testConfig = await Ape.configsV2.getTest({
-      params: { id: "456" },
-      query: {
-        includes: ["client", "server"],
-        noCache: true,
-      },
-    });
 
-    console.log("####", testConfig.body);
     // if (ActivePage.get() === "loading") {
     //   LoadingPage.updateBar(22.5);
     // } else {
@@ -71,8 +62,8 @@ export async function initSnapshot(): Promise<
     // LoadingPage.updateText("Downloading user...");
 
     const [userResponse, configResponse, presetsResponse] = await Promise.all([
-      Ape.usersV2.get(),
-      Ape.configsV2.get(),
+      Ape.users.getData(),
+      Ape.configs.get(),
       Ape.presets.get(),
     ]);
 
@@ -80,7 +71,7 @@ export async function initSnapshot(): Promise<
     if (userResponse.status !== 200) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw {
-        message: `${userResponse.body.message} (user)`,
+        message: `${userResponse.message} (user)`,
         responseCode: userResponse.status,
       };
     }
@@ -99,7 +90,7 @@ export async function initSnapshot(): Promise<
       };
     }
 
-    const userData = userResponse.body.data as any; //TODO
+    const userData = userResponse.data;
     const configData = configResponse.body.data;
     const presetsData = presetsResponse.data;
 
@@ -902,9 +893,9 @@ export async function updateLbMemory<M extends SharedTypes.Config.Mode>(
 
 export async function saveConfig(config: SharedTypes.Config): Promise<void> {
   if (isAuthenticated()) {
-    const response = await Ape.configs.save(config);
+    const response = await Ape.configs.save({ body: { config } });
     if (response.status !== 200) {
-      Notifications.add("Failed to save config: " + response.message, -1);
+      Notifications.add("Failed to save config: " + response.body.message, -1);
     }
   }
 }

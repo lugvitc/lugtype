@@ -1,10 +1,10 @@
 import _ from "lodash";
+import { contract } from "./../../../../shared/contract/index.contract";
 import psas from "./psas";
 import publicStats from "./public";
 import users from "./users";
 import { join } from "path";
 import quotes from "./quotes";
-import configs from "./configs";
 import results from "./results";
 import presets from "./presets";
 import apeKeys from "./ape-keys";
@@ -15,7 +15,7 @@ import { version } from "../../version";
 import leaderboards from "./leaderboards";
 import addSwaggerMiddlewares from "./swagger";
 import { asyncHandler } from "../../middlewares/api-utils";
-import { MonkeyResponse } from "../../utils/monkey-response";
+import { MonkeyResponse, MonkeyResponse2 } from "../../utils/monkey-response";
 import { recordClientVersion } from "../../utils/prometheus";
 import {
   Application,
@@ -27,6 +27,9 @@ import {
 import { isDevEnvironment } from "../../utils/misc";
 import { getLiveConfiguration } from "../../init/configuration";
 import Logger from "../../utils/logger";
+import { createExpressEndpoints, initServer } from "@ts-rest/express";
+import { userRoutes } from "./usersV2";
+import { configsRoutes } from "./configs";
 
 const pathOverride = process.env["API_PATH_OVERRIDE"];
 const BASE_ROUTE = pathOverride !== undefined ? `/${pathOverride}` : "";
@@ -34,7 +37,6 @@ const APP_START_TIME = Date.now();
 
 const API_ROUTE_MAP = {
   "/users": users,
-  "/configs": configs,
   "/results": results,
   "/presets": presets,
   "/psas": psas,
@@ -46,7 +48,17 @@ const API_ROUTE_MAP = {
   "/webhooks": webhooks,
 };
 
-function addApiRoutes(app: Application): void {
+const s = initServer();
+const router = s.router(contract, {
+  users: userRoutes,
+  configs: configsRoutes,
+});
+
+export function applyApiRoutes(app: IRouter): void {
+  createExpressEndpoints(contract, router, app, { jsonQuery: true });
+}
+
+export function addApiRoutes(app: Application): void {
   app.get("/leaderboard", (_req, res) => {
     res.sendStatus(404);
   });
@@ -133,4 +145,29 @@ function addApiRoutes(app: Application): void {
 */
 }
 
-export default addApiRoutes;
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+export function callController<
+  TInput,
+  TBody,
+  TQuery,
+  TParams,
+  TResponse extends MonkeyResponse2<any>
+>(
+  handler: (
+    req: MonkeyTypes.Request2<TQuery, TBody, TParams>
+  ) => Promise<TResponse>
+): (all: TInput) => Promise<any> {
+  return async (all) => {
+    const { req, body, params, query } = all as any;
+    const result = await handler({
+      body: body as TBody,
+      query: query as TQuery,
+      params: params as TParams,
+      ctx: req.ctx,
+      raw: req,
+    });
+    return { status: result.status, body: result };
+  };
+}
+
+/* eslint-enable  @typescript-eslint/no-explicit-any */

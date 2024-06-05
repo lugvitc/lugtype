@@ -3,8 +3,7 @@ import { buildHttpClient } from "./adapters/axios-adapter";
 import { envConfig } from "../constants/env-config";
 import axios from "axios";
 import { buildClient } from "./endpoints/ApeClient";
-import { configContract } from "./../../../../shared/contract/config.contract";
-import { userContract } from "./../../../../shared/contract/user.contract";
+import { configsContract } from "../../../../shared/contract/configs.contract";
 
 const API_PATH = "";
 const BASE_URL = envConfig.backendUrl;
@@ -19,7 +18,7 @@ const axiosClient = axios.create({
 // API Endpoints
 const Ape = {
   users: new endpoints.Users(httpClient),
-  configs: new endpoints.Configs(httpClient),
+  configs: buildClient(configsContract, axiosClient, BASE_URL),
   results: new endpoints.Results(httpClient),
   psas: new endpoints.Psas(httpClient),
   quotes: new endpoints.Quotes(httpClient),
@@ -28,8 +27,6 @@ const Ape = {
   publicStats: new endpoints.Public(httpClient),
   apeKeys: new endpoints.ApeKeys(httpClient),
   configuration: new endpoints.Configuration(httpClient),
-  usersV2: buildClient(userContract, axios, BASE_URL),
-  configsV2: buildClient(configContract, axios, BASE_URL),
 };
 
 export default Ape;

@@ -52,6 +52,7 @@ const CONFIG_SCHEMA = joi.object({
   confidenceMode: joi.string().valid("off", "on", "max"),
   indicateTypos: joi.string().valid("off", "below", "replace"),
   timerStyle: joi.string().valid("off", "bar", "text", "mini"),
+
   liveSpeedStyle: joi.string().valid("off", "text", "mini"),
   liveAccStyle: joi.string().valid("off", "text", "mini"),
   liveBurstStyle: joi.string().valid("off", "text", "mini"),
@@ -59,6 +60,7 @@ const CONFIG_SCHEMA = joi.object({
   randomTheme: joi
     .string()
     .valid("off", "on", "fav", "light", "dark", "custom"),
+
   timerColor: joi.string().valid("black", "sub", "text", "main"),
   timerOpacity: joi.number().valid(0.25, 0.5, 0.75, 1),
   stopOnError: joi.string().valid("off", "word", "letter"),
@@ -84,6 +86,7 @@ const CONFIG_SCHEMA = joi.object({
     .valid()
     .max(50),
   keymapShowTopRow: joi.string().valid("always", "layout", "never"),
+
   fontFamily: joi
     .string()
     .max(50)

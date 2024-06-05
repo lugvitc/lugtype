@@ -1,6 +1,6 @@
 import cors from "cors";
 import helmet from "helmet";
-import addApiRoutes from "./api/routes";
+import { addApiRoutes, applyApiRoutes } from "./api/routes";
 import express, { urlencoded, json } from "express";
 import contextMiddleware from "./middlewares/context";
 import errorHandlingMiddleware from "./middlewares/error";
@@ -8,7 +8,6 @@ import {
   badAuthRateLimiterHandler,
   rootRateLimiter,
 } from "./middlewares/rate-limit";
-import { applyApiRoutes } from "./api/routes/index2";
 import { contract } from "./../../shared/contract/index.contract";
 import { generateOpenApi } from "@ts-rest/open-api";
 import * as swaggerUi from "swagger-ui-express";
@@ -46,11 +45,11 @@ function buildApp(): express.Application {
   app.use("/v2/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
   const openApiJson = JSON.stringify(openApiDocument);
-  app.use("/v2/swagger.json", (req, res) => {
+  /*app.use("/v2/swagger.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(openApiJson);
     res.end(200);
-  });
+  });*/
 
   return app;
 }

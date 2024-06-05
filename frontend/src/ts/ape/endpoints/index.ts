@@ -1,5 +1,4 @@
 import ApeKeys from "./ape-keys";
-import Configs from "./configs";
 import Configuration from "./configuration";
 import Leaderboards from "./leaderboards";
 import Presets from "./presets";
@@ -10,7 +9,6 @@ import Results from "./results";
 import Users from "./users";
 
 export default {
-  Configs,
   Leaderboards,
   Presets,
   Psas,

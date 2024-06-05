@@ -24,7 +24,7 @@ const configLegacyProperties = [
 
 export async function saveConfig(
   uid: string,
-  config: SharedTypes.Config
+  config: Partial<SharedTypes.Config>
 ): Promise<UpdateResult> {
   const configChanges = _.mapKeys(config, (_value, key) => `config.${key}`);
 

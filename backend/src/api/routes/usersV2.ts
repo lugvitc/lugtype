@@ -6,7 +6,7 @@ import * as RateLimit from "../../middlewares/rate-limit";
 
 import * as UserController from "../controllers/user";
 import { userContract } from "./../../../../shared/contract/user.contract";
-import { callController } from "./index2";
+import { callController } from "./index";
 
 const s = initServer();
 export const userRoutes = s.router(userContract, {
