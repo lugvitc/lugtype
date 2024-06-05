@@ -29,24 +29,11 @@ import * as AuthUtil from "../../utils/auth";
 import * as Dates from "date-fns";
 import { UTCDateMini } from "@date-fns/utc";
 import * as BlocklistDal from "../../dal/blocklist";
-import { UserCreateBody, User } from "@shared/contract/user.contract";
 
 async function verifyCaptcha(captcha: string): Promise<void> {
   if (!(await verify(captcha))) {
     throw new MonkeyError(422, "Captcha check failed");
   }
-}
-
-export async function createNewUserV2(
-  req: MonkeyTypes.Request2<never, UserCreateBody>
-): Promise<MonkeyResponse2<never>> {
-  const { name, captcha } = req.body;
-  const { email, uid } = req.ctx.decodedToken;
-  console.log({ email, uid, name, captcha });
-  if (email.endsWith("@tidal.lol") || email.endsWith("@selfbot.cc")) {
-    throw new MonkeyError(400, "Invalid domain v2");
-  }
-  return new MonkeyResponse2("User created v2");
 }
 
 export async function createNewUser(
@@ -397,85 +384,6 @@ function getRelevantUserInfo(
     "ips",
     "testActivity",
   ]);
-}
-
-export async function getUserV2(
-  req: MonkeyTypes.Request2
-): Promise<MonkeyResponse2<User>> {
-  const { uid } = req.ctx.decodedToken;
-
-  let userInfo: MonkeyTypes.DBUser;
-  try {
-    userInfo = await UserDAL.getUser(uid, "get user");
-  } catch (e) {
-    if (e.status === 404) {
-      //if the user is in the auth system but not in the db, its possible that the user was created by bypassing captcha
-      //since there is no data in the database anyway, we can just delete the user from the auth system
-      //and ask them to sign up again
-      try {
-        await AuthUtil.deleteUser(uid);
-        throw new MonkeyError(
-          404,
-          "User not found in the database, but found in the auth system. We have deleted the ghost user from the auth system. Please sign up again.",
-          "get user",
-          uid
-        );
-      } catch (e) {
-        if (e.code === "auth/user-not-found") {
-          throw new MonkeyError(
-            404,
-            "User not found in the database or the auth system. Please sign up again.",
-            "get user",
-            uid
-          );
-        } else {
-          throw e;
-        }
-      }
-    } else {
-      throw e;
-    }
-  }
-
-  userInfo.personalBests ??= {
-    time: {},
-    words: {},
-    quote: {},
-    zen: {},
-    custom: {},
-  };
-
-  const agentLog = buildAgentLog(req.raw);
-  void Logger.logToDb("user_data_requested", agentLog, uid);
-  void UserDAL.logIpAddress(uid, agentLog.ip, userInfo);
-
-  let inboxUnreadSize = 0;
-  if (req.ctx.configuration.users.inbox.enabled) {
-    inboxUnreadSize = _.filter(userInfo.inbox, { read: false }).length;
-  }
-
-  if (!userInfo.name) {
-    userInfo.needsToChangeName = true;
-    await UserDAL.flagForNameChange(uid);
-  }
-
-  const isPremium = await UserDAL.checkIfUserIsPremium(uid, userInfo);
-
-  const allTimeLbs = await getAllTimeLbs(uid);
-  const testActivity = getCurrentTestActivity(userInfo.testActivity);
-
-  const userData = {
-    ...getRelevantUserInfo(userInfo),
-    inboxUnreadSize: inboxUnreadSize,
-    isPremium,
-    allTimeLbs,
-    testActivity,
-  };
-
-  return new MonkeyResponse2(
-    "User data retrieved",
-    userData as unknown as User
-  ); //TOOD cleanup mapping
 }
 
 export async function getUser(

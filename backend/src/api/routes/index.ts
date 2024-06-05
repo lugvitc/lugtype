@@ -19,6 +19,7 @@ import { MonkeyResponse, MonkeyResponse2 } from "../../utils/monkey-response";
 import { recordClientVersion } from "../../utils/prometheus";
 import {
   Application,
+  IRouter,
   NextFunction,
   Response,
   Router,
@@ -28,7 +29,6 @@ import { isDevEnvironment } from "../../utils/misc";
 import { getLiveConfiguration } from "../../init/configuration";
 import Logger from "../../utils/logger";
 import { createExpressEndpoints, initServer } from "@ts-rest/express";
-import { userRoutes } from "./usersV2";
 import { configsRoutes } from "./configs";
 
 const pathOverride = process.env["API_PATH_OVERRIDE"];
@@ -50,7 +50,6 @@ const API_ROUTE_MAP = {
 
 const s = initServer();
 const router = s.router(contract, {
-  users: userRoutes,
   configs: configsRoutes,
 });
 
