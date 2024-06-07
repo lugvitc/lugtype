@@ -146,13 +146,12 @@ export const ConfigSchema = z.object({
 });
 export type Config = z.infer<typeof ConfigSchema>;
 
-export const ConfigResponseSchema = z.object({
+export const ConfigWrappedSchema = z.object({
   _id: z.string(),
   uid: z.string(),
   config: ConfigSchema,
 });
-
-export type ConfigResponse = z.infer<typeof ConfigResponseSchema>;
+export type ConfigWrapped = z.infer<typeof ConfigWrappedSchema>;
 
 export const ConfigUpdateBodySchema = z.object({
   config: ConfigSchema.partial(),
@@ -167,7 +166,7 @@ export const configsContract = c.router(
       method: "GET",
       path: "/",
       responses: {
-        200: MonkeyResponseSchema.extend({ data: ConfigResponseSchema }),
+        200: MonkeyResponseSchema.extend({ data: ConfigWrappedSchema }),
         400: MonkeyErrorSchema,
       },
     },

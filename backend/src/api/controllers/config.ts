@@ -1,23 +1,19 @@
 import {
-  ConfigResponse,
+  ConfigWrapped,
   ConfigUpdateBody,
 } from "@shared/contract/configs.contract";
 import * as ConfigDAL from "../../dal/config";
-import { MonkeyResponse, MonkeyResponse2 } from "../../utils/monkey-response";
+import { MonkeyResponse2 } from "../../utils/monkey-response";
 import MonkeyError from "../../utils/error";
 
 export async function getConfig(
   req: MonkeyTypes.Request2
-): Promise<MonkeyResponse2<ConfigResponse>> {
+): Promise<MonkeyResponse2<ConfigWrapped>> {
   const { uid } = req.ctx.decodedToken;
 
   const data = await ConfigDAL.getConfig(uid); //TODO DBConfig?
   if (data === null) throw new MonkeyError(400, "No config found.");
-  return new MonkeyResponse2("Configuration retrieved", {
-    _id: data["_id"],
-    uid: data["uid"],
-    config: data["config"], //TODO type definitino
-  });
+  return MonkeyResponse2.fromDB("Configuration retrieved", data);
 }
 
 export async function saveConfig(
@@ -28,5 +24,5 @@ export async function saveConfig(
 
   await ConfigDAL.saveConfig(uid, config);
 
-  return new MonkeyResponse("Config updated");
+  return new MonkeyResponse2("Config updated");
 }

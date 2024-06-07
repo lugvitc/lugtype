@@ -136,4 +136,8 @@ declare namespace MonkeyTypes {
   };
 
   type DBBlocklistEntry = WithObjectId<MonkeyTypes.BlocklistEntry>;
+
+  type DBConfig = WithObjectId<
+    import("@shared/contract/configs.contract").ConfigWrapped
+  >;
 }

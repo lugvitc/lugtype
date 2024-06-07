@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { isCustomCode } from "../constants/monkey-status-codes";
 import { MonkeyResonseType as MonkeyResponseType } from "@shared/contract/common.contract";
+import { omit } from "lodash";
 
 export type MonkeyStatusAware = {
   status: number;
@@ -52,5 +53,17 @@ export class MonkeyResponse2<T>
     this.message = message ?? "ok";
     this.data = data;
     this.status = status;
+  }
+
+  public static fromDB<T extends { _id: string }>(
+    message: string,
+    data: MonkeyTypes.WithObjectId<T>,
+    status = 200
+  ): MonkeyResponse2<T> {
+    return new MonkeyResponse2(
+      message,
+      { _id: data._id.toString(), ...omit(data, "_id") } as unknown as T,
+      status
+    );
   }
 }

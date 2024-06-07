@@ -1,7 +1,5 @@
 import { z } from "zod";
 import { PersonalBestsSchema } from "./types";
-import { numericEnum } from "./helpers";
-import { MonkeyErrorSchema } from "../common.contract";
 
 export const SmoothCaretSchema = z.enum(["off", "slow", "medium", "fast"]);
 export type SmoothCaret = z.infer<typeof SmoothCaretSchema>;
@@ -12,8 +10,16 @@ export type QuickRestart = z.infer<typeof QuickRestartSchema>;
 export const ModeSchema = PersonalBestsSchema.keyof();
 export type Mode = z.infer<typeof ModeSchema>;
 
-export const QuoteLengthSchema = numericEnum([-3, -2, -1, 0, 1, 2, 3]);
-export type QuoteLength = -3 | -2 | -1 | 0 | 1 | 2 | 3;
+export const QuoteLengthSchema = z.union([
+  z.literal(-3),
+  z.literal(-2),
+  z.literal(-1),
+  z.literal(0),
+  z.literal(1),
+  z.literal(2),
+  z.literal(3),
+]);
+export type QuoteLength = z.infer<typeof QuoteLengthSchema>;
 
 export const DifficultySchema = z.enum(["normal", "expert", "master"]);
 export type Difficulty = z.infer<typeof DifficultySchema>;
@@ -177,7 +183,7 @@ export type CustomBackgroundSize = z.infer<typeof CustomBackgroundSizeSchema>;
 export const CustomBackgroundFilterSchema = z.array(z.number()).length(4);
 export type CustomBackgroundFilter = [number, number, number, number, number];
 
-export const CustomLayoutFluidSchema = z.string().regex(/^[0-9a-zA-Z_#]+$/);
+export const CustomLayoutFluidSchema = z.string().regex(/^[0-9a-zA-Z_#]+$/); //TODO better regex
 export type CustomLayoutFluid = `${string}#${string}#${string}`;
 
 export const MonkeyPowerLevelSchema = z.enum(["off", "1", "2", "3", "4"]);
