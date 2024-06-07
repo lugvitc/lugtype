@@ -22,7 +22,7 @@ declare namespace MonkeyTypes {
     ctx: Readonly<Context>;
   } & ExpressRequest;
 
-  type Request2<TQuery = unknown, TBody = unknown, TParams = unknown> = {
+  type Request2<TQuery = never, TBody = never, TParams = never> = {
     query: Readonly<TQuery>;
     body: Readonly<TBody>;
     params: TParams;

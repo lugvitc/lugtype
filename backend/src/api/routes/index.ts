@@ -58,7 +58,6 @@ export function applyApiRoutes(app: IRouter): void {
     jsonQuery: true,
     requestValidationErrorHandler(err, req, res, next) {
       if (err.body?.issues !== undefined) {
-        console.log(err.body.issues);
         res.status(400).json({
           message: "validation errors",
           errors: err.body?.issues.map(

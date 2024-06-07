@@ -53,7 +53,6 @@ export async function initSnapshot(): Promise<
   const snap = { ...defaultSnap };
   try {
     if (!isAuthenticated()) return false;
-
     // if (ActivePage.get() === "loading") {
     //   LoadingPage.updateBar(22.5);
     // } else {

@@ -1,6 +1,5 @@
 import _ from "lodash";
 import uaparser from "ua-parser-js";
-import { TsRestRequest } from "@ts-rest/express";
 
 //todo split this file into smaller util files (grouped by functionality)
 
@@ -53,9 +52,7 @@ type AgentLog = {
 };
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export function buildAgentLog(
-  req: MonkeyTypes.Request | TsRestRequest<any>
-): AgentLog {
+export function buildAgentLog(req: MonkeyTypes.Request): AgentLog {
   const agent = uaparser(req.headers["user-agent"]);
 
   const agentLog: AgentLog = {

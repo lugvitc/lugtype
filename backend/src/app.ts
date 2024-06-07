@@ -45,11 +45,10 @@ function buildApp(): express.Application {
   app.use("/v2/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
   const openApiJson = JSON.stringify(openApiDocument);
-  /*app.use("/v2/swagger.json", (req, res) => {
+  app.use("/v2/swagger.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
-    res.send(openApiJson);
-    res.end(200);
-  });*/
+    res.status(200).send(openApiJson);
+  });
 
   return app;
 }

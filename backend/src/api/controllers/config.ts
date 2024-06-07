@@ -11,7 +11,7 @@ export async function getConfig(
 ): Promise<MonkeyResponse2<ConfigWrapped>> {
   const { uid } = req.ctx.decodedToken;
 
-  const data = await ConfigDAL.getConfig(uid); //TODO DBConfig?
+  const data = await ConfigDAL.getConfig(uid);
   if (data === null) throw new MonkeyError(400, "No config found.");
   return MonkeyResponse2.fromDB("Configuration retrieved", data);
 }
