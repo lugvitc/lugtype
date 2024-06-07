@@ -1,14 +1,10 @@
 import { z } from "zod";
-import { PersonalBestsSchema } from "./types";
 
 export const SmoothCaretSchema = z.enum(["off", "slow", "medium", "fast"]);
 export type SmoothCaret = z.infer<typeof SmoothCaretSchema>;
 
 export const QuickRestartSchema = z.enum(["off", "esc", "tab", "enter"]);
 export type QuickRestart = z.infer<typeof QuickRestartSchema>;
-
-export const ModeSchema = PersonalBestsSchema.keyof();
-export type Mode = z.infer<typeof ModeSchema>;
 
 export const QuoteLengthSchema = z.union([
   z.literal(-3),
@@ -132,13 +128,13 @@ export const PaceCaretSchema = z.enum([
 ]);
 export type PaceCaret = z.infer<typeof PaceCaretSchema>;
 
-export const AccountChartSchema = z.array(z.enum(["on", "off"])).length(4);
-export type AccountChart = [
-  "off" | "on",
-  "off" | "on",
-  "off" | "on",
-  "off" | "on"
-];
+export const AccountChartSchema = z.tuple([
+  z.enum(["on", "off"]),
+  z.enum(["on", "off"]),
+  z.enum(["on", "off"]),
+  z.enum(["on", "off"]),
+]);
+export type AccountChart = z.infer<typeof AccountChartSchema>;
 
 export const MinimumWordsPerMinuteSchema = z.enum(["off", "custom"]);
 export type MinimumWordsPerMinute = z.infer<typeof MinimumWordsPerMinuteSchema>;
@@ -180,11 +176,19 @@ export type OppositeShiftMode = z.infer<typeof OppositeShiftModeSchema>;
 export const CustomBackgroundSizeSchema = z.enum(["cover", "contain", "max"]);
 export type CustomBackgroundSize = z.infer<typeof CustomBackgroundSizeSchema>;
 
-export const CustomBackgroundFilterSchema = z.array(z.number()).length(4);
-export type CustomBackgroundFilter = [number, number, number, number, number];
+export const CustomBackgroundFilterSchema = z.tuple([
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+]);
+export type CustomBackgroundFilter = z.infer<
+  typeof CustomBackgroundFilterSchema
+>;
 
 export const CustomLayoutFluidSchema = z.string().regex(/^[0-9a-zA-Z_#]+$/); //TODO better regex
-export type CustomLayoutFluid = `${string}#${string}#${string}`;
+export type CustomLayoutFluid = z.infer<typeof CustomLayoutFluidSchema>;
 
 export const MonkeyPowerLevelSchema = z.enum(["off", "1", "2", "3", "4"]);
 export type MonkeyPowerLevel = z.infer<typeof MonkeyPowerLevelSchema>;

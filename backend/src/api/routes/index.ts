@@ -54,7 +54,22 @@ const router = s.router(contract, {
 });
 
 export function applyApiRoutes(app: IRouter): void {
-  createExpressEndpoints(contract, router, app, { jsonQuery: true });
+  createExpressEndpoints(contract, router, app, {
+    jsonQuery: true,
+    requestValidationErrorHandler(err, req, res, next) {
+      if (err.body?.issues !== undefined) {
+        console.log(err.body.issues);
+        res.status(400).json({
+          message: "validation errors",
+          errors: err.body?.issues.map(
+            (it) => `"${it.path.join(".")}" ${it.message}`
+          ),
+        });
+      } else {
+        return next();
+      }
+    },
+  });
 }
 
 export function addApiRoutes(app: Application): void {

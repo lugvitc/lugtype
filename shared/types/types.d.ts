@@ -113,9 +113,9 @@ declare namespace SharedTypes {
 
   type StringNumber = import("../contract/shared/types").StringNumber;
 
-  type PersonalBest = import("../contract/shared/types").PersonalBest;
+  type PersonalBest = import("../contract/users.contract").PersonalBest;
 
-  type PersonalBests = import("../contract/shared/types").PersonalBests;
+  type PersonalBests = import("../contract/users.contract").PersonalBests;
 
   interface IncompleteTest {
     acc: number;

@@ -20,7 +20,6 @@ import {
   MinimumAccuracySchema,
   MinimumBurstSchema,
   MinimumWordsPerMinuteSchema,
-  ModeSchema,
   MonkeyPowerLevelSchema,
   OppositeShiftModeSchema,
   PaceCaretSchema,
@@ -42,6 +41,7 @@ import {
   TypingSpeedUnitSchema,
 } from "./shared/config";
 import { token } from "./shared/helpers";
+import { ModeSchema } from "./users.contract";
 
 export const ConfigSchema = z.object({
   theme: token().max(50),
@@ -49,7 +49,7 @@ export const ConfigSchema = z.object({
   themeDark: token().max(50),
   autoSwitchTheme: z.boolean(),
   customTheme: z.boolean(),
-  //customThemeId: token().min(0).max(24),
+  //customThemeId: token().nonnegative().max(24),
   customThemeColors: z
     .array(z.string().regex(/^#([\da-f]{3}){1,2}$/i))
     .length(10),
@@ -59,8 +59,8 @@ export const ConfigSchema = z.object({
   quickRestart: QuickRestartSchema,
   punctuation: z.boolean(),
   numbers: z.boolean(),
-  words: z.number().int().min(0),
-  time: z.number().int().min(0),
+  words: z.number().int().nonnegative(),
+  time: z.number().int().nonnegative(),
   mode: ModeSchema,
   quoteLength: z.array(QuoteLengthSchema),
   language: z
@@ -115,11 +115,11 @@ export const ConfigSchema = z.object({
   startGraphsAtZero: z.boolean(),
   showOutOfFocusWarning: z.boolean(),
   paceCaret: PaceCaretSchema,
-  paceCaretCustomSpeed: z.number().min(0),
+  paceCaretCustomSpeed: z.number().nonnegative(),
   repeatedPace: z.boolean(),
   accountChart: AccountChartSchema,
   minWpm: MinimumWordsPerMinuteSchema,
-  minWpmCustomSpeed: z.number().min(0),
+  minWpmCustomSpeed: z.number().nonnegative(),
   highlightMode: HighlightModeSchema,
   tapeMode: TapeModeSchema,
   typingSpeedUnit: TypingSpeedUnitSchema,
@@ -127,7 +127,7 @@ export const ConfigSchema = z.object({
   hideExtraLetters: z.boolean(),
   strictSpace: z.boolean(),
   minAcc: MinimumAccuracySchema,
-  minAccCustom: z.number().min(0),
+  minAccCustom: z.number().nonnegative(),
   monkey: z.boolean(),
   repeatQuotes: RepeatQuotesSchema,
   oppositeShiftMode: OppositeShiftModeSchema,
@@ -137,7 +137,7 @@ export const ConfigSchema = z.object({
   customLayoutfluid: CustomLayoutFluidSchema,
   monkeyPowerLevel: MonkeyPowerLevelSchema,
   minBurst: MinimumBurstSchema,
-  minBurstCustomSpeed: z.number().min(0),
+  minBurstCustomSpeed: z.number().nonnegative(),
   burstHeatmap: z.boolean(),
   britishEnglish: z.boolean(),
   lazyMode: z.boolean(),
