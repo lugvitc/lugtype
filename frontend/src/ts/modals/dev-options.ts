@@ -3,6 +3,7 @@ import AnimatedModal from "../utils/animated-modal";
 import { showPopup } from "./simple-modals";
 import * as Notifications from "../elements/notifications";
 import { setMediaQueryDebugLevel } from "../ui";
+import { updateXpBar } from "../elements/account-button";
 
 let mediaQueryDebugLevel = 0;
 
@@ -54,6 +55,7 @@ export function appendButton(): void {
       <div id="devButtons">
         <a class='button configureAPI' href='${envConfig.backendUrl}/configure/' target='_blank' aria-label="Configure API" data-balloon-pos="right"><i class="fas fa-fw fa-server"></i></a>
         <button class='button showDevOptionsModal' aria-label="Dev options" data-balloon-pos="right"><i class="fas fa-fw fa-flask"></i></button>
+        <button class='button addXPTest' aria-label=Add xp" data-balloon-pos="right"><i class="fas fa-fw fa-plus-circle"></i></button>
       <div>
       `
   );
@@ -62,4 +64,16 @@ export function appendButton(): void {
     ?.addEventListener("click", () => {
       show();
     });
+
+  $(".addXPTest").on("click", async () => {
+    console.log("click");
+    await updateXpBar(1000, 5000, {
+      base: 100,
+      "100%": 200,
+      accPenalty: 300,
+      quote: 400,
+      punctuation: 500,
+      configMultiplier: 2,
+    });
+  });
 }

@@ -182,7 +182,7 @@ export async function updateXpBar(
   $("nav .xpBar")
     .stop(true, true)
     .css("opacity", 1)
-    .animate({ opacity: 0 }, SlowTimer.get() ? 0 : 250, () => {
+    .animate({ opacity: 0.5 }, SlowTimer.get() ? 0 : 250, () => {
       $("nav .xpBar .xpGain").text(``);
     });
 }
@@ -195,33 +195,35 @@ async function animateXpBreakdown(
     $("nav .xpBar .xpGain").text(`+${addedXp}`);
     return;
   }
-  const delay = 1000;
+  const delay = 200;
   let total = 0;
   const xpGain = $("nav .xpBar .xpGain");
   const xpBreakdown = $("nav .xpBar .xpBreakdown");
   xpBreakdown.empty();
 
-  async function append(string: string): Promise<void> {
+  async function append(
+    string: string,
+    amount: number | undefined
+  ): Promise<void> {
+    console.log({ string, amount, skipBreakdown });
     if (skipBreakdown) {
       total = addedXp;
       string = "";
     }
 
-    xpBreakdown.find(".next").removeClass("next").addClass("previous");
-    xpBreakdown.append(
-      `<div class='text next' style="opacity: 0; margin-top: 1rem;">${string}</div>`
-    );
-    const previous = xpBreakdown.find(".previous");
-    previous.animate(
-      {
-        marginTop: "-1rem",
-        opacity: 0,
-      },
-      SlowTimer.get() ? 0 : 250,
-      () => {
-        previous.remove();
-      }
-    );
+    const positive = amount == undefined ? undefined : amount >= 0;
+
+    if (amount !== undefined) {
+      xpBreakdown.append(`
+          <span>${string}</span>
+          <span class="${positive ? "positive" : "negative"}">${
+        positive ? "+" : "-"
+      } ${Math.abs(amount)}</span>
+      `);
+    } else {
+      xpBreakdown.append(`<span>${string}</span><span></span>`);
+    }
+
     setTimeout(() => {
       xpGain
         .stop(true, true)
@@ -247,28 +249,28 @@ async function animateXpBreakdown(
     }, 125);
 
     await Misc.promiseAnimation(
-      xpBreakdown.find(".next"),
+      xpBreakdown,
       {
         opacity: "1",
-        marginTop: "0",
+        //marginTop: "0",
       },
       SlowTimer.get() ? 0 : 250,
       "swing"
     );
   }
+  console.log({ breakdown });
 
   xpGain.text(`+0`);
-  xpBreakdown.append(
-    `<div class='text next'>time typing +${breakdown["base"]}</div>`
-  );
+  await append("time typing", breakdown["base"]);
   total += breakdown["base"] ?? 0;
+  console.log({ breakdown });
   if (breakdown["100%"]) {
     await Misc.sleep(delay);
-    await append(`perfect +${breakdown["100%"]}`);
+    await append("perfect", breakdown["100%"]);
     total += breakdown["100%"];
   } else if (breakdown["corrected"]) {
     await Misc.sleep(delay);
-    await append(`clean +${breakdown["corrected"]}`);
+    await append("clean", breakdown["corrected"]);
     total += breakdown["corrected"];
   }
 
@@ -276,17 +278,17 @@ async function animateXpBreakdown(
 
   if (breakdown["quote"]) {
     await Misc.sleep(delay);
-    await append(`quote +${breakdown["quote"]}`);
+    await append("quote", breakdown["quote"]);
     total += breakdown["quote"];
   } else {
     if (breakdown["punctuation"]) {
       await Misc.sleep(delay);
-      await append(`punctuation +${breakdown["punctuation"]}`);
+      await append("punctuation", breakdown["punctuation"]);
       total += breakdown["punctuation"];
     }
     if (breakdown["numbers"]) {
       await Misc.sleep(delay);
-      await append(`numbers +${breakdown["numbers"]}`);
+      await append("numbers", breakdown["numbers"]);
       total += breakdown["numbers"];
     }
   }
@@ -295,7 +297,7 @@ async function animateXpBreakdown(
 
   if (breakdown["funbox"]) {
     await Misc.sleep(delay);
-    await append(`funbox +${breakdown["funbox"]}`);
+    await append("funbox", breakdown["funbox"]);
     total += breakdown["funbox"];
   }
 
@@ -303,7 +305,7 @@ async function animateXpBreakdown(
 
   if (breakdown["streak"]) {
     await Misc.sleep(delay);
-    await append(`streak +${breakdown["streak"]}`);
+    await append("streak", breakdown["streak"]);
     total += breakdown["streak"];
   }
 
@@ -311,7 +313,7 @@ async function animateXpBreakdown(
 
   if (breakdown["accPenalty"]) {
     await Misc.sleep(delay);
-    await append(`accuracy penalty -${breakdown["accPenalty"]}`);
+    await append("accuracy penalty", breakdown["accPenalty"] * -1);
     total -= breakdown["accPenalty"];
   }
 
@@ -319,7 +321,7 @@ async function animateXpBreakdown(
 
   if (breakdown["incomplete"]) {
     await Misc.sleep(delay);
-    await append(`incomplete tests +${breakdown["incomplete"]}`);
+    await append("incomplete tests", breakdown["incomplete"]);
     total += breakdown["incomplete"];
   }
 
@@ -327,7 +329,10 @@ async function animateXpBreakdown(
 
   if (breakdown["configMultiplier"]) {
     await Misc.sleep(delay);
-    await append(`global multiplier x${breakdown["configMultiplier"]}`);
+    await append(
+      `global multiplier x${breakdown["configMultiplier"]}`,
+      undefined
+    );
     total *= breakdown["configMultiplier"];
   }
 
@@ -335,14 +340,14 @@ async function animateXpBreakdown(
 
   if (breakdown["daily"]) {
     await Misc.sleep(delay);
-    await append(`daily bonus +${breakdown["daily"]}`);
+    await append("daily bonus", breakdown["daily"]);
     total += breakdown["daily"];
   }
 
   if (skipBreakdown) return;
 
-  await Misc.sleep(delay);
-  await append("");
+  //  await Misc.sleep(delay);
+  //  await append("");
   return;
   //base (100% corrected) (quote punctuation numbers) accPenalty incomplete configMultiplier daily
 }
@@ -353,7 +358,7 @@ async function animateXpBar(
 ): Promise<void> {
   const difference = endingLevel - startingLevel;
 
-  $("nav .xpBar").stop(true, true).css("opacity", 0);
+  $("nav .xpBar").stop(true, true).css("opacity", 0.2);
 
   await Misc.promiseAnimation(
     $("nav .xpBar"),
