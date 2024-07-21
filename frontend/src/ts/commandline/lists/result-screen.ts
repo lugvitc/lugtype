@@ -39,6 +39,16 @@ const practiceSubgroup: MonkeyTypes.CommandsSubgroup = {
         });
       },
     },
+    {
+      id: "practiseMissedBiwords",
+      display: "missed biwords",
+      exec: (): void => {
+        PractiseWords.init(false, false, true);
+        TestLogic.restart({
+          practiseMissed: true,
+        });
+      },
+    },
   ],
 };
 
