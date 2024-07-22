@@ -1398,6 +1398,15 @@ $("#popups").on("click", "#practiseWordsPopup .button.both", () => {
   }
 });
 
+$("#popups").on("click", "#practiseWordsPopup .button.biwords", () => {
+  if (PractiseWords.init(false, false, true)) {
+    PractiseWords.hidePopup();
+    restart({
+      practiseMissed: true,
+    });
+  }
+});
+
 $("header").on("click", "nav #startTestButton, #logo", () => {
   if (ActivePage.get() === "test") restart();
 });

@@ -26,7 +26,11 @@ export const before: Before = {
   customText: null,
 };
 
-export function init(missed: boolean, slow: boolean): boolean {
+export function init(
+  missed: boolean,
+  slow: boolean,
+  biwords: boolean = false
+): boolean {
   if (Config.mode === "zen") return false;
   let limit;
   if ((missed && !slow) || (!missed && slow)) {
@@ -51,7 +55,34 @@ export function init(missed: boolean, slow: boolean): boolean {
     sortableMissedWords = sortableMissedWords.slice(0, limit);
   }
 
-  if (missed && !slow && sortableMissedWords.length === 0) {
+  let sortableMissedBiwords: [string, string, number][] = [];
+  if (biwords) {
+    for (let i = 0; i < TestWords.words.length; i++) {
+      const missedWord = TestWords.words.get(i);
+      const missedWordCount = TestInput.missedWords[missedWord];
+      if (missedWordCount !== undefined) {
+        if (i === 0) {
+          sortableMissedBiwords.push([missedWord, "", missedWordCount]);
+        } else {
+          sortableMissedBiwords.push([
+            missedWord,
+            TestWords.words.get(i - 1),
+            missedWordCount,
+          ]);
+        }
+      }
+    }
+    sortableMissedBiwords.sort((a, b) => {
+      return b[2] - a[2];
+    });
+    sortableMissedBiwords = sortableMissedBiwords.slice(0, limit);
+  }
+
+  if (
+    ((missed && sortableMissedWords.length === 0) ||
+      (biwords && sortableMissedBiwords.length === 0)) &&
+    !slow
+  ) {
     Notifications.add("You haven't missed any words", 0);
     return false;
   }
@@ -71,9 +102,14 @@ export function init(missed: boolean, slow: boolean): boolean {
   }
 
   // console.log(sortableMissedWords);
+  // console.log(sortableMissedBiwords);
   // console.log(sortableSlowWords);
 
-  if (sortableMissedWords.length === 0 && sortableSlowWords.length === 0) {
+  if (
+    sortableMissedWords.length === 0 &&
+    sortableMissedBiwords.length === 0 &&
+    sortableSlowWords.length === 0
+  ) {
     Notifications.add("Could not start a new custom test", 0);
     return false;
   }
@@ -82,6 +118,16 @@ export function init(missed: boolean, slow: boolean): boolean {
   sortableMissedWords.forEach((missed) => {
     for (let i = 0; i < missed[1]; i++) {
       newCustomText.push(missed[0]);
+    }
+  });
+
+  sortableMissedBiwords.forEach((missedBiwords) => {
+    for (let i = 0; i < missedBiwords[2]; i++) {
+      newCustomText.push(missedBiwords[0]);
+      if (missedBiwords[1] !== "") {
+        console.log("in here");
+        newCustomText.push(missedBiwords[1]);
+      }
     }
   });
 
