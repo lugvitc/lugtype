@@ -48,6 +48,7 @@
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-conventional": "17.7.0",
     "@csmith/release-it-calver-plugin": "2023.9.0",
+    "@monkeytype/eslint-config": "*",
     "@release-it/conventional-changelog": "7.0.0",
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
@@ -82,5 +83,8 @@
     "packages/*"
   ],
   "version": "24.29.0",
-  "packageManager": "npm@10.2.4"
+  "packageManager": "npm@10.2.4",
+  "dependencies": {
+    "esbuild": "0.19.12"
+  }
 }
