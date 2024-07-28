@@ -458,6 +458,9 @@ export async function getUser(
     quote: {},
     zen: {},
     custom: {},
+    easy: {},
+    medium: {},
+    onerandom: {},
   };
 
   const agentLog = buildAgentLog(req);

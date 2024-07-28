@@ -57,6 +57,33 @@ const commands: MonkeyTypes.Command[] = [
             TestLogic.restart();
           },
         },
+        {
+          id: "changeModeEasy",
+          display: "easy",
+          configValue: "easy",
+          exec: (): void => {
+            UpdateConfig.setMode("words");
+            TestLogic.restart();
+          },
+        },
+        {
+          id: "changeModeMedium",
+          display: "medium",
+          configValue: "medium",
+          exec: (): void => {
+            UpdateConfig.setMode("medium");
+            TestLogic.restart();
+          },
+        },
+        {
+          id: "changeModeOneRandom",
+          display: "onerandom",
+          configValue: "onerandom",
+          exec: (): void => {
+            UpdateConfig.setMode("onerandom");
+            TestLogic.restart();
+          },
+        },
       ],
     },
   },

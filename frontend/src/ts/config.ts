@@ -107,7 +107,16 @@ export function setPunctuation(punc: boolean, nosave?: boolean): boolean {
 export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
   if (
     !isConfigValueValid("mode", mode, [
-      ["time", "words", "quote", "zen", "custom"],
+      [
+        "time",
+        "words",
+        "quote",
+        "zen",
+        "easy",
+        "medium",
+        "onerandom",
+        "custom",
+      ],
     ])
   ) {
     return false;
@@ -129,6 +138,15 @@ export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
     if (config.paceCaret !== "off") {
       Notifications.add(`Pace caret will not work with zen mode.`, 0);
     }
+  } else if (config.mode === "easy") {
+    setPunctuation(false);
+    setNumbers(false);
+  } else if (config.mode === "medium") {
+    setPunctuation(true);
+    setNumbers(true);
+  } else if (config.mode === "onerandom") {
+    setPunctuation(true);
+    setNumbers(true);
   }
   saveToLocalStorage("mode", nosave);
   ConfigEvent.dispatch("mode", config.mode, nosave, previous);

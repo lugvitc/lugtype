@@ -72,6 +72,9 @@ export async function update(previous: Mode, current: Mode): Promise<void> {
     custom: "customText",
     quote: "quoteLength",
     zen: "zen",
+    easy: "easy",
+    medium: "medium",
+    onerandom: "onerandom",
   };
 
   const animTime = 250;
@@ -87,6 +90,9 @@ export async function update(previous: Mode, current: Mode): Promise<void> {
     custom: true,
     quote: false,
     zen: false,
+    easy: false,
+    medium: false,
+    onerandom: false,
   };
 
   const puncAndNumEl = $("#testConfig .puncAndNum");
@@ -131,7 +137,12 @@ export async function update(previous: Mode, current: Mode): Promise<void> {
       );
   }
 
-  if (current === "zen") {
+  if (
+    current === "zen" ||
+    current === "easy" ||
+    current === "medium" ||
+    current === "onerandom"
+  ) {
     $("#testConfig .rightSpacer").addClass("scrolled");
   } else {
     $("#testConfig .rightSpacer").removeClass("scrolled");

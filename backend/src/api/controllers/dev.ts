@@ -199,6 +199,9 @@ async function updateUser(uid: string): Promise<void> {
     words: {},
     zen: {},
     quote: {},
+    easy: {},
+    medium: {},
+    onerandom: {},
   };
   const modes = stats.map((it) => it["_id"]);
   for (const mode of modes) {

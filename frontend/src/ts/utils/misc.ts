@@ -395,6 +395,13 @@ export function getMode2<M extends keyof PersonalBests>(
     retVal = "zen";
   } else if (mode === "quote") {
     retVal = `${randomQuote?.id ?? -1}`;
+  } else if (mode === "easy") {
+    retVal = config.words.toString();
+  } else if (mode === "medium") {
+    // TODO: LOOK AT THIS AGAIN
+    retVal = config.time.toString();
+  } else if (mode === "onerandom") {
+    retVal = config.words.toString();
   } else {
     throw new Error("Invalid mode");
   }

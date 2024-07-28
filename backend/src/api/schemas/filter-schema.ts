@@ -30,6 +30,9 @@ const FILTER_SCHEMA = {
       quote: joi.bool().required(),
       zen: joi.bool().required(),
       custom: joi.bool().required(),
+      easy: joi.bool().required(),
+      medium: joi.bool().required(),
+      onerandom: joi.bool().required(),
     })
     .required(),
   words: joi

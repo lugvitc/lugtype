@@ -49,6 +49,9 @@ export const defaultResultFilters: ResultFilters = {
     quote: true,
     zen: true,
     custom: true,
+    easy: true,
+    medium: true,
+    onerandom: true,
   },
   words: {
     "10": true,

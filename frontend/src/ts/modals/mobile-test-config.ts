@@ -55,6 +55,13 @@ function update(): void {
   } else if (Config.mode === "custom") {
     el.find(".punctuation").removeClass("disabled");
     el.find(".numbers").removeClass("disabled");
+  } else if (
+    Config.mode === "easy" ||
+    Config.mode === "medium" ||
+    Config.mode === "onerandom"
+  ) {
+    el.find(".punctuation").addClass("disabled");
+    el.find(".numbers").addClass("disabled");
   }
 }
 

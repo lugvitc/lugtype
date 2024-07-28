@@ -1267,6 +1267,9 @@ list.clearTagPb = new SimpleModal({
       quote: {},
       zen: {},
       custom: {},
+      easy: {},
+      medium: {},
+      onerandom: {},
     };
     $(
       `.pageSettings .section.tags .tagsList .tag[id="${tagId}"] .clearPbButton`
@@ -1340,6 +1343,9 @@ list.resetPersonalBests = new SimpleModal({
       quote: {},
       zen: {},
       custom: {},
+      easy: {},
+      medium: {},
+      onerandom: {},
     };
 
     return {

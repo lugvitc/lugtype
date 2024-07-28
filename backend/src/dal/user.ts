@@ -55,6 +55,9 @@ export async function addUser(
       quote: {},
       zen: {},
       custom: {},
+      easy: {},
+      medium: {},
+      onerandom: {},
     },
     testActivity: {},
   };
@@ -85,6 +88,9 @@ export async function resetUser(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          easy: {},
+          medium: {},
+          onerandom: {},
         },
         lbPersonalBests: {
           time: {},
@@ -170,6 +176,9 @@ export async function clearPb(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          easy: {},
+          medium: {},
+          onerandom: {},
         },
         lbPersonalBests: {
           time: {},
@@ -344,6 +353,9 @@ export async function addTag(
       quote: {},
       zen: {},
       custom: {},
+      easy: {},
+      medium: {},
+      onerandom: {},
     },
   };
 
@@ -403,6 +415,9 @@ export async function removeTagPb(uid: string, _id: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          easy: {},
+          medium: {},
+          onerandom: {},
         },
       },
     },
@@ -447,6 +462,9 @@ export async function checkIfPb(
     quote: {},
     words: {},
     zen: {},
+    easy: {},
+    medium: {},
+    onerandom: {},
   };
   user.lbPersonalBests ??= {
     time: {},
@@ -505,6 +523,9 @@ export async function checkIfTagPb(
       quote: {},
       zen: {},
       custom: {},
+      easy: {},
+      medium: {},
+      onerandom: {},
     };
 
     const tagpb = checkAndUpdatePb(tag.personalBests, undefined, result);
@@ -531,6 +552,9 @@ export async function resetPb(uid: string): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          easy: {},
+          medium: {},
+          onerandom: {},
         },
       },
     },
