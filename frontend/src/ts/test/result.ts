@@ -651,7 +651,7 @@ function updateTestType(randomQuote: MonkeyTypes.Quote | null): void {
 
   if (Config.mode === "time") {
     testType += " " + Config.time;
-  } else if (Config.mode === "words") {
+  } else if (Config.mode === "words" || Config.mode === "easy") {
     testType += " " + Config.words;
   } else if (Config.mode === "quote") {
     if (randomQuote?.group !== undefined) {
@@ -711,8 +711,13 @@ function updateOther(
     const extra: string[] = [];
     if (
       result.wpm < 0 ||
-      (result.wpm > 350 && result.mode !== "words" && result.mode2 !== "10") ||
-      (result.wpm > 420 && result.mode === "words" && result.mode2 === "10")
+      (result.wpm > 350 &&
+        result.mode !== "words" &&
+        result.mode !== "easy" &&
+        result.mode2 !== "10") ||
+      (result.wpm > 420 &&
+        (result.mode === "words" || result.mode === "easy") &&
+        result.mode2 === "10")
     ) {
       extra.push("wpm");
     }
@@ -720,8 +725,11 @@ function updateOther(
       result.rawWpm < 0 ||
       (result.rawWpm > 350 &&
         result.mode !== "words" &&
+        result.mode !== "easy" &&
         result.mode2 !== "10") ||
-      (result.rawWpm > 420 && result.mode === "words" && result.mode2 === "10")
+      (result.rawWpm > 420 &&
+        (result.mode === "words" || result.mode === "easy") &&
+        result.mode2 === "10")
     ) {
       extra.push("raw");
     }

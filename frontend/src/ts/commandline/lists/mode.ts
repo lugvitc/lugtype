@@ -62,7 +62,8 @@ const commands: MonkeyTypes.Command[] = [
           display: "easy",
           configValue: "easy",
           exec: (): void => {
-            UpdateConfig.setMode("words");
+            UpdateConfig.setMode("easy");
+            UpdateConfig.setWordCount(10);
             TestLogic.restart();
           },
         },

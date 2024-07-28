@@ -212,6 +212,10 @@ export function restart(options = {} as RestartOptions): void {
     options.withSameWordset = true;
   }
 
+  if (Config.mode === "easy") {
+    UpdateConfig.setWordCount(10);
+  }
+
   if (
     PractiseWords.before.mode !== null &&
     !options.withSameWordset &&
@@ -515,7 +519,7 @@ export async function init(): Promise<void> {
 
 export function areAllTestWordsGenerated(): boolean {
   return (
-    (Config.mode === "words" &&
+    ((Config.mode === "words" || Config.mode === "easy") &&
       TestWords.words.length >= Config.words &&
       Config.words > 0) ||
     (Config.mode === "custom" &&
@@ -572,7 +576,10 @@ export async function addWord(): Promise<void> {
       let wordCount = 0;
       for (let i = 0; i < section.words.length; i++) {
         const word = section.words[i] as string;
-        if (wordCount >= Config.words && Config.mode === "words") {
+        if (
+          wordCount >= Config.words &&
+          (Config.mode === "words" || Config.mode === "easy")
+        ) {
           break;
         }
         wordCount++;
@@ -935,8 +942,10 @@ export async function finish(difficultyFailed = false): Promise<void> {
     (Config.mode === "time" &&
       mode2Number === 0 &&
       completedEvent.testDuration < 15) ||
-    (Config.mode === "words" && mode2Number < 10 && mode2Number > 0) ||
-    (Config.mode === "words" &&
+    ((Config.mode === "words" || Config.mode === "easy") &&
+      mode2Number < 10 &&
+      mode2Number > 0) ||
+    ((Config.mode === "words" || Config.mode === "easy") &&
       mode2Number === 0 &&
       completedEvent.testDuration < 15) ||
     (Config.mode === "custom" &&
@@ -955,6 +964,7 @@ export async function finish(difficultyFailed = false): Promise<void> {
     completedEvent.wpm < 0 ||
     (completedEvent.wpm > 350 &&
       completedEvent.mode !== "words" &&
+      completedEvent.mode !== "easy" &&
       completedEvent.mode2 !== "10") ||
     (completedEvent.wpm > 420 &&
       completedEvent.mode === "words" &&
@@ -967,6 +977,7 @@ export async function finish(difficultyFailed = false): Promise<void> {
     completedEvent.rawWpm < 0 ||
     (completedEvent.rawWpm > 350 &&
       completedEvent.mode !== "words" &&
+      completedEvent.mode !== "easy" &&
       completedEvent.mode2 !== "10") ||
     (completedEvent.rawWpm > 420 &&
       completedEvent.mode === "words" &&

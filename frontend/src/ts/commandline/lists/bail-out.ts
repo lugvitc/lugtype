@@ -16,7 +16,8 @@ function canBailOut(): boolean {
       CustomText.getLimitMode() === "time" &&
       (CustomText.getLimitValue() >= 3600 ||
         CustomText.getLimitValue() === 0)) ||
-    (Config.mode === "words" && Config.words >= 5000) ||
+    ((Config.mode === "words" || Config.mode === "easy") &&
+      Config.words >= 5000) ||
     Config.words === 0 ||
     (Config.mode === "time" && (Config.time >= 3600 || Config.time === 0)) ||
     Config.mode === "zen"

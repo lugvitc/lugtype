@@ -518,7 +518,10 @@ export const accountHistory = new ChartWithUpdateColors<
 
               if (resultData.mode === "time") {
                 label += resultData.mode2;
-              } else if (resultData.mode === "words") {
+              } else if (
+                resultData.mode === "words" ||
+                resultData.mode === "easy"
+              ) {
                 label += resultData.mode2;
               }
 

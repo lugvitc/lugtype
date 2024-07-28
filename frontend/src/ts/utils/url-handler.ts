@@ -137,7 +137,7 @@ export function loadTestSettingsFromUrl(getOverride?: string): void {
   if (de[1] !== null) {
     if (Config.mode === "time") {
       UpdateConfig.setTimeConfig(parseInt(de[1], 10), true);
-    } else if (Config.mode === "words") {
+    } else if (Config.mode === "words" || Config.mode === "easy") {
       UpdateConfig.setWordCount(parseInt(de[1], 10), true);
     } else if (Config.mode === "quote") {
       UpdateConfig.setQuoteLength(-2, false);

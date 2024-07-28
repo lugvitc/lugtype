@@ -38,7 +38,7 @@ export async function instantUpdate(): Promise<void> {
     $("#testConfig .time").removeClass("hidden");
 
     updateExtras("time", Config.time);
-  } else if (Config.mode === "words") {
+  } else if (Config.mode === "words" || Config.mode === "easy") {
     $("#testConfig .puncAndNum").removeClass("hidden");
     $("#testConfig .leftSpacer").removeClass("scrolled");
     $("#testConfig .rightSpacer").removeClass("scrolled");
@@ -269,7 +269,7 @@ ConfigEvent.subscribe((eventKey, eventValue, _nosave, eventPreviousValue) => {
 
     if (Config.mode === "time") {
       m2 = Config.time;
-    } else if (Config.mode === "words") {
+    } else if (Config.mode === "words" || Config.mode === "easy") {
       m2 = Config.words;
     } else if (Config.mode === "quote") {
       m2 = Config.quoteLength;

@@ -653,7 +653,7 @@ $(".pageAccount .topFilters button.currentConfigFilter").on("click", () => {
     } else {
       filters.time.custom = true;
     }
-  } else if (Config.mode === "words") {
+  } else if (Config.mode === "words" || Config.mode === "easy") {
     if ([10, 25, 50, 100, 200].includes(Config.words)) {
       const configWords = Config.words as MonkeyTypes.DefaultWordsModes;
       filters.words[configWords] = true;

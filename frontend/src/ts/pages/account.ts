@@ -320,7 +320,7 @@ async function fillContent(): Promise<void> {
           }
           return;
         }
-      } else if (result.mode === "words") {
+      } else if (result.mode === "words" || result.mode === "easy") {
         let wordfilter: Mode2Custom<"words"> = "custom";
         if (
           ["10", "25", "50", "100", "200"].includes(
@@ -554,7 +554,7 @@ async function fillContent(): Promise<void> {
       //test finished before testDuration field was introduced - estimate
       if (result.mode === "time") {
         tt = parseInt(result.mode2);
-      } else if (result.mode === "words") {
+      } else if (result.mode === "words" || result.mode === "easy") {
         tt = (parseInt(result.mode2) / result.wpm) * 60;
       }
     } else {

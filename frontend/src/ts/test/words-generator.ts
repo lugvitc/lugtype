@@ -323,7 +323,10 @@ async function getFunboxSection(): Promise<string[]> {
     }
 
     for (const word of section.words) {
-      if (ret.length >= Config.words && Config.mode === "words") {
+      if (
+        ret.length >= Config.words &&
+        (Config.mode === "words" || Config.mode === "easy")
+      ) {
         break;
       }
       ret.push(word);
@@ -418,7 +421,7 @@ export function getWordsLimit(): number {
     if (Config.mode === "custom") {
       limit = CustomText.getLimitValue();
     }
-    if (Config.mode === "words") {
+    if (Config.mode === "words" || Config.mode === "easy") {
       limit = Config.words;
     }
     if (Config.mode === "quote") {
@@ -427,7 +430,10 @@ export function getWordsLimit(): number {
   }
 
   //infinite words
-  if (Config.mode === "words" && Config.words === 0) {
+  if (
+    (Config.mode === "words" || Config.mode === "easy") &&
+    Config.words === 0
+  ) {
     limit = 100;
   }
 
@@ -447,7 +453,11 @@ export function getWordsLimit(): number {
   }
 
   //make sure the limit is not higher than the word count
-  if (Config.mode === "words" && Config.words !== 0 && Config.words < limit) {
+  if (
+    (Config.mode === "words" || Config.mode === "easy") &&
+    Config.words !== 0 &&
+    Config.words < limit
+  ) {
     limit = Config.words;
   }
 
@@ -742,7 +752,8 @@ export async function getNextWord(
         (Config.mode === "custom" &&
           CustomText.getLimitMode() === "word" &&
           wordIndex < CustomText.getLimitValue()) ||
-        (Config.mode === "words" && wordIndex < Config.words)
+        ((Config.mode === "words" || Config.mode === "easy") &&
+          wordIndex < Config.words)
       ) {
         continueRandomGeneration = true;
       }

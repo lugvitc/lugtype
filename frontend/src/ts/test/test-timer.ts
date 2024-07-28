@@ -210,7 +210,9 @@ export async function start(): Promise<void> {
     });
     if (
       (Config.mode === "time" && Config.time < 130 && Config.time > 0) ||
-      (Config.mode === "words" && Config.words < 250 && Config.words > 0)
+      ((Config.mode === "words" || Config.mode === "easy") &&
+        Config.words < 250 &&
+        Config.words > 0)
     ) {
       if (delay < interval / 2) {
         //slow timer

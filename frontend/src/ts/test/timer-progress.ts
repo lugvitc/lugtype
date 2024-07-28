@@ -137,11 +137,12 @@ export function update(): void {
     }
   } else if (
     Config.mode === "words" ||
+    Config.mode === "easy" ||
     Config.mode === "custom" ||
     Config.mode === "quote"
   ) {
     let outof = TestWords.words.length;
-    if (Config.mode === "words") {
+    if (Config.mode === "words" || Config.mode === "easy") {
       outof = Config.words;
     }
     if (Config.mode === "custom") {
