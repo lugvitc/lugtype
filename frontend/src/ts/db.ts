@@ -470,7 +470,8 @@ export async function getUserAverage10<M extends Mode>(
           // Continue if the mode2 doesn't match and it's not a quote
           if (
             `${result.mode2}` !== `${mode2 as string | number}` &&
-            mode !== "quote"
+            mode !== "quote" &&
+            mode !== "medium"
           ) {
             //using template strings because legacy results might use numbers in mode2
             continue;
@@ -498,7 +499,7 @@ export async function getUserAverage10<M extends Mode>(
 
     // Return the last 10 average wpm & acc for quote
     // if the current quote id has never been completed before by the user
-    if (count === 0 && mode === "quote") {
+    if (count === 0 && (mode === "quote" || mode === "medium")) {
       return [last10Wpm / last10Count, last10Acc / last10Count];
     }
 
@@ -554,7 +555,8 @@ export async function getUserDailyBest<M extends Mode>(
           // Continue if the mode2 doesn't match and it's not a quote
           if (
             `${result.mode2}` !== `${mode2 as string | number}` &&
-            mode !== "quote"
+            mode !== "quote" &&
+            mode !== "medium"
           ) {
             //using template strings because legacy results might use numbers in mode2
             continue;
@@ -624,7 +626,7 @@ export async function saveLocalPB<M extends Mode>(
   raw: number,
   consistency: number
 ): Promise<void> {
-  if (mode === "quote") return;
+  if (mode === "quote" || mode === "medium") return;
   if (!dbSnapshot) return;
   function cont(): void {
     if (!dbSnapshot) return;
@@ -760,7 +762,7 @@ export async function saveLocalTagPB<M extends Mode>(
   consistency: number
 ): Promise<number | undefined> {
   if (!dbSnapshot) return;
-  if (mode === "quote") return;
+  if (mode === "quote" || mode === "medium") return;
   function cont(): void {
     const filteredtag = dbSnapshot?.tags?.filter(
       (t) => t._id === tagId

@@ -660,7 +660,7 @@ $(".pageAccount .topFilters button.currentConfigFilter").on("click", () => {
     } else {
       filters.words.custom = true;
     }
-  } else if (Config.mode === "quote") {
+  } else if (Config.mode === "quote" || Config.mode === "medium") {
     const filterName: MonkeyTypes.Filter<"quoteLength">[] = [
       "short",
       "medium",
@@ -685,7 +685,10 @@ $(".pageAccount .topFilters button.currentConfigFilter").on("click", () => {
   } else {
     filters.numbers.off = true;
   }
-  if (Config.mode === "quote" && /english.*/.test(Config.language)) {
+  if (
+    (Config.mode === "quote" || Config.mode === "medium") &&
+    /english.*/.test(Config.language)
+  ) {
     filters.language["english"] = true;
   } else {
     filters.language[Config.language] = true;

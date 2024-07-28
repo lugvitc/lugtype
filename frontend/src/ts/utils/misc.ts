@@ -393,13 +393,10 @@ export function getMode2<M extends keyof PersonalBests>(
     retVal = "custom";
   } else if (mode === "zen") {
     retVal = "zen";
-  } else if (mode === "quote") {
+  } else if (mode === "quote" || mode === "medium") {
     retVal = `${randomQuote?.id ?? -1}`;
   } else if (mode === "easy") {
     retVal = config.words.toString();
-  } else if (mode === "medium") {
-    // TODO: LOOK AT THIS AGAIN
-    retVal = config.time.toString();
   } else if (mode === "onerandom") {
     retVal = config.words.toString();
   } else {

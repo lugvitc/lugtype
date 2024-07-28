@@ -45,7 +45,7 @@ export async function instantUpdate(): Promise<void> {
     $("#testConfig .wordCount").removeClass("hidden");
 
     updateExtras("words", Config.words);
-  } else if (Config.mode === "quote") {
+  } else if (Config.mode === "quote" || Config.mode === "medium") {
     $("#testConfig .rightSpacer").removeClass("scrolled");
     $("#testConfig .quoteLength").removeClass("hidden");
 
@@ -271,7 +271,7 @@ ConfigEvent.subscribe((eventKey, eventValue, _nosave, eventPreviousValue) => {
       m2 = Config.time;
     } else if (Config.mode === "words" || Config.mode === "easy") {
       m2 = Config.words;
-    } else if (Config.mode === "quote") {
+    } else if (Config.mode === "quote" || Config.mode === "medium") {
       m2 = Config.quoteLength;
     }
 

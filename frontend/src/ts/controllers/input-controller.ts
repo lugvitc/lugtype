@@ -319,7 +319,8 @@ async function handleSpace(): Promise<void> {
     Config.mode === "custom" ||
     Config.mode === "quote" ||
     Config.mode === "zen" ||
-    Config.mode === "easy"
+    Config.mode === "easy" ||
+    Config.mode === "medium"
   ) {
     TimerProgress.update();
   }

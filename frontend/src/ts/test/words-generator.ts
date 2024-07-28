@@ -365,7 +365,7 @@ async function applyBritishEnglishToWord(
   if (!Config.britishEnglish) return word;
   if (!Config.language.includes("english")) return word;
   if (
-    Config.mode === "quote" &&
+    (Config.mode === "quote" || Config.mode === "medium") &&
     TestWords.currentQuote?.britishText !== undefined &&
     TestWords.currentQuote?.britishText !== ""
   ) {
@@ -408,7 +408,10 @@ export function getWordsLimit(): number {
 
   const currentQuote = TestWords.currentQuote;
 
-  if (Config.mode === "quote" && currentQuote === null) {
+  if (
+    (Config.mode === "quote" || Config.mode === "medium") &&
+    currentQuote === null
+  ) {
     throw new WordGenError("Random quote is null");
   }
 
@@ -424,7 +427,7 @@ export function getWordsLimit(): number {
     if (Config.mode === "words" || Config.mode === "easy") {
       limit = Config.words;
     }
-    if (Config.mode === "quote") {
+    if (Config.mode === "quote" || Config.mode === "medium") {
       limit = (currentQuote as MonkeyTypes.QuoteWithTextSplit).textSplit.length;
     }
   }
@@ -462,7 +465,7 @@ export function getWordsLimit(): number {
   }
 
   if (
-    Config.mode === "quote" &&
+    (Config.mode === "quote" || Config.mode === "medium") &&
     (currentQuote as MonkeyTypes.QuoteWithTextSplit).textSplit.length < limit
   ) {
     limit = (currentQuote as MonkeyTypes.QuoteWithTextSplit).textSplit.length;
@@ -627,7 +630,7 @@ export async function generateWords(
   let wordList = language.words;
   if (Config.mode === "custom") {
     wordList = CustomText.getText();
-  } else if (Config.mode === "quote") {
+  } else if (Config.mode === "quote" || Config.mode === "medium") {
     wordList = await getQuoteWordList(language, wordOrder);
   } else if (Config.mode === "zen") {
     wordList = [];
@@ -674,21 +677,21 @@ export async function generateWords(
 
   const quote = TestWords.currentQuote;
 
-  if (Config.mode === "quote" && quote === null) {
+  if ((Config.mode === "quote" || Config.mode === "medium") && quote === null) {
     throw new WordGenError("Random quote is null");
   }
 
   ret.hasTab =
     ret.words.some((w) => /\t/.test(w)) ||
     currentWordset.words.some((w) => /\t/.test(w)) ||
-    (Config.mode === "quote" &&
+    ((Config.mode === "quote" || Config.mode === "medium") &&
       (quote as MonkeyTypes.QuoteWithTextSplit).textSplit.some((w) =>
         /\t/.test(w)
       ));
   ret.hasNewline =
     ret.words.some((w) => /\n/.test(w)) ||
     currentWordset.words.some((w) => /\n/.test(w)) ||
-    (Config.mode === "quote" &&
+    ((Config.mode === "quote" || Config.mode === "medium") &&
       (quote as MonkeyTypes.QuoteWithTextSplit).textSplit.some((w) =>
         /\n/.test(w)
       ));
@@ -736,7 +739,11 @@ export async function getNextWord(
   //because quote test can be repeated in the middle of a test
   //we cant rely on data inside previousGetNextWordReturns
   //because it might not include the full quote
-  if (TestState.isRepeated && Config.mode !== "quote") {
+  if (
+    TestState.isRepeated &&
+    Config.mode !== "quote" &&
+    Config.mode !== "medium"
+  ) {
     const repeated = previousGetNextWordReturns[wordIndex];
 
     if (repeated === undefined) {
@@ -781,7 +788,7 @@ export async function getNextWord(
   if (currentSection.length === 0) {
     const funboxSection = await getFunboxSection();
 
-    if (Config.mode === "quote") {
+    if (Config.mode === "quote" || Config.mode === "medium") {
       randomWord = currentWordset.nextWord();
     } else if (Config.mode === "custom" && CustomText.getMode() === "repeat") {
       randomWord = currentWordset.nextWord();
@@ -871,6 +878,7 @@ export async function getNextWord(
   if (
     Config.mode !== "custom" &&
     Config.mode !== "quote" &&
+    Config.mode !== "medium" &&
     /[A-Z]/.test(randomWord) &&
     !Config.punctuation &&
     !Config.language.startsWith("german") &&

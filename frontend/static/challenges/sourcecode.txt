@@ -20658,7 +20658,7 @@ window.addEventListener("beforeunload", (event) => {
   if (
     ((Config.mode === "words" || Config.mode === "easy") && Config.words < 1000) ||
     (Config.mode === "time" && Config.time < 3600) ||
-    Config.mode === "quote" ||
+    (Config.mode === "quote" || Config.mode === "medium") ||
     (Config.mode === "custom" &&
       CustomText.isWordRandom &&
       CustomText.word < 1000) ||
@@ -23050,7 +23050,7 @@ export function restart(
       $("#wordsInput").val(" ");
       let shouldQuoteRepeat = false;
       if (
-        Config.mode === "quote" &&
+        (Config.mode === "quote" || Config.mode === "medium") &&
         Config.repeatQuotes === "typing" &&
         failReason !== ""
       ) {
@@ -23094,7 +23094,7 @@ export function restart(
         PaceCaret.init();
       }
       failReason = "";
-      if (Config.mode === "quote") {
+      if ((Config.mode === "quote" || Config.mode === "medium")) {
         setRepeated(false);
       }
       if (Config.keymapMode !== "off") {
@@ -23184,7 +23184,7 @@ async function getNextWord(wordset, language, wordsBound) {
   let randomWord = wordset.randomWord();
   const previousWord = words.get(words.length - 1, true);
   const previousWord2 = words.get(words.length - 2, true);
-  if (Config.mode === "quote") {
+  if ((Config.mode === "quote" || Config.mode === "medium")) {
     randomWord = randomQuote.textSplit[words.length];
   } else if (
     Config.mode == "custom" &&
@@ -23299,7 +23299,7 @@ export async function init() {
 
   let wordsBound = 100;
   if (Config.showAllLines) {
-    if (Config.mode === "quote") {
+    if ((Config.mode === "quote" || Config.mode === "medium")) {
       wordsBound = 100;
     } else if (Config.mode === "custom") {
       if (CustomText.isWordRandom) {
@@ -23660,7 +23660,7 @@ export async function addWord() {
       !CustomText.isWordRandom &&
       !CustomText.isTimeRandom &&
       words.length >= CustomText.text.length) ||
-    (Config.mode === "quote" && words.length >= randomQuote.textSplit.length)
+    ((Config.mode === "quote" || Config.mode === "medium") && words.length >= randomQuote.textSplit.length)
   )
     return;
   const language =
@@ -23886,7 +23886,7 @@ function buildCompletedEvent(difficultyFailed) {
     completedEvent.chartData.err.push(TestStats.keypressPerSecond[i].errors);
   }
 
-  if (Config.mode === "quote") {
+  if ((Config.mode === "quote" || Config.mode === "medium")) {
     completedEvent.quoteLength = randomQuote.group;
     completedEvent.lang = Config.language.replace(/_\d*k$/g, "");
   }
@@ -25252,7 +25252,7 @@ $(document).on("keypress", "#restartTestButton", (event) => {
     if (
       TestLogic.active &&
       Config.repeatQuotes === "typing" &&
-      Config.mode === "quote"
+      (Config.mode === "quote" || Config.mode === "medium")
     ) {
       TestLogic.restart(true);
     } else {
@@ -25267,7 +25267,7 @@ $(document.body).on("click", "#restartTestButton", () => {
   if (
     TestLogic.active &&
     Config.repeatQuotes === "typing" &&
-    Config.mode === "quote"
+    (Config.mode === "quote" || Config.mode === "medium")
   ) {
     TestLogic.restart(true);
   } else {
@@ -25912,7 +25912,7 @@ export function update() {
   } else if (
     (Config.mode === "words" || Config.mode === "easy") ||
     Config.mode === "custom" ||
-    Config.mode === "quote"
+    (Config.mode === "quote" || Config.mode === "medium")
   ) {
     let outof = TestLogic.words.length;
     if ((Config.mode === "words" || Config.mode === "easy")) {
@@ -25925,7 +25925,7 @@ export function update() {
         outof = CustomText.text.length;
       }
     }
-    if (Config.mode === "quote") {
+    if ((Config.mode === "quote" || Config.mode === "medium")) {
       outof = TestLogic?.randomQuote?.textSplit?.length ?? 1;
     }
     if (Config.timerStyle === "bar") {
@@ -26460,7 +26460,7 @@ function updateTags(dontSave) {
 function updateTestType() {
   let testType = "";
 
-  if (Config.mode === "quote") {
+  if ((Config.mode === "quote" || Config.mode === "medium")) {
     let qlen = "";
     if (Config.quoteLength === 0) {
       qlen = "short ";
@@ -26562,7 +26562,7 @@ function updateOther(
 }
 
 export function updateRateQuote(randomQuote) {
-  if (Config.mode === "quote") {
+  if ((Config.mode === "quote" || Config.mode === "medium")) {
     let userqr = DB.getSnapshot().quoteRatings?.[randomQuote.language]?.[
       randomQuote.id
     ];
@@ -26586,7 +26586,7 @@ export function updateRateQuote(randomQuote) {
 }
 
 function updateQuoteSource(randomQuote) {
-  if (Config.mode === "quote") {
+  if ((Config.mode === "quote" || Config.mode === "medium")) {
     $("#result .stats .source").removeClass("hidden");
     $("#result .stats .source .bottom").html(randomQuote.source);
   } else {

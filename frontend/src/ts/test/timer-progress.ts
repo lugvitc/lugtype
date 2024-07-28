@@ -139,7 +139,8 @@ export function update(): void {
     Config.mode === "words" ||
     Config.mode === "easy" ||
     Config.mode === "custom" ||
-    Config.mode === "quote"
+    Config.mode === "quote" ||
+    Config.mode === "medium"
   ) {
     let outof = TestWords.words.length;
     if (Config.mode === "words" || Config.mode === "easy") {
@@ -148,7 +149,7 @@ export function update(): void {
     if (Config.mode === "custom") {
       outof = CustomText.getLimitValue();
     }
-    if (Config.mode === "quote") {
+    if (Config.mode === "quote" || Config.mode === "medium") {
       outof = TestWords.currentQuote?.textSplit.length ?? 1;
     }
     if (Config.timerStyle === "bar") {

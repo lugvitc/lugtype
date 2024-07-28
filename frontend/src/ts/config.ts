@@ -76,7 +76,7 @@ export function setNumbers(numb: boolean, nosave?: boolean): boolean {
     return false;
   }
 
-  if (config.mode === "quote") {
+  if (config.mode === "quote" || config.mode === "medium") {
     numb = false;
   }
   config.numbers = numb;
@@ -94,7 +94,7 @@ export function setPunctuation(punc: boolean, nosave?: boolean): boolean {
     return false;
   }
 
-  if (config.mode === "quote") {
+  if (config.mode === "quote" || config.mode === "medium") {
     punc = false;
   }
   config.punctuation = punc;
@@ -131,7 +131,7 @@ export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
   if (config.mode === "custom") {
     setPunctuation(false, true);
     setNumbers(false, true);
-  } else if (config.mode === "quote") {
+  } else if (config.mode === "quote" || config.mode === "medium") {
     setPunctuation(false, true);
     setNumbers(false, true);
   } else if (config.mode === "zen") {
@@ -141,9 +141,6 @@ export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
   } else if (config.mode === "easy") {
     setPunctuation(false);
     setNumbers(false);
-  } else if (config.mode === "medium") {
-    setPunctuation(true);
-    setNumbers(true);
   } else if (config.mode === "onerandom") {
     setPunctuation(true);
     setNumbers(true);

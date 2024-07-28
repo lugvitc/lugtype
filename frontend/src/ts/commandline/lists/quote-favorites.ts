@@ -16,7 +16,7 @@ const commands: MonkeyTypes.Command[] = [
       return (
         isAuthenticated() &&
         quote !== null &&
-        Config.mode === "quote" &&
+        (Config.mode === "quote" || Config.mode === "medium") &&
         !QuotesController.isQuoteFavorite(quote)
       );
     },
@@ -48,7 +48,7 @@ const commands: MonkeyTypes.Command[] = [
       return (
         isAuthenticated() &&
         quote !== null &&
-        Config.mode === "quote" &&
+        (Config.mode === "quote" || Config.mode === "medium") &&
         QuotesController.isQuoteFavorite(quote)
       );
     },

@@ -34,7 +34,11 @@ ConfigEvent.subscribe((eventKey) => {
 export async function update(): Promise<void> {
   $(".pageTest #testModesNotice").empty();
 
-  if (TestState.isRepeated && Config.mode !== "quote") {
+  if (
+    TestState.isRepeated &&
+    Config.mode !== "quote" &&
+    Config.mode !== "medium"
+  ) {
     $(".pageTest #testModesNotice").append(
       `<div class="textButton noInteraction" style="color:var(--error-color);"><i class="fas fa-sync-alt"></i>repeated</div>`
     );
@@ -91,7 +95,12 @@ export async function update(): Promise<void> {
     );
   }
 
-  if (Config.mode !== "zen") {
+  if (
+    Config.mode !== "zen" &&
+    Config.mode !== "easy" &&
+    Config.mode !== "medium" &&
+    Config.mode !== "onerandom"
+  ) {
     $(".pageTest #testModesNotice").append(
       `<button class="textButton" commands="languages"><i class="fas fa-globe-americas"></i>${getLanguageDisplayString(
         Config.language,

@@ -203,7 +203,7 @@ export function restart(options = {} as RestartOptions): void {
   }
 
   if (
-    Config.mode === "quote" &&
+    (Config.mode === "quote" || Config.mode === "medium") &&
     TestWords.currentQuote !== null &&
     Config.language.startsWith(TestWords.currentQuote.language) &&
     Config.repeatQuotes === "typing" &&
@@ -214,6 +214,14 @@ export function restart(options = {} as RestartOptions): void {
 
   if (Config.mode === "easy") {
     UpdateConfig.setWordCount(10);
+  }
+
+  if (Config.mode === "medium") {
+    if (Config.language !== "code_c++") {
+      UpdateConfig.setLanguage("code_c++");
+    }
+  } else if (Config.language === "code_c++") {
+    UpdateConfig.setLanguage("english");
   }
 
   if (
@@ -414,7 +422,7 @@ export async function init(): Promise<void> {
     await Funbox.activate();
   }
 
-  if (Config.mode === "quote") {
+  if (Config.mode === "quote" || Config.mode === "medium") {
     if (Config.quoteLength.includes(-3) && !isAuthenticated()) {
       UpdateConfig.setQuoteLength(-1);
     }
@@ -526,7 +534,7 @@ export function areAllTestWordsGenerated(): boolean {
       CustomText.getLimitMode() === "word" &&
       TestWords.words.length >= CustomText.getLimitValue() &&
       CustomText.getLimitValue() !== 0) ||
-    (Config.mode === "quote" &&
+    ((Config.mode === "quote" || Config.mode === "medium") &&
       TestWords.words.length >=
         (TestWords.currentQuote?.textSplit?.length ?? 0)) ||
     (Config.mode === "custom" &&
@@ -765,7 +773,7 @@ function buildCompletedEvent(difficultyFailed: boolean): CompletedEvent {
   const duration = parseFloat(stats.time.toString());
   const afkDuration = TestStats.calculateAfkSeconds(duration);
   let language = Config.language;
-  if (Config.mode === "quote") {
+  if (Config.mode === "quote" || Config.mode === "medium") {
     language = Strings.removeLanguageSize(Config.language);
   }
 
@@ -817,7 +825,8 @@ function buildCompletedEvent(difficultyFailed: boolean): CompletedEvent {
   } as CompletedEvent;
 
   if (completedEvent.mode !== "custom") delete completedEvent.customText;
-  if (completedEvent.mode !== "quote") delete completedEvent.quoteLength;
+  if (completedEvent.mode !== "quote" && completedEvent.mode !== "medium")
+    delete completedEvent.quoteLength;
 
   return completedEvent;
 }
@@ -828,7 +837,10 @@ export async function finish(difficultyFailed = false): Promise<void> {
   const now = performance.now();
   TestStats.setEnd(now);
 
-  if (TestState.isRepeated && Config.mode === "quote") {
+  if (
+    TestState.isRepeated &&
+    (Config.mode === "quote" || Config.mode === "medium")
+  ) {
     TestState.setRepeated(false);
   }
 
@@ -1295,7 +1307,7 @@ $(".pageTest").on("click", "#restartTestButton", () => {
   if (
     TestState.isActive &&
     Config.repeatQuotes === "typing" &&
-    Config.mode === "quote"
+    (Config.mode === "quote" || Config.mode === "medium")
   ) {
     restart({
       withSameWordset: true,
