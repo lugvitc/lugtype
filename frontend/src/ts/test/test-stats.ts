@@ -179,7 +179,7 @@ export function setStart(s: number): void {
 export function calculateAfkSeconds(testSeconds: number): number {
   let extraAfk = 0;
   if (testSeconds !== undefined) {
-    if (Config.mode === "time") {
+    if (Config.mode === "time" || Config.mode === "onerandom") {
       extraAfk =
         Math.round(testSeconds) - TestInput.keypressCountHistory.length;
     } else {

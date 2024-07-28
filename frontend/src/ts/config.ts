@@ -143,7 +143,7 @@ export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
     setNumbers(false);
   } else if (config.mode === "onerandom") {
     setPunctuation(true);
-    setNumbers(true);
+    setNumbers(false);
   }
   saveToLocalStorage("mode", nosave);
   ConfigEvent.dispatch("mode", config.mode, nosave, previous);

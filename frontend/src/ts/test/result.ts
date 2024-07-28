@@ -650,7 +650,7 @@ function updateTestType(randomQuote: MonkeyTypes.Quote | null): void {
 
   testType += Config.mode;
 
-  if (Config.mode === "time") {
+  if (Config.mode === "time" || Config.mode === "onerandom") {
     testType += " " + Config.time;
   } else if (Config.mode === "words" || Config.mode === "easy") {
     testType += " " + Config.words;

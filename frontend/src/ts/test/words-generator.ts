@@ -634,6 +634,20 @@ export async function generateWords(
     wordList = await getQuoteWordList(language, wordOrder);
   } else if (Config.mode === "zen") {
     wordList = [];
+  } else if (Config.mode === "onerandom") {
+    // generate list of words from special characters
+    const special_characters = "``!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
+    wordList = [];
+    for (let i = 0; i < 1000; i++) {
+      let word = "";
+      for (let i = 0; i < 10; i++) {
+        word +=
+          special_characters[
+            Math.floor(Math.random() * special_characters.length)
+          ] ?? "@";
+      }
+      wordList.push(word);
+    }
   }
 
   const limit = getWordsLimit();
@@ -755,6 +769,7 @@ export async function getNextWord(
 
       if (
         Config.mode === "time" ||
+        Config.mode === "onerandom" ||
         (Config.mode === "custom" && CustomText.getLimitMode() === "time") ||
         (Config.mode === "custom" &&
           CustomText.getLimitMode() === "word" &&

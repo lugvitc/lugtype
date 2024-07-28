@@ -47,6 +47,7 @@ function updateTimer(): void {
   if (timerDebug) console.time("timer progress update");
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     TimerProgress.update();
@@ -86,7 +87,7 @@ function layoutfluid(): void {
   if (timerDebug) console.time("layoutfluid");
   if (
     Config.funbox.split("#").includes("layoutfluid") &&
-    Config.mode === "time"
+    (Config.mode === "time" || Config.mode === "onerandom")
   ) {
     const layouts = Config.customLayoutfluid
       ? Config.customLayoutfluid.split("#")
@@ -149,12 +150,13 @@ function checkIfTimeIsUp(): void {
   if (timerDebug) console.time("times up check");
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     if (
       (Time.get() >= Config.time &&
         Config.time !== 0 &&
-        Config.mode === "time") ||
+        (Config.mode === "time" || Config.mode === "onerandom")) ||
       (Time.get() >= CustomText.getLimitValue() &&
         CustomText.getLimitValue() !== 0 &&
         Config.mode === "custom")
@@ -209,7 +211,9 @@ export async function start(): Promise<void> {
       nextDelay: delay,
     });
     if (
-      (Config.mode === "time" && Config.time < 130 && Config.time > 0) ||
+      ((Config.mode === "time" || Config.mode === "onerandom") &&
+        Config.time < 130 &&
+        Config.time > 0) ||
       ((Config.mode === "words" || Config.mode === "easy") &&
         Config.words < 250 &&
         Config.words > 0)

@@ -46,6 +46,7 @@ export function reset(): void {
   let width = "0vw";
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     width = "100vw";
@@ -103,6 +104,7 @@ export function update(): void {
   const time = Time.get();
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     let maxtime = Config.time;

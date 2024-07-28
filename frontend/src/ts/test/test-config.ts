@@ -38,14 +38,14 @@ export async function instantUpdate(): Promise<void> {
     $("#testConfig .time").removeClass("hidden");
 
     updateExtras("time", Config.time);
-  } else if (Config.mode === "words" || Config.mode === "easy") {
+  } else if (Config.mode === "words") {
     $("#testConfig .puncAndNum").removeClass("hidden");
     $("#testConfig .leftSpacer").removeClass("scrolled");
     $("#testConfig .rightSpacer").removeClass("scrolled");
     $("#testConfig .wordCount").removeClass("hidden");
 
     updateExtras("words", Config.words);
-  } else if (Config.mode === "quote" || Config.mode === "medium") {
+  } else if (Config.mode === "quote") {
     $("#testConfig .rightSpacer").removeClass("scrolled");
     $("#testConfig .quoteLength").removeClass("hidden");
 
@@ -267,7 +267,7 @@ ConfigEvent.subscribe((eventKey, eventValue, _nosave, eventPreviousValue) => {
 
     let m2;
 
-    if (Config.mode === "time") {
+    if (Config.mode === "time" || Config.mode === "onerandom") {
       m2 = Config.time;
     } else if (Config.mode === "words" || Config.mode === "easy") {
       m2 = Config.words;
