@@ -13,7 +13,16 @@ const GET_MODE_STATS_VALIDATION_SCHEMA = {
     .required(),
   mode: joi
     .string()
-    .valid("time", "words", "quote", "zen", "custom")
+    .valid(
+      "time",
+      "words",
+      "quote",
+      "zen",
+      "custom",
+      "easy",
+      "medium",
+      "onerandom"
+    )
     .required(),
   mode2: joi
     .string()

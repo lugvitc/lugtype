@@ -30,7 +30,18 @@ const CONFIG_SCHEMA = joi.object({
   numbers: joi.boolean(),
   words: joi.number().min(0),
   time: joi.number().min(0),
-  mode: joi.string().valid("time", "words", "quote", "zen", "custom"),
+  mode: joi
+    .string()
+    .valid(
+      "time",
+      "words",
+      "quote",
+      "zen",
+      "custom",
+      "easy",
+      "medium",
+      "onerandom"
+    ),
   quoteLength: joi.array().items(joi.number()),
   language: joi
     .string()

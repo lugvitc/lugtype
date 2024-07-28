@@ -111,6 +111,9 @@ async function apply(): Promise<void> {
           quote: {},
           zen: {},
           custom: {},
+          easy: {},
+          medium: {},
+          onerandom: {},
         },
       });
       void Settings.update();
@@ -159,6 +162,9 @@ async function apply(): Promise<void> {
             quote: {},
             zen: {},
             custom: {},
+            easy: {},
+            medium: {},
+            onerandom: {},
           };
         }
       });

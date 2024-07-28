@@ -375,7 +375,7 @@ export function updateCrownType(type: PbCrown.CrownType): void {
 }
 
 export async function updateCrown(dontSave: boolean): Promise<void> {
-  if (Config.mode === "quote" || dontSave) {
+  if (Config.mode === "quote" || Config.mode === "medium" || dontSave) {
     hideCrown();
     return;
   }
@@ -574,6 +574,7 @@ async function updateTags(dontSave: boolean): Promise<void> {
     const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
     if (
       Config.mode !== "quote" &&
+      Config.mode !== "medium" &&
       !dontSave &&
       (await resultCanGetPb()).value
     ) {
@@ -649,11 +650,11 @@ function updateTestType(randomQuote: MonkeyTypes.Quote | null): void {
 
   testType += Config.mode;
 
-  if (Config.mode === "time") {
+  if (Config.mode === "time" || Config.mode === "onerandom") {
     testType += " " + Config.time;
-  } else if (Config.mode === "words") {
+  } else if (Config.mode === "words" || Config.mode === "easy") {
     testType += " " + Config.words;
-  } else if (Config.mode === "quote") {
+  } else if (Config.mode === "quote" || Config.mode === "medium") {
     if (randomQuote?.group !== undefined) {
       testType += " " + ["short", "medium", "long", "thicc"][randomQuote.group];
     }
@@ -711,8 +712,13 @@ function updateOther(
     const extra: string[] = [];
     if (
       result.wpm < 0 ||
-      (result.wpm > 350 && result.mode !== "words" && result.mode2 !== "10") ||
-      (result.wpm > 420 && result.mode === "words" && result.mode2 === "10")
+      (result.wpm > 350 &&
+        result.mode !== "words" &&
+        result.mode !== "easy" &&
+        result.mode2 !== "10") ||
+      (result.wpm > 420 &&
+        (result.mode === "words" || result.mode === "easy") &&
+        result.mode2 === "10")
     ) {
       extra.push("wpm");
     }
@@ -720,8 +726,11 @@ function updateOther(
       result.rawWpm < 0 ||
       (result.rawWpm > 350 &&
         result.mode !== "words" &&
+        result.mode !== "easy" &&
         result.mode2 !== "10") ||
-      (result.rawWpm > 420 && result.mode === "words" && result.mode2 === "10")
+      (result.rawWpm > 420 &&
+        (result.mode === "words" || result.mode === "easy") &&
+        result.mode2 === "10")
     ) {
       extra.push("raw");
     }
@@ -752,7 +761,7 @@ function updateOther(
 }
 
 export function updateRateQuote(randomQuote: MonkeyTypes.Quote | null): void {
-  if (Config.mode === "quote") {
+  if (Config.mode === "quote" || Config.mode === "medium") {
     if (randomQuote === null) {
       console.error(
         "Failed to update quote rating button: randomQuote is null"
@@ -787,7 +796,10 @@ export function updateRateQuote(randomQuote: MonkeyTypes.Quote | null): void {
 function updateQuoteFavorite(randomQuote: MonkeyTypes.Quote | null): void {
   const icon = $(".pageTest #result #favoriteQuoteButton .icon");
 
-  if (Config.mode !== "quote" || !isAuthenticated()) {
+  if (
+    (Config.mode !== "quote" && Config.mode !== "medium") ||
+    !isAuthenticated()
+  ) {
     icon.parent().addClass("hidden");
     return;
   }
@@ -799,8 +811,14 @@ function updateQuoteFavorite(randomQuote: MonkeyTypes.Quote | null): void {
     return;
   }
 
-  quoteLang = Config.mode === "quote" ? randomQuote.language : "";
-  quoteId = Config.mode === "quote" ? randomQuote.id.toString() : "";
+  quoteLang =
+    Config.mode === "quote" || Config.mode === "medium"
+      ? randomQuote.language
+      : "";
+  quoteId =
+    Config.mode === "quote" || Config.mode === "medium"
+      ? randomQuote.id.toString()
+      : "";
 
   const userFav = QuotesController.isQuoteFavorite(randomQuote);
   icon.removeClass(userFav ? "far" : "fas").addClass(userFav ? "fas" : "far");
@@ -808,7 +826,7 @@ function updateQuoteFavorite(randomQuote: MonkeyTypes.Quote | null): void {
 }
 
 function updateQuoteSource(randomQuote: MonkeyTypes.Quote | null): void {
-  if (Config.mode === "quote") {
+  if (Config.mode === "quote" || Config.mode === "medium") {
     $("#result .stats .source").removeClass("hidden");
     $("#result .stats .source .bottom").html(
       randomQuote?.source ?? "Error: Source unknown"

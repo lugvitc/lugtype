@@ -135,11 +135,11 @@ export function loadTestSettingsFromUrl(getOverride?: string): void {
   }
 
   if (de[1] !== null) {
-    if (Config.mode === "time") {
+    if (Config.mode === "time" || Config.mode === "onerandom") {
       UpdateConfig.setTimeConfig(parseInt(de[1], 10), true);
-    } else if (Config.mode === "words") {
+    } else if (Config.mode === "words" || Config.mode === "easy") {
       UpdateConfig.setWordCount(parseInt(de[1], 10), true);
-    } else if (Config.mode === "quote") {
+    } else if (Config.mode === "quote" || Config.mode === "medium") {
       UpdateConfig.setQuoteLength(-2, false);
       TestState.setSelectedQuoteId(parseInt(de[1], 10));
       ManualRestart.set();

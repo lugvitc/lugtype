@@ -318,7 +318,9 @@ async function handleSpace(): Promise<void> {
     Config.mode === "words" ||
     Config.mode === "custom" ||
     Config.mode === "quote" ||
-    Config.mode === "zen"
+    Config.mode === "zen" ||
+    Config.mode === "easy" ||
+    Config.mode === "medium"
   ) {
     TimerProgress.update();
   }
@@ -326,7 +328,10 @@ async function handleSpace(): Promise<void> {
     Config.mode === "time" ||
     Config.mode === "words" ||
     Config.mode === "custom" ||
-    Config.mode === "quote"
+    Config.mode === "quote" ||
+    Config.mode === "easy" ||
+    Config.mode === "medium" ||
+    Config.mode === "onerandom"
   ) {
     await TestLogic.addWord();
   }

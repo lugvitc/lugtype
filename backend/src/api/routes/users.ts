@@ -177,7 +177,16 @@ router.patch(
     body: {
       mode: joi
         .string()
-        .valid("time", "words", "quote", "zen", "custom")
+        .valid(
+          "time",
+          "words",
+          "quote",
+          "zen",
+          "custom",
+          "easy",
+          "medium",
+          "onerandom"
+        )
         .required(),
       mode2: joi
         .string()
@@ -434,7 +443,16 @@ router.get(
     query: {
       mode: joi
         .string()
-        .valid("time", "words", "quote", "zen", "custom")
+        .valid(
+          "time",
+          "words",
+          "quote",
+          "zen",
+          "custom",
+          "easy",
+          "medium",
+          "onerandom"
+        )
         .required(),
       mode2: joi.string().regex(/^(\d)+|custom|zen/),
     },

@@ -71,7 +71,16 @@ const RESULT_SCHEMA = joi
     lazyMode: joi.boolean().required(),
     mode: joi
       .string()
-      .valid("time", "words", "quote", "zen", "custom")
+      .valid(
+        "time",
+        "words",
+        "quote",
+        "zen",
+        "custom",
+        "easy",
+        "medium",
+        "onerandom"
+      )
       .required(),
     mode2: joi
       .string()

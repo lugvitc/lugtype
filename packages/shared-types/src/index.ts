@@ -254,6 +254,9 @@ export interface ResultFilters {
     quote: boolean;
     zen: boolean;
     custom: boolean;
+    easy: boolean;
+    medium: boolean;
+    onerandom: boolean;
   };
   words: {
     "10": boolean;

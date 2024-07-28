@@ -224,7 +224,8 @@ export function canQuickRestart(
   customTextIsLong: boolean
 ): boolean {
   const wordsLong = mode === "words" && (words >= 1000 || words === 0);
-  const timeLong = mode === "time" && (time >= 900 || time === 0);
+  const timeLong =
+    (mode === "time" || mode === "onerandom") && (time >= 900 || time === 0);
   const customTextLong = mode === "custom" && customTextIsLong;
 
   const customTextRandomWordsLong =
@@ -385,7 +386,7 @@ export function getMode2<M extends keyof PersonalBests>(
   const mode = config.mode;
   let retVal: string;
 
-  if (mode === "time") {
+  if (mode === "time" || mode === "onerandom") {
     retVal = config.time.toString();
   } else if (mode === "words") {
     retVal = config.words.toString();
@@ -393,8 +394,10 @@ export function getMode2<M extends keyof PersonalBests>(
     retVal = "custom";
   } else if (mode === "zen") {
     retVal = "zen";
-  } else if (mode === "quote") {
+  } else if (mode === "quote" || mode === "medium") {
     retVal = `${randomQuote?.id ?? -1}`;
+  } else if (mode === "easy") {
+    retVal = config.words.toString();
   } else {
     throw new Error("Invalid mode");
   }

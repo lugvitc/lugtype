@@ -76,7 +76,7 @@ export function setNumbers(numb: boolean, nosave?: boolean): boolean {
     return false;
   }
 
-  if (config.mode === "quote") {
+  if (config.mode === "quote" || config.mode === "medium") {
     numb = false;
   }
   config.numbers = numb;
@@ -94,7 +94,7 @@ export function setPunctuation(punc: boolean, nosave?: boolean): boolean {
     return false;
   }
 
-  if (config.mode === "quote") {
+  if (config.mode === "quote" || config.mode === "medium") {
     punc = false;
   }
   config.punctuation = punc;
@@ -107,7 +107,16 @@ export function setPunctuation(punc: boolean, nosave?: boolean): boolean {
 export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
   if (
     !isConfigValueValid("mode", mode, [
-      ["time", "words", "quote", "zen", "custom"],
+      [
+        "time",
+        "words",
+        "quote",
+        "zen",
+        "easy",
+        "medium",
+        "onerandom",
+        "custom",
+      ],
     ])
   ) {
     return false;
@@ -122,13 +131,19 @@ export function setMode(mode: ConfigTypes.Mode, nosave?: boolean): boolean {
   if (config.mode === "custom") {
     setPunctuation(false, true);
     setNumbers(false, true);
-  } else if (config.mode === "quote") {
+  } else if (config.mode === "quote" || config.mode === "medium") {
     setPunctuation(false, true);
     setNumbers(false, true);
   } else if (config.mode === "zen") {
     if (config.paceCaret !== "off") {
       Notifications.add(`Pace caret will not work with zen mode.`, 0);
     }
+  } else if (config.mode === "easy") {
+    setPunctuation(false);
+    setNumbers(false);
+  } else if (config.mode === "onerandom") {
+    setPunctuation(true);
+    setNumbers(false);
   }
   saveToLocalStorage("mode", nosave);
   ConfigEvent.dispatch("mode", config.mode, nosave, previous);

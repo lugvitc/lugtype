@@ -12,7 +12,15 @@ export type CaretStyle =
   | "carrot"
   | "banana";
 export type Difficulty = "normal" | "expert" | "master";
-export type Mode = "time" | "words" | "quote" | "custom" | "zen";
+export type Mode =
+  | "time"
+  | "words"
+  | "quote"
+  | "custom"
+  | "zen"
+  | "easy"
+  | "medium"
+  | "onerandom";
 export type Mode2<M extends Mode> = M extends M
   ? keyof PersonalBests[M]
   : never;

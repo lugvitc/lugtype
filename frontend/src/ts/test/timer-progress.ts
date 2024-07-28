@@ -46,6 +46,7 @@ export function reset(): void {
   let width = "0vw";
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     width = "100vw";
@@ -103,6 +104,7 @@ export function update(): void {
   const time = Time.get();
   if (
     Config.mode === "time" ||
+    Config.mode === "onerandom" ||
     (Config.mode === "custom" && CustomText.getLimitMode() === "time")
   ) {
     let maxtime = Config.time;
@@ -137,17 +139,19 @@ export function update(): void {
     }
   } else if (
     Config.mode === "words" ||
+    Config.mode === "easy" ||
     Config.mode === "custom" ||
-    Config.mode === "quote"
+    Config.mode === "quote" ||
+    Config.mode === "medium"
   ) {
     let outof = TestWords.words.length;
-    if (Config.mode === "words") {
+    if (Config.mode === "words" || Config.mode === "easy") {
       outof = Config.words;
     }
     if (Config.mode === "custom") {
       outof = CustomText.getLimitValue();
     }
-    if (Config.mode === "quote") {
+    if (Config.mode === "quote" || Config.mode === "medium") {
       outof = TestWords.currentQuote?.textSplit.length ?? 1;
     }
     if (Config.timerStyle === "bar") {

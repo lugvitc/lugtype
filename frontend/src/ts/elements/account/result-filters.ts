@@ -49,6 +49,9 @@ export const defaultResultFilters: ResultFilters = {
     quote: true,
     zen: true,
     custom: true,
+    easy: true,
+    medium: true,
+    onerandom: true,
   },
   words: {
     "10": true,
@@ -650,14 +653,14 @@ $(".pageAccount .topFilters button.currentConfigFilter").on("click", () => {
     } else {
       filters.time.custom = true;
     }
-  } else if (Config.mode === "words") {
+  } else if (Config.mode === "words" || Config.mode === "easy") {
     if ([10, 25, 50, 100, 200].includes(Config.words)) {
       const configWords = Config.words as MonkeyTypes.DefaultWordsModes;
       filters.words[configWords] = true;
     } else {
       filters.words.custom = true;
     }
-  } else if (Config.mode === "quote") {
+  } else if (Config.mode === "quote" || Config.mode === "medium") {
     const filterName: MonkeyTypes.Filter<"quoteLength">[] = [
       "short",
       "medium",
@@ -682,7 +685,10 @@ $(".pageAccount .topFilters button.currentConfigFilter").on("click", () => {
   } else {
     filters.numbers.off = true;
   }
-  if (Config.mode === "quote" && /english.*/.test(Config.language)) {
+  if (
+    (Config.mode === "quote" || Config.mode === "medium") &&
+    /english.*/.test(Config.language)
+  ) {
     filters.language["english"] = true;
   } else {
     filters.language[Config.language] = true;

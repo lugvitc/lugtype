@@ -38,7 +38,10 @@ export async function replace(
 
     if (!replacement) return word;
 
-    if (Config.mode === "quote" && replacement[2]?.includes(previousWord)) {
+    if (
+      (Config.mode === "quote" || Config.mode === "medium") &&
+      replacement[2]?.includes(previousWord)
+    ) {
       return word;
     }
 

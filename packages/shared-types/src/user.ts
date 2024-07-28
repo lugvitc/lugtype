@@ -20,4 +20,7 @@ export type PersonalBests = {
   quote: Record<StringNumber, PersonalBest[]>;
   custom: Partial<Record<"custom", PersonalBest[]>>;
   zen: Partial<Record<"zen", PersonalBest[]>>;
+  easy: Record<StringNumber, PersonalBest[]>;
+  medium: Record<StringNumber, PersonalBest[]>;
+  onerandom: Record<StringNumber, PersonalBest[]>;
 };
