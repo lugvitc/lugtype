@@ -1,0 +1,1 @@
+import{l as e}from"./misc.BNae4R43.js";/* empty css              */import"./vendor.DzUv717B.js";e("/css/fa.min.css",!0);document.getElementById("page404").classList.remove("hidden");document.getElementById("page404").classList.remove("hidden");document.querySelector("header").classList.add("focus");document.title="404 Not Found | Monkeytype";

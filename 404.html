@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <script>
+    document.addEventListener("keydown", function (e) {
+      if (e.key == "Escape") e.preventDefault();
+    });
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lugtype | A minimalistic, customizable typing test</title>
+  <!-- default colors in case theme file fails to load -->
+  <style>
+    :root {
+      --bg-color: #323437;
+      --main-color: #e2b714;
+      --caret-color: #e2b714;
+      --sub-color: #646669;
+      --sub-alt-color: #2c2e31;
+      --text-color: #d1d0c5;
+      --error-color: #ca4754;
+      --error-extra-color: #7e2a33;
+      --colorful-error-color: #ca4754;
+      --colorful-error-extra-color: #7e2a33;
+    }
+  </style>
+  <link
+    rel="icon"
+    type="image/x-icon"
+    sizes="32x32"
+    href="/images/favicon/favicon.ico"
+  />
+  <link
+    id="favicon"
+    rel="shortcut icon"
+    type="image/svg+xml"
+    href="/images/favicon/favicon.svg"
+  />
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="/images/favicon/apple-touch-icon.png"
+  />
+  <link
+    rel="mask-icon"
+    href="/images/favicon/safari-pinned-tab.svg"
+    color="#eee"
+  />
+  <meta name="msapplication-TileColor" content="#e2b714" />
+  <meta
+    name="msapplication-config"
+    content="/images/favicon/browserconfig.xml"
+  />
+  <meta id="metaThemeColor" name="theme-color" content="#e2b714" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta
+    name="name"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta name="image" content="https://monkeytype.com/images/mtsocial.png" />
+  <meta
+    name="description"
+    content="The most customizable typing test website with a minimal design and a ton of features. Test yourself in various modes, track your progress and improve your speed."
+  />
+  <meta
+    name="keywords"
+    content="typing speed test, typing speedtest, typing test, speedtest, speed test, typing, test, typing-test, typing test, monkey-type, monkeytype, monkey type, monkey-types, monkeytypes, monkey types, types, monkey, type, miodec, wpm, words per minute, typing website, minimalistic, custom typing test, customizable, customisable, themes, random words, smooth caret, smooth, new, new typing site, new typing website, minimalist typing website, minimalistic typing website, minimalist typing test"
+  />
+  <meta name="author" content="Miodec" />
+  <meta
+    property="og:title"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta property="og:url" content="https://type.lugvitc.net/" />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:image"
+    content="https://monkeytype.com/images/mtsocial.png"
+  />
+  <meta
+    property="og:description"
+    content="The most customizable typing test website with a minimal design and a ton of features. Test yourself in various modes, track your progress and improve your speed."
+  />
+  <meta
+    name="twitter:title"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta
+    name="twitter:image"
+    content="https://monkeytype.com/images/mtsocial.png"
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="darkreader-lock" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <script async type="module" crossorigin src="/js/404.D25Vg9gx.js"></script>
+  <link rel="modulepreload" crossorigin href="/js/vendor.DzUv717B.js">
+  <link rel="modulepreload" crossorigin href="/js/misc.BNae4R43.js">
+  <link rel="stylesheet" crossorigin href="/css/index.B1emN-I3.css">
+<link rel="manifest" href="/manifest.json"></head>
+
+  <body>
+    <noscript>
+  <div
+    style="
+      background: #333;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      position: fixed;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      color: #646669;
+      font-size: 1rem;
+      font-family: Arial Rounded MT Bold;
+      z-index: 99999;
+      padding: 6rem;
+      box-sizing: border-box;
+    "
+  >
+    <div
+      style="
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        max-width: 800px;
+        gap: 1rem;
+      "
+    >
+      <span style="font-size: 6rem; color: #e2b714">:(</span>
+      <span style="font-size: 2rem; color: #d1d0c5">
+        Looks like JavaScript is disabled. Please enable JavaScript in order to
+        use this website.
+      </span>
+    </div>
+  </div>
+</noscript>
+<div
+  id="nocss"
+  style="
+    background: #333;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    position: fixed;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    color: #646669;
+    font-size: 1rem;
+    font-family: Arial Rounded MT Bold;
+    z-index: 99999;
+    padding: 6rem;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  "
+>
+  <style>
+    .noCssReinstallServiceWorker {
+      margin-top: 1rem;
+      padding: 1rem;
+      display: inline-block;
+      border-radius: 1rem;
+      background: #2c2e31;
+      transition: 0.125s;
+    }
+    .noCssReinstallServiceWorker:hover {
+      background: #d1d0c5;
+      color: #333;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+           user-select: none;
+    }
+    .noCssReinstallServiceWorker:active {
+      background: #646669;
+    }
+  </style>
+  <script>
+    function reinstallServiceWorker() {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+        caches.keys().then((cacheNames) => {
+          for (let cacheName of cacheNames) {
+            caches.delete(cacheName);
+          }
+        });
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
+    }
+  </script>
+  <div
+    style="
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      max-width: 800px;
+      gap: 1rem;
+    "
+  >
+    <span style="font-size: 6rem; color: #e2b714">:(</span>
+    <span style="font-size: 1.5rem; color: #d1d0c5">
+      It seems like the CSS failed to load. Please try clearing your cache to
+      redownload the styles:
+      <br />
+      <span class="keys">
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          "
+        >
+          Ctrl
+        </span>
+        /
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          Cmd
+        </span>
+        +
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          Shift
+        </span>
+        +
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          R
+        </span>
+      </span>
+      <br />
+      You could also try to reinstall the service worker:
+      <br />
+      <span
+        class="noCssReinstallServiceWorker"
+        onclick="reinstallServiceWorker()"
+        style="margin-bottom: 1rem"
+      >
+        Reinstall
+      </span>
+      <br />
+      Various dark mode extensions are also known to cause this issue.
+    </span>
+    <span>
+      If that doesn't help contact support (support@monkeytype.com or
+      discord.gg/monkeytype)
+    </span>
+    <span class="requestedStylesheets">
+      If the website works for a bit but then this screen comes back, clear your
+      cache again and then on Monkeytype open the command line (esc) and search
+      for "Clear SW cache".
+    </span>
+    <span class="requestedJs"></span>
+  </div>
+</div>
+
+    <div id="app" class="content-grid focus">
+      <header class="focus">
+        <a id="logo" href="/" router-link="">
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              style="isolation: isolate"
+              viewBox="-680 -1030 300 180"
+            >
+              <g>
+                <path
+                  d="M -430 -910 L -430 -910 C -424.481 -910 -420 -905.519 -420 -900 L -420 -900 C -420 -894.481 -424.481 -890 -430 -890 L -430 -890 C -435.519 -890 -440 -894.481 -440 -900 L -440 -900 C -440 -905.519 -435.519 -910 -430 -910 Z"
+                ></path>
+                <path
+                  d=" M -570 -910 L -510 -910 C -504.481 -910 -500 -905.519 -500 -900 L -500 -900 C -500 -894.481 -504.481 -890 -510 -890 L -570 -890 C -575.519 -890 -580 -894.481 -580 -900 L -580 -900 C -580 -905.519 -575.519 -910 -570 -910 Z "
+                ></path>
+                <path
+                  d="M -590 -970 L -590 -970 C -584.481 -970 -580 -965.519 -580 -960 L -580 -940 C -580 -934.481 -584.481 -930 -590 -930 L -590 -930 C -595.519 -930 -600 -934.481 -600 -940 L -600 -960 C -600 -965.519 -595.519 -970 -590 -970 Z"
+                ></path>
+                <path
+                  d=" M -639.991 -960.515 C -639.72 -976.836 -626.385 -990 -610 -990 L -610 -990 C -602.32 -990 -595.31 -987.108 -590 -982.355 C -584.69 -987.108 -577.68 -990 -570 -990 L -570 -990 C -553.615 -990 -540.28 -976.836 -540.009 -960.515 C -540.001 -960.345 -540 -960.172 -540 -960 L -540 -960 L -540 -940 C -540 -934.481 -544.481 -930 -550 -930 L -550 -930 C -555.519 -930 -560 -934.481 -560 -940 L -560 -960 L -560 -960 C -560 -965.519 -564.481 -970 -570 -970 C -575.519 -970 -580 -965.519 -580 -960 L -580 -960 L -580 -960 L -580 -940 C -580 -934.481 -584.481 -930 -590 -930 L -590 -930 C -595.519 -930 -600 -934.481 -600 -940 L -600 -960 L -600 -960 L -600 -960 L -600 -960 L -600 -960 L -600 -960 L -600 -960 L -600 -960 C -600 -965.519 -604.481 -970 -610 -970 C -615.519 -970 -620 -965.519 -620 -960 L -620 -960 L -620 -940 C -620 -934.481 -624.481 -930 -630 -930 L -630 -930 C -635.519 -930 -640 -934.481 -640 -940 L -640 -960 L -640 -960 C -640 -960.172 -639.996 -960.344 -639.991 -960.515 Z "
+                ></path>
+                <path
+                  d=" M -460 -930 L -460 -900 C -460 -894.481 -464.481 -890 -470 -890 L -470 -890 C -475.519 -890 -480 -894.481 -480 -900 L -480 -930 L -508.82 -930 C -514.99 -930 -520 -934.481 -520 -940 L -520 -940 C -520 -945.519 -514.99 -950 -508.82 -950 L -431.18 -950 C -425.01 -950 -420 -945.519 -420 -940 L -420 -940 C -420 -934.481 -425.01 -930 -431.18 -930 L -460 -930 Z "
+                ></path>
+                <path
+                  d="M -470 -990 L -430 -990 C -424.481 -990 -420 -985.519 -420 -980 L -420 -980 C -420 -974.481 -424.481 -970 -430 -970 L -470 -970 C -475.519 -970 -480 -974.481 -480 -980 L -480 -980 C -480 -985.519 -475.519 -990 -470 -990 Z"
+                ></path>
+                <path
+                  d=" M -630 -910 L -610 -910 C -604.481 -910 -600 -905.519 -600 -900 L -600 -900 C -600 -894.481 -604.481 -890 -610 -890 L -630 -890 C -635.519 -890 -640 -894.481 -640 -900 L -640 -900 C -640 -905.519 -635.519 -910 -630 -910 Z "
+                ></path>
+                <path
+                  d=" M -515 -990 L -510 -990 C -504.481 -990 -500 -985.519 -500 -980 L -500 -980 C -500 -974.481 -504.481 -970 -510 -970 L -515 -970 C -520.519 -970 -525 -974.481 -525 -980 L -525 -980 C -525 -985.519 -520.519 -990 -515 -990 Z "
+                ></path>
+                <path
+                  d=" M -660 -910 L -680 -910 L -680 -980 C -680 -1007.596 -657.596 -1030 -630 -1030 L -430 -1030 C -402.404 -1030 -380 -1007.596 -380 -980 L -380 -900 C -380 -872.404 -402.404 -850 -430 -850 L -630 -850 C -657.596 -850 -680 -872.404 -680 -900 L -680 -920 L -660 -920 L -660 -900 C -660 -883.443 -646.557 -870 -630 -870 L -430 -870 C -413.443 -870 -400 -883.443 -400 -900 L -400 -980 C -400 -996.557 -413.443 -1010 -430 -1010 L -630 -1010 C -646.557 -1010 -660 -996.557 -660 -980 L -660 -910 Z "
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <h1 class="text">
+            <div class="top">monkey see</div>
+            monkeytype
+          </h1>
+        </a>
+      </header>
+      <main style="height: 100%">
+        <div class="page page404 hidden" id="page404">
+  <div class="content">
+    <div class="image"></div>
+    <div class="side">
+      <div class="title">404</div>
+      <div>Ooops! Looks like this page or resource doesn't exist.</div>
+      <a href="/" class="button" router-link>
+        <i class="fas fa-home"></i>
+        Go Home
+      </a>
+    </div>
+  </div>
+</div>
+
+      </main>
+    </div>
+    <link rel="stylesheet" href="/themes/lugvitc.css" id="currentTheme" />
+  </body>
+</html>

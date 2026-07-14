@@ -1,0 +1,5418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <script>
+    document.addEventListener("keydown", function (e) {
+      if (e.key == "Escape") e.preventDefault();
+    });
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lugtype | A minimalistic, customizable typing test</title>
+  <!-- default colors in case theme file fails to load -->
+  <style>
+    :root {
+      --bg-color: #323437;
+      --main-color: #e2b714;
+      --caret-color: #e2b714;
+      --sub-color: #646669;
+      --sub-alt-color: #2c2e31;
+      --text-color: #d1d0c5;
+      --error-color: #ca4754;
+      --error-extra-color: #7e2a33;
+      --colorful-error-color: #ca4754;
+      --colorful-error-extra-color: #7e2a33;
+    }
+  </style>
+  <link
+    rel="icon"
+    type="image/x-icon"
+    sizes="32x32"
+    href="/images/favicon/favicon.ico"
+  />
+  <link
+    id="favicon"
+    rel="shortcut icon"
+    type="image/svg+xml"
+    href="/images/favicon/favicon.svg"
+  />
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="/images/favicon/apple-touch-icon.png"
+  />
+  <link
+    rel="mask-icon"
+    href="/images/favicon/safari-pinned-tab.svg"
+    color="#eee"
+  />
+  <meta name="msapplication-TileColor" content="#e2b714" />
+  <meta
+    name="msapplication-config"
+    content="/images/favicon/browserconfig.xml"
+  />
+  <meta id="metaThemeColor" name="theme-color" content="#e2b714" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta
+    name="name"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta name="image" content="https://monkeytype.com/images/mtsocial.png" />
+  <meta
+    name="description"
+    content="The most customizable typing test website with a minimal design and a ton of features. Test yourself in various modes, track your progress and improve your speed."
+  />
+  <meta
+    name="keywords"
+    content="typing speed test, typing speedtest, typing test, speedtest, speed test, typing, test, typing-test, typing test, monkey-type, monkeytype, monkey type, monkey-types, monkeytypes, monkey types, types, monkey, type, miodec, wpm, words per minute, typing website, minimalistic, custom typing test, customizable, customisable, themes, random words, smooth caret, smooth, new, new typing site, new typing website, minimalist typing website, minimalistic typing website, minimalist typing test"
+  />
+  <meta name="author" content="Miodec" />
+  <meta
+    property="og:title"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta property="og:url" content="https://type.lugvitc.net/" />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:image"
+    content="https://monkeytype.com/images/mtsocial.png"
+  />
+  <meta
+    property="og:description"
+    content="The most customizable typing test website with a minimal design and a ton of features. Test yourself in various modes, track your progress and improve your speed."
+  />
+  <meta
+    name="twitter:title"
+    content="Lugtype | A minimalistic, customizable typing test"
+  />
+  <meta
+    name="twitter:image"
+    content="https://monkeytype.com/images/mtsocial.png"
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="darkreader-lock" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <script type="module" crossorigin src="/js/monkeytype.ZhUWr3Qt.js"></script>
+  <link rel="modulepreload" crossorigin href="/js/vendor.DzUv717B.js">
+  <link rel="modulepreload" crossorigin href="/js/misc.BNae4R43.js">
+  <link rel="modulepreload" crossorigin href="/js/firebase.DEPKAGWU.js">
+  <link rel="stylesheet" crossorigin href="/css/index.B1emN-I3.css">
+<link rel="manifest" href="/manifest.json"></head>
+
+
+  <body>
+    <div id="mediaQueryDebug"></div>
+    <noscript>
+  <div
+    style="
+      background: #333;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      position: fixed;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      color: #646669;
+      font-size: 1rem;
+      font-family: Arial Rounded MT Bold;
+      z-index: 99999;
+      padding: 6rem;
+      box-sizing: border-box;
+    "
+  >
+    <div
+      style="
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        max-width: 800px;
+        gap: 1rem;
+      "
+    >
+      <span style="font-size: 6rem; color: #e2b714">:(</span>
+      <span style="font-size: 2rem; color: #d1d0c5">
+        Looks like JavaScript is disabled. Please enable JavaScript in order to
+        use this website.
+      </span>
+    </div>
+  </div>
+</noscript>
+<div
+  id="nocss"
+  style="
+    background: #333;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    position: fixed;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    color: #646669;
+    font-size: 1rem;
+    font-family: Arial Rounded MT Bold;
+    z-index: 99999;
+    padding: 6rem;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  "
+>
+  <style>
+    .noCssReinstallServiceWorker {
+      margin-top: 1rem;
+      padding: 1rem;
+      display: inline-block;
+      border-radius: 1rem;
+      background: #2c2e31;
+      transition: 0.125s;
+    }
+    .noCssReinstallServiceWorker:hover {
+      background: #d1d0c5;
+      color: #333;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+           user-select: none;
+    }
+    .noCssReinstallServiceWorker:active {
+      background: #646669;
+    }
+  </style>
+  <script>
+    function reinstallServiceWorker() {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+        caches.keys().then((cacheNames) => {
+          for (let cacheName of cacheNames) {
+            caches.delete(cacheName);
+          }
+        });
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
+    }
+  </script>
+  <div
+    style="
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      max-width: 800px;
+      gap: 1rem;
+    "
+  >
+    <span style="font-size: 6rem; color: #e2b714">:(</span>
+    <span style="font-size: 1.5rem; color: #d1d0c5">
+      It seems like the CSS failed to load. Please try clearing your cache to
+      redownload the styles:
+      <br />
+      <span class="keys">
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          "
+        >
+          Ctrl
+        </span>
+        /
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          Cmd
+        </span>
+        +
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          Shift
+        </span>
+        +
+        <span
+          style="
+            padding: 1rem;
+            display: inline-block;
+            border-radius: 1rem;
+            background: #2c2e31;
+          "
+        >
+          R
+        </span>
+      </span>
+      <br />
+      You could also try to reinstall the service worker:
+      <br />
+      <span
+        class="noCssReinstallServiceWorker"
+        onclick="reinstallServiceWorker()"
+        style="margin-bottom: 1rem"
+      >
+        Reinstall
+      </span>
+      <br />
+      Various dark mode extensions are also known to cause this issue.
+    </span>
+    <span>
+      If that doesn't help contact support (support@monkeytype.com or
+      discord.gg/monkeytype)
+    </span>
+    <span class="requestedStylesheets">
+      If the website works for a bit but then this screen comes back, clear your
+      cache again and then on Monkeytype open the command line (esc) and search
+      for "Clear SW cache".
+    </span>
+    <span class="requestedJs"></span>
+  </div>
+</div>
+
+    <div id="fpsCounter" class="hidden"></div>
+    <div class="customBackground"></div>
+    <div id="backgroundLoader" style="display: none"></div>
+    <div id="bannerCenter" class="focus"></div>
+    <div id="notificationCenter">
+      <div class="clearAll button invisible" style="display: none">
+        <i class="fas fa-times"></i>
+        Clear all
+      </div>
+      <div class="history"></div>
+    </div>
+    <div id="barTimerProgress" class="timerMain">
+      <div class="opacityWrapper" style="opacity: 0">
+        <div class="bar"></div>
+      </div>
+    </div>
+    <div id="popups">
+      <dialog id="registerCaptchaModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="g-recaptcha"></div>
+  </div>
+</dialog>
+
+<dialog id="devOptionsModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Dev options</div>
+    <button class="generateData">generate data</button>
+    <button class="toggleMediaQueryDebug">toggle media query debug</button>
+    <button class="showTestNotifications">show test notifications</button>
+    <button class="showRealWordsInput">show real words input</button>
+  </div>
+</dialog>
+
+<dialog id="alertsPopup" class="modalWrapper hidden">
+  <div class="modal">
+    <button class="mobileClose">
+      <i class="fas fa-times"></i>
+      Close
+    </button>
+    <div class="scrollWrapper">
+      <div class="accountAlerts">
+        <div class="title">
+          <div class="left">
+            <i class="fas fa-inbox"></i>
+            Inbox
+          </div>
+          <div class="right"></div>
+        </div>
+        <button class="claimAll hidden">
+          <i class="fas fa-fw fa-gift"></i>
+          Claim all
+        </button>
+        <button class="deleteAll hidden">
+          <i class="fas fa-fw fa-trash"></i>
+          Delete all
+        </button>
+        <div class="list">
+          <div class="nothing">Nothing to show</div>
+        </div>
+      </div>
+      <div class="separator accountSeparator"></div>
+      <div class="psas">
+        <div class="title">
+          <i class="fas fa-bullhorn"></i>
+          Announcements
+        </div>
+        <div class="list">
+          <div class="nothing">Nothing to show</div>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="notificationHistory">
+        <div class="title">
+          <i class="fas fa-comment-alt"></i>
+          Notifications
+        </div>
+        <div class="list">
+          <div class="nothing">Nothing to show</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="simpleModal" class="modalWrapper hidden">
+  <form class="modal"></form>
+</dialog>
+
+<dialog id="cookiesModal" class="modalWrapper hidden">
+  <div class="extensionMessage">
+    If you see this text, that means an extension is blocking a cookie consent
+    popup. This will cause the website to incorrectly assume its still visible
+    and stop you from enjoying Monkeytype. Please disable any extensions that
+    block cookie popups and refresh the page.
+  </div>
+  <div class="modal">
+    <div class="title">
+      <i class="fas fa-cookie-bite"></i>
+      We use cookies by the way
+    </div>
+    <div class="main">
+      <div class="text">
+        Cookies enhance your experience and help us improve our website.
+      </div>
+      <div class="buttons">
+        <button class="active acceptAll">accept all</button>
+        <button class="rejectAll">reject non-essential</button>
+        <button class="openSettings">more options</button>
+      </div>
+    </div>
+    <div class="settings hidden">
+      <div class="cookie security">
+        <label class="checkbox">
+          <div class="title">security</div>
+          <div class="description">
+            We use Cloudflare cookies to improve security and performance of our
+            site.
+            <br />
+            <br />
+            They
+            <b>do not</b>
+            store any personal information and are required.
+          </div>
+          <input type="checkbox" checked disabled />
+        </label>
+      </div>
+      <div class="cookie analytics">
+        <label class="checkbox">
+          <div class="title">analytics</div>
+          <div class="description">
+            We use Google Analytics cookies to check how users interact with our
+            website and use this data to improve our site design.
+          </div>
+          <input type="checkbox" />
+        </label>
+      </div>
+      <div class="cookie ads">
+        <label class="checkbox">
+          <div class="title">advertising</div>
+          <div class="description">
+            Our advertising partner may use cookies to deliver ads that are more
+            relevant to you.
+          </div>
+          <div class="textButton">
+            Click to change your preferences on ad related cookies
+          </div>
+        </label>
+      </div>
+      <button class="active acceptSelected">accept selected</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="shareTestSettingsModal" class="modalWrapper hidden">
+  <!-- <div id="shareTestSettingsPopup"> -->
+  <div class="modal">
+    <div class="title">Share test settings</div>
+    <label class="checkboxWithSub mode">
+      <input type="checkbox" setting="mode" />
+      <div>Mode</div>
+      <div class="sub">
+        Time, Words, Quote, Zen, Custom, Easy, Medium, OneRandom
+      </div>
+    </label>
+    <label class="checkboxWithSub mode2 subgroup hidden">
+      <input type="checkbox" setting="mode2" />
+      <div>Mode2</div>
+      <div class="sub">Test seconds, Test words, Quote Id</div>
+    </label>
+    <label class="checkbox customText subgroup hidden">
+      <input type="checkbox" setting="customText" />
+      Custom text
+      <span></span>
+    </label>
+    <label class="checkbox punctuation">
+      <input type="checkbox" setting="punctuation" />
+      Punctuation
+      <span></span>
+    </label>
+    <label class="checkbox numbers">
+      <input type="checkbox" setting="numbers" />
+      Numbers
+      <span></span>
+    </label>
+    <label class="checkbox language">
+      <input type="checkbox" setting="language" />
+      Language
+      <span></span>
+    </label>
+    <label class="checkbox difficulty">
+      <input type="checkbox" setting="difficulty" />
+      Difficulty
+      <span></span>
+    </label>
+    <label class="checkbox funbox">
+      <input type="checkbox" setting="funbox" />
+      Funbox
+      <span></span>
+    </label>
+    <textarea
+      class="url"
+      placeholder="url"
+      value="monkeytype.com"
+      readonly
+    ></textarea>
+    <div class="tooLongWarning hidden">
+      <i class="fas fa-fw fa-exclamation-triangle"></i>
+      <span>The URL is over 2000 characters long - it might not work</span>
+    </div>
+    <!-- </div> -->
+  </div>
+</dialog>
+
+<dialog id="mobileTestConfigModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="group">
+      <button class="punctuation">punctuation</button>
+      <button class="numbers">numbers</button>
+    </div>
+    <div class="group modeGroup">
+      <button data-mode="time">time</button>
+      <button class="active" data-mode="words">words</button>
+      <button data-mode="quote">quote</button>
+      <button data-mode="zen">zen</button>
+      <button data-mode="custom">custom</button>
+      <button data-mode="easy">easy</button>
+      <button data-mode="medium">medium</button>
+      <button data-mode="onerandom">onerandom</button>
+    </div>
+    <div class="group timeGroup">
+      <button data-time="15">15</button>
+      <button class="button active" data-time="30">30</button>
+      <button data-time="60">60</button>
+      <button data-time="120">120</button>
+      <button data-time="custom">custom</button>
+    </div>
+    <div class="group wordsGroup hidden">
+      <button data-words="10">10</button>
+      <button data-words="25">25</button>
+      <button data-words="50">50</button>
+      <button data-words="100">100</button>
+      <button data-words="custom">custom</button>
+    </div>
+    <div class="group quoteGroup hidden">
+      <button data-quoteLength="-1">all</button>
+      <button data-quoteLength="0">short</button>
+      <button data-quoteLength="1">medium</button>
+      <button data-quoteLength="2">long</button>
+      <button data-quoteLength="3">thicc</button>
+      <button id="quote-search-button" data-quoteLength="-2">search</button>
+    </div>
+    <div class="group customGroup hidden">
+      <button class="customChange">change</button>
+    </div>
+  </div>
+</dialog>
+
+<div id="videoAdPopupWrapper" class="popupWrapper hidden">
+  <div id="videoAdPopup">
+    <div class="preloader">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div>
+    <div id="eg-video-player" class="video"></div>
+  </div>
+</div>
+
+<dialog id="pbTablesModal" class="modalWrapper hidden">
+  <div class="modal">
+    <table>
+      <thead>
+        <tr>
+          <td width="1%">words</td>
+          <td>
+            <span class="unit">wpm</span>
+            <br />
+            <span class="sub">accuracy</span>
+          </td>
+          <td>
+            raw
+            <br />
+            <span class="sub">consistency</span>
+          </td>
+          <td>difficulty</td>
+          <td>language</td>
+          <td>punctuation</td>
+          <td>numbers</td>
+          <td>lazy mode</td>
+          <td>date</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</dialog>
+
+<div id="practiseWordsPopupWrapper" class="popupWrapper hidden" tabindex="-1">
+  <div id="practiseWordsPopup" action="">
+    <div class="title">Practice words</div>
+    <div class="text">
+      This will start a new test in custom mode. Words that you mistyped more
+      often or words that you typed much slower will be weighted higher and
+      appear more often.
+    </div>
+    <div class="button missed" tabindex="1">Practice missed</div>
+    <div class="button slow" tabindex="1">Practice slow</div>
+    <div class="button both" tabindex="1">Practice both</div>
+  </div>
+</div>
+
+<dialog id="quoteRateModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="warning">
+      If you find a grammatical error, think the quote has inappropriate
+      language or feel like it's low quality -
+      <span>don't give it a low rating!</span>
+      Please report it instead. You can do so by closing this popup and clicking
+      the "Flag" icon.
+    </div>
+    <div class="quote">
+      <div class="text">-</div>
+      <div class="id">
+        <div class="top">id</div>
+        <div class="val">-</div>
+      </div>
+      <div class="length">
+        <div class="top">length</div>
+        <div class="val">-</div>
+      </div>
+      <div class="source">
+        <div class="top">source</div>
+        <div class="val">-</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="spacer2"></div>
+    <div class="ratingStats">
+      <div class="ratingCount">
+        <div class="top">ratings</div>
+        <div class="val">-</div>
+      </div>
+      <div class="ratingAverage">
+        <div class="top">average</div>
+        <div class="val">-</div>
+      </div>
+      <div class="starsWrapper">
+        <div class="top">your rating</div>
+        <div class="stars">
+          <button class="star" data-rating="1">
+            <i class="fas fa-fw fa-star"></i>
+          </button>
+          <button class="star" data-rating="2">
+            <i class="fas fa-fw fa-star"></i>
+          </button>
+          <button class="star" data-rating="3">
+            <i class="fas fa-fw fa-star"></i>
+          </button>
+          <button class="star" data-rating="4">
+            <i class="fas fa-fw fa-star"></i>
+          </button>
+          <button class="star" data-rating="5">
+            <i class="fas fa-fw fa-star"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="button rate1">
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <div class="button rate2">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <div class="button rate3">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div> -->
+    <button
+      class="textButton submitButton"
+      aria-label="Submit review"
+      data-balloon-pos="up"
+    >
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</dialog>
+
+<dialog id="importExportSettingsModal" class="modalWrapper hidden">
+  <form class="modal" data-mode="">
+    <input type="text" title="import settings" />
+    <button>import settings</button>
+  </form>
+</dialog>
+
+<dialog id="shareCustomThemeUrlModal" class="modalWrapper hidden">
+  <div class="modal">
+    <input type="text" title="custom theme" />
+    <div class="button">ok</div>
+  </div>
+</dialog>
+<dialog id="customTextModal" class="modalWrapper hidden">
+  <div class="modal" action="">
+    <div class="buttonsTop">
+      <div class="button saveCustomText">
+        <i class="fas fa-save"></i>
+        save
+      </div>
+      <div class="button showSavedTexts">
+        <i class="fas fa-folder"></i>
+        saved texts
+      </div>
+      <input id="fileInput" type="file" class="hidden" accept=".txt" />
+      <label for="fileInput" class="button importText">
+        <i class="fas fa-file-import"></i>
+        open file
+      </label>
+      <div class="button wordfilter">
+        <i class="fas fa-filter"></i>
+        words filter
+      </div>
+    </div>
+    <div class="savedTexts hidden" style="display: none">
+      <div class="title">saved texts</div>
+      <div class="buttons"></div>
+    </div>
+    <div class="textAreaWrapper" style="position: relative">
+      <div class="longCustomTextWarning">
+        <div>
+          <p>
+            A long custom text is currently loaded.
+            <br />
+            Editing the text will disable progress tracking.
+            <br />
+            <br />
+          </p>
+          <p class="small">Click anywhere to start editing the text.</p>
+        </div>
+      </div>
+      <div class="challengeWarning">
+        <div>
+          <p>
+            A challenge is currently loaded.
+            <br />
+            Editing the settings will clear the challenge.
+            <br />
+            <br />
+          </p>
+          <p class="small">Click anywhere to edit.</p>
+        </div>
+      </div>
+      <textarea class="textarea"></textarea>
+    </div>
+    <div class="inputs">
+      <div class="group" data-id="mode">
+        <div class="title">
+          <i class="fas fa-fw fa-cog"></i>
+          Mode
+        </div>
+        <div class="sub">Change the way words are generated.</div>
+        <div class="groupInputs">
+          <div class="buttonGroup">
+            <button value="simple">simple</button>
+            <button value="repeat">repeat</button>
+            <button value="shuffle">shuffle</button>
+            <button value="random">random</button>
+          </div>
+        </div>
+      </div>
+      <div class="group" data-id="limit">
+        <div class="title">
+          <i class="fas fa-fw fa-step-forward"></i>
+          Limit
+        </div>
+        <div class="sub">
+          Control how many words to generate or for how long you want to type.
+        </div>
+        <div class="groupInputs limitInputs">
+          <input
+            class="words"
+            type="number"
+            value=""
+            min="0"
+            placeholder="words"
+          />
+          <input
+            class="sections hidden"
+            type="number"
+            value=""
+            min="0"
+            placeholder="sections"
+          />
+          <div class="or">or</div>
+          <input
+            class="time"
+            type="number"
+            value=""
+            min="0"
+            placeholder="time"
+          />
+        </div>
+      </div>
+
+      <div class="group" data-id="fancy">
+        <div class="title">
+          <i class="fas fa-fw fa-pen-fancy"></i>
+          Remove fancy typography
+        </div>
+        <div class="sub">
+          Standardises typography symbols (for example “ and ” become ")
+        </div>
+        <div class="groupInputs">
+          <div class="buttonGroup">
+            <button value="false">no</button>
+            <button value="true">yes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="group" data-id="control">
+        <div class="title">
+          <i class="fas fa-fw fa-code"></i>
+          Replace control characters
+        </div>
+        <div class="sub">
+          Replace control characters (\n becomes a new line and \t becomes a
+          tab)
+        </div>
+        <div class="groupInputs">
+          <div class="buttonGroup">
+            <button value="false">no</button>
+            <button value="true">yes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="group" data-id="delimiter">
+        <div class="title">
+          <i class="fas fa-fw fa-grip-lines-vertical"></i>
+          Word delimiter
+        </div>
+        <div class="sub">
+          Change how words are separated. Using the pipe delimiter allows you to
+          randomize groups of words.
+        </div>
+        <div class="groupInputs">
+          <div class="buttonGroup">
+            <button value="true">pipe</button>
+            <button value="false">space</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="group" data-id="newlines">
+        <div class="title">
+          <i class="fas fa-fw fa-level-down-alt fa-rotate-90"></i>
+          Replace new lines with spaces
+        </div>
+        <div class="sub">
+          Replace all new line characters with spaces. Can automatically add
+          periods to the end of lines if you wish.
+        </div>
+        <div class="groupInputs">
+          <div class="buttonGroup">
+            <button value="off">off</button>
+            <button value="space">space</button>
+            <button value="periodSpace">period + space</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="button apply">ok</div>
+  </div>
+</dialog>
+<dialog id="savedTextsModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Saved texts</div>
+    <div class="list"></div>
+    <div class="title">Saved long texts</div>
+    <div class="listLong"></div>
+  </div>
+</dialog>
+<dialog id="saveCustomTextModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">Save custom text</div>
+    <input class="textName" type="text" placeholder="name" />
+    <div>
+      <label class="checkboxWithSub">
+        <input type="checkbox" class="isLongText" />
+        <div>Long text (book mode)</div>
+        <div class="sub">
+          Disables editing this text but allows you to save progress by pressing
+          shift + enter or bailing out. You can then load this text again to
+          continue where you left off.
+        </div>
+      </label>
+    </div>
+    <button class="save">save</button>
+  </form>
+</dialog>
+<dialog id="wordFilterModal" class="modalWrapper hidden">
+  <div class="modal">
+    <!-- hidden for now, dunno where to place it -->
+    <!-- <div class="loadingIndicator">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div> -->
+    <div class="top">
+      <div class="group">
+        <div class="title">language</div>
+        <select class="languageInput" title="language"></select>
+      </div>
+      <div class="tip">
+        You can manually filter words by length, words or characters (separated
+        by spaces) on the left side. On the right side you can generate filters
+        based on a preset and selected layout.
+      </div>
+    </div>
+    <div class="leftSide">
+      <div class="group lengthgrid">
+        <div class="title">min length</div>
+        <div class="title">max length</div>
+
+        <input
+          class="wordLength wordMinInput"
+          autocomplete="off"
+          type="number"
+          title="min"
+        />
+        <input
+          class="wordLength wordMaxInput"
+          autocomplete="off"
+          type="number"
+          title="max"
+        />
+      </div>
+      <div class="group">
+        <div class="title">include</div>
+        <input
+          class="wordIncludeInput"
+          id="wordIncludeInput"
+          autocomplete="off"
+          title="include"
+        />
+      </div>
+      <div class="group">
+        <div class="title">exclude</div>
+        <input
+          class="wordExcludeInput"
+          id="wordExcludeInput"
+          autocomplete="off"
+          title="exclude"
+        />
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="rightSide">
+      <div class="group">
+        <div class="title">presets</div>
+        <select class="presetInput"></select>
+      </div>
+      <div class="group">
+        <div class="title">layout</div>
+        <select class="layoutInput"></select>
+      </div>
+      <!-- <div class="tip">Use the dropdowns above to generate presets</div> -->
+      <button class="generateButton">generate</button>
+    </div>
+
+    <div class="bottom">
+      <div class="tip">
+        "Set" replaces the current custom word list with the filter result,
+        "Add" appends the filter result to the current custom word list.
+      </div>
+      <button class="setButton">set</button>
+      <button class="addButton">add</button>
+    </div>
+  </div>
+</dialog>
+<dialog id="googleSignUpModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">Account name</div>
+    <div class="text">Please enter a username before continuing</div>
+    <input type="text" placeholder="username" />
+    <div class="captcha"></div>
+    <button>continue</button>
+  </form>
+</dialog>
+<dialog id="customWordAmountModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">Custom word amount</div>
+    <input type="number" value="1" min="0" max="10000" />
+    <div class="tip">
+      You can start an infinite test by inputting 0. Then, to stop the test, use
+      the Bail Out feature (
+      <key>esc</key>
+      or
+      <key>ctrl/cmd</key>
+      +
+      <key>shift</key>
+      +
+      <key>p</key>
+      > Bail Out)
+    </div>
+    <button>ok</button>
+  </form>
+</dialog>
+<dialog id="customTestDurationModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">Test duration</div>
+    <div class="preview"></div>
+    <input value="1" title="test duration" min="0" />
+    <div class="tip">
+      You can use "h" for hours and "m" for minutes, for example "1h30m".
+      <br />
+      <br />
+      You can start an infinite test by inputting 0. Then, to stop the test, use
+      the Bail Out feature (
+      <key>esc</key>
+      or
+      <key>ctrl/cmd</key>
+      +
+      <key>shift</key>
+      +
+      <key>p</key>
+      > Bail Out)
+    </div>
+    <button>ok</button>
+  </form>
+</dialog>
+<dialog id="quoteSearchModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div id="quoteSearchTop">
+      <div class="title">Quote search</div>
+      <div class="buttons">
+        <button class="goToQuoteSubmit">
+          <i class="fas fa-plus"></i>
+          Submit a quote
+        </button>
+        <button class="goToQuoteApprove">
+          <i class="fas fa-check"></i>
+          Approve quotes
+        </button>
+      </div>
+    </div>
+    <div id="quoteSearchControlsWrapper">
+      <input
+        id="searchBox"
+        class="searchBox"
+        type="text"
+        maxlength="200"
+        autocomplete="off"
+        placeholder="filter by text, source or id"
+      />
+      <select class="quoteLengthFilter" multiple></select>
+      <button class="toggleFavorites">
+        <i class="fas fa-fw fa-heart"></i>
+        <!-- favorites -->
+      </button>
+    </div>
+    <div id="quoteSearchResults" class="quoteSearchResults"></div>
+    <div id="quoteSearchPageNavigator">
+      <button class="prevPage" disabled>
+        <i class="fas fa-fw fa-chevron-left"></i>
+      </button>
+      <div class="pageInfo">No search results</div>
+      <button class="nextPage" disabled>
+        <i class="fas fa-fw fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</dialog>
+<dialog id="quoteSubmitModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Submit a quote</div>
+    <ul>
+      <li>
+        Do not include content that contains any libelous or otherwise unlawful,
+        abusive or obscene text.
+      </li>
+      <li>Verify quotes added aren't duplicates of any already present</li>
+      <li>
+        Please do not add extremely short quotes (less than 60 characters)
+      </li>
+      <li>
+        <b>
+          Submitting low quality quotes or misusing this form will cause you to
+          lose access to this feature
+        </b>
+      </li>
+    </ul>
+    <label>quote</label>
+    <textarea class="newQuoteText" type="text" autocomplete="off"></textarea>
+    <label>source</label>
+    <input class="newQuoteSource" type="text" autocomplete="off" />
+    <label>language</label>
+    <select name="language" class="newQuoteLanguage"></select>
+    <div class="g-recaptcha"></div>
+    <button>submit</button>
+  </div>
+</dialog>
+<dialog id="apeKeysModal" class="hidden modalWrapper">
+  <div class="modal">
+    <div class="top">
+      <div class="title">Ape Keys</div>
+      <button class="generateApeKey">
+        <i class="fas fa-plus"></i>
+        Generate new key
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <td width="1px">active</td>
+          <td>name</td>
+          <td>created on</td>
+          <td>modified on</td>
+          <td>last used on</td>
+          <td width="1px"></td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</dialog>
+<dialog id="quoteReportModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Report a quote</div>
+    <div class="text">
+      Please report quotes responsibly - misuse may result in you losing access
+      to this feature.
+      <br />
+      <br />
+      <span class="red">Please add comments in English only.</span>
+    </div>
+    <label>quote</label>
+    <div class="quote"></div>
+    <label>reason</label>
+    <select name="report-reason" class="reason" title="reason">
+      <option value="Grammatical error">Grammatical error</option>
+      <option value="Duplicate quote">Duplicate quote</option>
+      <option value="Inappropriate content">Inappropriate content</option>
+      <option value="Low quality content">Low quality content</option>
+      <option value="Incorrect source">Incorrect source</option>
+    </select>
+    <label>comment</label>
+    <textarea class="comment" type="text" autocomplete="off"></textarea>
+    <div
+      class="g-recaptcha"
+      data-sitekey="6Lc-V8McAAAAAJ7s6LGNe7MBZnRiwbsbiWts87aj"
+    ></div>
+    <button>report</button>
+  </div>
+</dialog>
+<dialog id="userReportModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Report a user</div>
+    <div class="text">
+      Please report users responsibly and add comments in English only. Misuse
+      may result in you losing access to this feature.
+    </div>
+    <label>user</label>
+    <div class="user"></div>
+    <label>reason</label>
+    <select name="report-reason" class="reason">
+      <option value="Inappropriate name">Inappropriate name</option>
+      <option value="Inappropriate bio">Inappropriate bio</option>
+      <option value="Inappropriate social links">
+        Inappropriate social links
+      </option>
+      <option value="Suspected cheating">Suspected cheating</option>
+    </select>
+    <label>comment</label>
+    <textarea class="comment" type="text" autocomplete="off"></textarea>
+    <div
+      class="g-recaptcha"
+      data-sitekey="6Lc-V8McAAAAAJ7s6LGNe7MBZnRiwbsbiWts87aj"
+    ></div>
+    <button>Report</button>
+  </div>
+</dialog>
+<dialog id="quoteApproveModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="top">
+      <div class="title">Approve quotes</div>
+      <button class="refreshList">
+        <i class="fas fa-sync-alt"></i>
+        Refresh list
+      </button>
+    </div>
+    <div class="quotes"></div>
+  </div>
+</dialog>
+<dialog id="editTagModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title"></div>
+    <input type="text" title="tag" />
+    <div class="text"></div>
+    <button type="submit"></button>
+  </form>
+</dialog>
+<dialog id="streakHourOffsetModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Set streak hour offset</div>
+    <div class="text">
+      Streaks reset at midnight UTC by default. If this is not convenient for
+      you (for example if it means that streaks reset in the middle of the day),
+      you can change the hour offset here.
+      <br />
+      <br />
+      This will not take daylight savings time into consideration!
+      <br />
+      <br />
+      <span class="red">You can only do this once!</span>
+    </div>
+    <input type="number" min="-11" max="12" value="0" />
+    <div class="preview"></div>
+    <button>set</button>
+  </div>
+</dialog>
+<dialog id="editResultTagsModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Edit result tags</div>
+    <div class="buttons"></div>
+    <button class="saveButton">save</button>
+  </div>
+</dialog>
+<dialog id="editPresetModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title"></div>
+    <input type="text" title="presets" />
+    <label class="checkbox">
+      <input type="checkbox" />
+      Change preset to current settings
+    </label>
+    <div class="text"></div>
+    <button type="submit">add</button>
+  </form>
+</dialog>
+<dialog id="shareCustomThemeModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Share custom theme</div>
+    <label class="checkbox">
+      <input type="checkbox" id="includeBackground" />
+      Include background information
+    </label>
+    <button>copy link to clipboard</button>
+  </div>
+</dialog>
+<div id="leaderboardsWrapper" class="popupWrapper hidden">
+  <div id="leaderboards">
+    <div class="leaderboardsTop">
+      <div class="mainTitle">All-Time English Leaderboards</div>
+      <div class="subTitle">Next update in: --:--</div>
+      <div class="textButton showYesterdayButton hidden">
+        <i class="fas fa-calendar-day"></i>
+        <div class="text">Show yesterday</div>
+      </div>
+      <div class="buttons">
+        <div class="buttonGroup timeRange">
+          <div class="button allTime">all-time</div>
+          <div class="button daily">daily</div>
+          <select class="languageSelect" disabled></select>
+        </div>
+      </div>
+    </div>
+    <div class="tables">
+      <div class="titleAndTable">
+        <div class="titleAndButtons">
+          <div class="title">
+            Time 15
+            <i
+              class="hidden leftTableLoader fas fa-fw fa-spin fa-circle-notch"
+            ></i>
+          </div>
+          <div class="buttons">
+            <div class="button leftTableJumpToTop">
+              <i class="fas fa-fw fas fa-crown"></i>
+              <!-- Top -->
+            </div>
+            <div class="button leftTableJumpToMe">
+              <i class="fas fa-fw fas fa-user"></i>
+              <!-- Me -->
+            </div>
+          </div>
+        </div>
+        <div class="leftTableWrapper invisible">
+          <table class="left">
+            <thead>
+              <tr>
+                <td width="1%">#</td>
+                <td>name</td>
+                <td class="alignRight" width="1%">
+                  wpm
+                  <br />
+                  <div class="sub">accuracy</div>
+                </td>
+                <td class="alignRight" width="1%">
+                  raw
+                  <br />
+                  <div class="sub">consistency</div>
+                </td>
+                <td class="alignRight" width="125px">date</td>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="titleAndTable">
+        <div class="titleAndButtons">
+          <div class="title">
+            Time 60
+            <i
+              class="hidden rightTableLoader fas fa-fw fa-spin fa-circle-notch"
+            ></i>
+          </div>
+          <div class="buttons">
+            <div class="button rightTableJumpToTop">
+              <i class="fas fa-fw fas fa-crown"></i>
+              <!-- Top -->
+            </div>
+            <div class="button rightTableJumpToMe">
+              <i class="fas fa-fw fas fa-user"></i>
+              <!-- Me -->
+            </div>
+          </div>
+        </div>
+        <div class="rightTableWrapper invisible">
+          <table class="right">
+            <thead>
+              <tr>
+                <td width="1%">#</td>
+                <td>name</td>
+                <td class="alignRight" width="1%">
+                  wpm
+                  <br />
+                  <div class="sub">accuracy</div>
+                </td>
+                <td class="alignRight" width="1%">
+                  raw
+                  <br />
+                  <div class="sub">consistency</div>
+                </td>
+                <td class="alignRight" width="120px">date</td>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<dialog id="versionHistoryModal" class="modalWrapper hidden">
+  <div class="modal"></div>
+</dialog>
+<dialog id="supportModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Support Monkeytype</div>
+    <div class="text">
+      Thank you so much for thinking about supporting this project. It would not
+      be possible without you and your continued support.
+      <i class="fas fa-heart"></i>
+    </div>
+    <div class="buttons">
+      <button class="ads">
+        <div class="icon"><i class="fas fa-fw fa-ad"></i></div>
+        <div class="text">Enable Ads</div>
+      </button>
+      <!-- <div class="button watchVideoAd">
+        <div class="icon"><i class="fas fa-fw fa-ad"></i></div>
+        <div class="text">
+          Watch
+          <br />
+          a Video Ad
+        </div>
+      </div> -->
+      <a
+        class="button"
+        href="https://ko-fi.com/monkeytype"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="icon"><i class="fas fa-fw fa-donate"></i></div>
+        <div class="text">Donate</div>
+      </a>
+      <a
+        class="button"
+        href="https://www.patreon.com/monkeytype"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="icon"><i class="fab fa-fw fa-patreon"></i></div>
+        <div class="text">Join Patreon</div>
+      </a>
+      <a
+        class="button"
+        href="https://monkeytype.store"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="icon"><i class="fas fa-fw fa-tshirt"></i></div>
+        <div class="text">Buy Merch</div>
+      </a>
+    </div>
+  </div>
+</dialog>
+<dialog id="contactModal" class="modalWrapper hidden">
+  <div class="modal">
+    <div class="title">Contact</div>
+    <div class="text">
+      Feel free to send an email to contact@monkeytype.com. For business
+      inquiries, email jack@monkeytype.com (the buttons below will open the
+      default mail client).
+      <br />
+      <br />
+      Please
+      <span>do not send</span>
+      requests to delete account, update email, update name or clear personal
+      bests - you can do that in the settings page.
+    </div>
+    <div class="buttons">
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:contact@monkeytype.com?subject=[Question] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-question-circle"></i></div>
+        <div class="textGroup">
+          <div class="text">Question</div>
+          <!-- <div class="subtext">Confused about something?</div> -->
+        </div>
+      </a>
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:contact@monkeytype.com?subject=[Feedback] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-comment-dots"></i></div>
+        <div class="textGroup">
+          <div class="text">Feedback</div>
+          <!-- <div class="subtext">Feel like the website could be improved?</div> -->
+        </div>
+      </a>
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:support@monkeytype.com?subject=[Bug] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-bug"></i></div>
+        <div class="textGroup">
+          <div class="text">Bug Report</div>
+          <!-- <div class="subtext">Report any bugs you found. You can also open a new issue on GitHub.</div> -->
+        </div>
+      </a>
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:support@monkeytype.com?subject=[Account] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-user-circle"></i></div>
+        <div class="textGroup">
+          <div class="text">Account Help</div>
+          <!-- <div class="subtext">Report any problems with your account like login issues.</div> -->
+        </div>
+      </a>
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:jack@monkeytype.com?subject=[Business] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-briefcase"></i></div>
+        <div class="textGroup">
+          <div class="text">Business Inquiry</div>
+          <!-- <div class="subtext">Let's work together.</div> -->
+        </div>
+      </a>
+      <a
+        class="button"
+        target="_blank"
+        href="mailto:contact@monkeytype.com?subject=[Other] "
+        rel="noopener"
+      >
+        <div class="icon"><i class="fas fa-ellipsis-h"></i></div>
+        <div class="textGroup">
+          <div class="text">Other</div>
+          <!-- <div class="subtext">We will try to help.</div> -->
+        </div>
+      </a>
+    </div>
+  </div>
+</dialog>
+<dialog id="commandLine" class="modalWrapper hidden">
+  <div class="modal">
+    <div
+      style="
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+      "
+    >
+      <div class="searchicon">
+        <i class="fas fa-fw fa-search"></i>
+      </div>
+      <input type="text" class="input" placeholder="Type to search" />
+    </div>
+    <div class="suggestions"></div>
+  </div>
+</dialog>
+
+<dialog id="newFilterPresetModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">New filter preset</div>
+    <input type="text" value="" />
+    <button>add</button>
+  </form>
+</dialog>
+
+<dialog id="editProfileModal" class="modalWrapper hidden">
+  <form class="modal">
+    <div class="title">Edit Profile</div>
+    <div>
+      <label>avatar</label>
+      <div>
+        To update your avatar make sure your Discord account is linked, then go
+        to Settings > Account > Discord Integration and click "Update Avatar"
+      </div>
+    </div>
+    <div>
+      <label>bio</label>
+      <textarea
+        class="bio"
+        type="text"
+        autocomplete="off"
+        maxlength="250"
+      ></textarea>
+    </div>
+    <div>
+      <label>keyboard</label>
+      <textarea
+        class="keyboard"
+        type="text"
+        autocomplete="off"
+        maxlength="75"
+      ></textarea>
+    </div>
+    <div>
+      <label>github</label>
+      <div class="socialURL">
+        <p>https://github.com/</p>
+        <input
+          class="github"
+          type="text"
+          value=""
+          placeholder="username"
+          maxlength="39"
+        />
+      </div>
+    </div>
+    <div>
+      <label>twitter</label>
+      <div class="socialURL">
+        <p>https://x.com/</p>
+        <input
+          class="twitter"
+          type="text"
+          value=""
+          placeholder="username"
+          maxlength="20"
+        />
+      </div>
+    </div>
+    <div>
+      <label>website</label>
+      <input class="website" type="text" value="" maxlength="200" />
+    </div>
+    <div>
+      <label>badge</label>
+      <div class="badgeSelectionContainer"></div>
+    </div>
+    <button class="edit-profile-submit" type="submit">save</button>
+  </form>
+</dialog>
+
+    </div>
+    <!-- <div id="div-gpt-ad-mkt-0" style="height: 100vh"></div> -->
+    <div id="app" class="content-grid focus hidden">
+      <header>
+  <a id="logo" href="/" router-link>
+    <div class="icon">
+      <svg
+        id="Layer_2"
+        data-name="Layer 2"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 76.99 67.33"
+      >
+        <defs>
+          <style>
+            .cls-1 {
+              fill: #fff;
+            }
+
+            .cls-1,
+            .cls-2 {
+              stroke-width: 0px;
+            }
+
+            .cls-2 {
+              fill: #565656;
+            }
+          </style>
+        </defs>
+        <g id="Layer_8" data-name="Layer 8">
+          <g>
+            <path
+              class="cls-1"
+              d="m18.71,58.35c-1.16,1.24-2.78.77-4.18,1.04-4.43.88-8.86,1.79-13.18,3.13-.31.1-.66.06-1.35.12,2.57-2.03,5.22-3.23,7.72-4.65,3.95-2.23,7.95-4.37,11.98-6.42,1.48-.75,2.5-1.77,3.2-3.23,1.44-3.01,2.63-6.14,3.4-9.36,1.7-7.03,5.44-12.85,10.19-18.1,1.1-1.22,1.06-1.85-.29-2.79-1.4-.98-2.26-2.47-3.03-4.02-2.16-4.35-4.95-8.22-9.14-10.89-.51-.32-1.35-.49-1.22-1.26.1-.58.85-.71,1.38-.87,4.72-1.41,8.8-.1,12.35,3.09,1.89,1.69,3.62,3.54,5.34,5.48-.14-2.74-.76-5.32-2.08-7.72-.26-.47-.86-1.01-.48-1.52.41-.55,1.2-.34,1.8-.2,3.15.76,5.38,2.72,6.94,5.5.8,1.43,1.51,2.98,1.64,4.57.21,2.49,1.58,3.22,3.79,3.48,3.92.47,7.82,1.09,11.72,1.75,3.68.63,6.34,2.77,7.96,6.08,1.28,2.6,2.33,5.31,3.47,7.98.21.49.66,1.09.04,1.52-.48.34-1.09.13-1.63-.08-.13-.05-.25-.14-.37-.22-3.44-2.38-7.24-3.79-11.38-4.33,1.67-3.53,1.37-4.19-2.35-5.51-1.86-.66-3.69-1.41-5.55-2.1-1.49-.56-3-.78-4.5-.04-2.35.28-3.92,1.8-5.45,3.4-1.2,1.26-2.23,2.73-4.16,3.5-.07-1.17.4-2.05.62-2.97.17-.71.84-1.71.15-2.12-.83-.49-1.48.54-2.03,1.12-2.22,2.32-3.88,5.03-5.15,7.98-3.41,7.95-3.79,16.13-1.91,24.49.26,1.16.76,2.68-.12,3.42-.69.59-1.85-.61-2.82-.97-.66-.25-1.29-.58-1.94-.84-4.04-1.63-7.26-1.14-10.7,1.61.43.32.87.64,1.3.95ZM62.9,17.1c1.45,1.34,2.54,2.37,3.67,3.38.42.38.79,1.2,1.52.53.71-.65.53-1.43-.06-2.04-1.27-1.33-2.96-1.57-5.13-1.87Z"
+            />
+            <path
+              class="cls-2"
+              d="m18.71,58.35c-.43-.32-.87-.64-1.3-.95,3.44-2.75,6.66-3.24,10.7-1.61.65.26,1.28.59,1.94.84.97.36,2.13,1.56,2.82.97.88-.74.38-2.27.12-3.42-1.88-8.37-1.5-16.54,1.91-24.49,1.27-2.95,2.93-5.65,5.15-7.98.55-.58,1.2-1.61,2.03-1.12.69.41.02,1.4-.15,2.12-.22.92-.69,1.8-.62,2.97,1.93-.77,2.95-2.25,4.16-3.5,1.53-1.59,3.1-3.11,5.45-3.4,1.45.1,3.08-.38,4.04,1.26-1.44.42-2.72,1.13-3.95,1.99-4.89,3.43-7.21,8.63-9.34,13.87-1.81,4.45-2.95,9.09-3.09,13.98-.1,3.64,0,7.2,1.79,10.42.9,1.61,2.01,3.34,4.33,3.21-.31,1.31.79,1.12,1.41,1.19,1.82.2,3.66.25,5.5.37.9.06,1.83.02,2.6.75-3.64,1.99-7.51,1.64-11.38,1.02-1.36-.22-2.44-1.07-3.41-2.02-1.16-1.13-2.53-2.11-3.56-3.28-1.98-2.24-4.33-2.49-7.03-2.53-3.38-.05-6.79.14-10.12-.67Z"
+            />
+            <path
+              class="cls-1"
+              d="m44.7,63.51c-2.33.13-3.44-1.6-4.33-3.21-1.79-3.22-1.89-6.78-1.79-10.42.14-4.89,1.28-9.53,3.09-13.98,2.13-5.24,4.44-10.44,9.34-13.87,1.23-.86,2.51-1.57,3.95-1.99,1.46,1.01,2.35,2.43,2.9,4.08.35,1.03.77,1.98,1.85,2.46-1.76,1.36-3,3.12-4.07,5.06-1.96,3.53-4.23,6.92-7.14,9.68-3.83,3.63-4.81,8.13-5.11,13.01-.06,1.06-.04,2.12-.08,3.18-.12,3.34-.12,3.33,3.27,3.75,1.22.15,2.54-.11,3.76.97-1.88.88-3.66,1.48-5.64,1.28Z"
+            />
+            <path
+              class="cls-2"
+              d="m59.7,26.57c-1.07-.48-1.5-1.43-1.85-2.46-.56-1.65-1.45-3.07-2.9-4.08-.96-1.65-2.6-1.16-4.04-1.26,1.51-.74,3.01-.52,4.5.04,1.85.69,3.68,1.44,5.55,2.1,3.72,1.32,4.02,1.98,2.35,5.51-1.2.05-2.4.1-3.61.16Z"
+            />
+            <path
+              class="cls-2"
+              d="m62.9,17.1c2.16.3,3.86.54,5.13,1.87.59.61.77,1.4.06,2.04-.73.66-1.1-.16-1.52-.53-1.12-1.01-2.22-2.04-3.67-3.38Z"
+            />
+          </g>
+        </g>
+      </svg>
+    </div>
+    <h1 class="text">
+      <div class="top">monkey see</div>
+      lugtype
+    </h1>
+  </a>
+  <nav>
+    <a
+      id="startTestButton"
+      class="textButton view-start"
+      href="/"
+      onclick="this.blur();"
+      router-link
+      title="start test"
+    >
+      <div class="icon">
+        <i class="fas fa-fw fa-keyboard"></i>
+      </div>
+    </a>
+    <button
+      class="textButton leaderboards view-leaderboards"
+      onclick="this.blur();"
+      title="leaderboard"
+    >
+      <div class="icon">
+        <i class="fas fa-fw fa-crown"></i>
+      </div>
+    </button>
+    <a
+      class="textButton view-about"
+      href="/about"
+      onclick="this.blur();"
+      router-link
+      title="about"
+    >
+      <div class="icon">
+        <i class="fas fa-fw fa-info"></i>
+      </div>
+    </a>
+    <!-- <a
+      class="textButton discord"
+      href="https://discord.gg/yENzqcB"
+      onclick="this.blur();"
+      target="_blank"
+      style="text-decoration: none;"
+    >
+      <div class="icon">
+        <i class="fab fa-discord"></i>
+      </div>
+    </a> -->
+    <a
+      class="textButton view-settings"
+      href="/settings"
+      onclick="this.blur();"
+      router-link
+      title="settings"
+    >
+      <div class="icon">
+        <i class="fas fa-fw fa-cog"></i>
+      </div>
+    </a>
+    <div></div>
+    <a
+      class="textButton hidden account view-account"
+      href="/account"
+      onclick="this.blur();"
+      router-link
+    >
+      <div class="loading hidden">
+        <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+      </div>
+      <div class="user">
+        <i class="fas fa-fw fa-user"></i>
+      </div>
+      <div class="avatar hidden"></div>
+      <div class="text"></div>
+      <div class="levelAndBar">
+        <div class="level" data-balloon-pos="up">1</div>
+        <div class="xpBar">
+          <div class="bar"></div>
+          <div class="xpGain"></div>
+          <div class="xpBreakdown"></div>
+        </div>
+      </div>
+    </a>
+    <button class="text showAlerts" onclick="this.blur();">
+      <div class="icon">
+        <i class="fas fa-fw fa-bell"></i>
+      </div>
+      <div class="notificationBubble hidden">5</div>
+    </button>
+    <button class="text signInOut" onclick="this.blur();">
+      <div class="icon">
+        <i class="fas fa-fw fa-sign-in-alt"></i>
+      </div>
+    </button>
+  </nav>
+</header>
+
+      <main class="full-width content-grid" style="height: 100%">
+        <div id="ad-vertical-left-wrapper" class="ad advertisement ad-v focus">
+          <div class="icon"><i class="fas fa-ad"></i></div>
+          <div id="ad-vertical-left"></div>
+        </div>
+        <div id="ad-vertical-right-wrapper" class="ad advertisement ad-v focus">
+          <div class="icon"><i class="fas fa-ad"></i></div>
+          <div id="ad-vertical-right"></div>
+        </div>
+        <div class="page pageLoading" id="pageLoading">
+  <div class="preloader">
+    <div class="icon">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div>
+    <div class="barWrapper hidden">
+      <div class="bar">
+        <div class="fill"></div>
+      </div>
+      <div class="text">‎</div>
+    </div>
+  </div>
+</div>
+
+        <div class="page pageAbout hidden full-width content-grid" id="pageAbout">
+  <div class="scrollToTopButton invisible">
+    <i class="fas fa-angle-double-up"></i>
+  </div>
+  <div class="created">
+    Created with love by Miodec.
+    <br />
+    <a href="#supporters_title">Supported</a>
+    and
+    <a href="#contributors_title">expanded</a>
+    by many awesome people.
+    <br />
+    Launched on 15th of May, 2020.
+  </div>
+  <div class="section histogramChart">
+    <div class="triplegroup">
+      <div
+        class="group"
+        id="totalStartedTestsStat"
+        aria-label=""
+        data-balloon-pos="up"
+      >
+        <div class="label">total tests started</div>
+        <div class="val">-</div>
+        <div class="valSmall">-</div>
+      </div>
+      <div
+        class="group"
+        id="totalTimeTypingStat"
+        aria-label=""
+        data-balloon-pos="up"
+      >
+        <div class="label">total typing time</div>
+        <div class="val">-</div>
+        <div class="valSmall">-</div>
+      </div>
+      <div
+        class="group"
+        id="totalCompletedTestsStat"
+        aria-label=""
+        data-balloon-pos="up"
+      >
+        <div class="label">total tests completed</div>
+        <div class="val">-</div>
+        <div class="valSmall">-</div>
+      </div>
+    </div>
+    <div>
+      <div class="chart" style="height: 200px">
+        <canvas id="publicStatsHistogramChart"></canvas>
+      </div>
+      <p class="small">distribution of time 60 leaderboard results (wpm)</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="bigtitle">
+      <i class="fas fa-info-circle"></i>
+      about
+    </div>
+    <h2>
+      Monkeytype is a minimalistic and customizable typing test. It features
+      many test modes, an account system to save your typing speed history, and
+      user-configurable features such as themes, sounds, a smooth caret, and
+      more. Monkeytype attempts to emulate the experience of natural keyboard
+      typing during a typing test, by unobtrusively presenting the text prompts
+      and displaying typed characters in-place, providing straightforward,
+      real-time feedback on typos, speed, and accuracy.
+      <br />
+      <br />
+      Test yourself in various modes, track your progress and improve your
+      speed.
+    </h2>
+  </div>
+  <div class="section">
+    <div class="title">
+      <i class="fas fa-align-left"></i>
+      word set
+    </div>
+    <p>
+      By default, this website uses the most common 200 words in the English
+      language to generate its tests. You can change to an expanded set (1000
+      most common words) in the options, or change the language entirely.
+    </p>
+  </div>
+  <div class="section">
+    <div class="title">
+      <i class="fas fa-keyboard"></i>
+      keybinds
+    </div>
+    <p>
+      You can use
+      <key>tab</key>
+      and
+      <key>enter</key>
+      (or just
+      <key>tab</key>
+      if you have quick tab mode enabled) to restart the typing test. Open the
+      command line by pressing
+      <key>ctrl/cmd</key>
+      +
+      <key>shift</key>
+      +
+      <key>p</key>
+      or
+      <key>esc</key>
+      - there you can access all the functionality you need without touching
+      your mouse
+    </p>
+  </div>
+  <div class="section">
+    <div class="title">
+      <i class="fas fa-list-ol"></i>
+      stats
+    </div>
+    <p>
+      wpm - total number of characters in the correctly typed words (including
+      spaces), divided by 5 and normalised to 60 seconds.
+    </p>
+    <p>
+      raw wpm - calculated just like wpm, but also includes incorrect words.
+    </p>
+    <p>acc - percentage of correctly pressed keys.</p>
+    <p>
+      char - correct characters / incorrect characters. Calculated after the
+      test has ended.
+    </p>
+    <p>
+      consistency - based on the variance of your raw wpm. Closer to 100% is
+      better. Calculated using the coefficient of variation of raw wpm and
+      mapped onto a scale from 0 to 100.
+    </p>
+  </div>
+  <div id="ad-about-1-wrapper" class="ad full-width advertisement ad-h">
+    <div class="icon"><i class="fas fa-ad"></i></div>
+    <div id="ad-about-1"></div>
+  </div>
+  <div id="ad-about-1-small-wrapper" class="ad advertisement ad-h-s">
+    <div class="icon small"><i class="fas fa-ad"></i></div>
+    <div id="ad-about-1-small"></div>
+  </div>
+  <div class="section">
+    <div class="title">
+      <i class="fas fa-chart-area"></i>
+      results screen
+    </div>
+    <p>
+      After completing a test you will be able to see your wpm, raw wpm,
+      accuracy, character stats, test length, leaderboards info and test info.
+      (you can hover over some values to get floating point numbers). You can
+      also see a graph of your wpm and raw over the duration of the test.
+      Remember that the wpm line is a global average, while the raw wpm line is
+      a local, momentary value. (meaning if you stop, the value is 0)
+    </p>
+  </div>
+  <div class="section">
+    <div class="title">
+      <i class="fas fa-bug"></i>
+      bug report or feature request
+    </div>
+    <p>
+      If you encounter a bug, or have a feature request - join the Discord
+      server, send me an email, a direct message on Twitter or create an issue
+      on GitHub.
+    </p>
+  </div>
+  <div></div>
+  <div class="section">
+    <div class="bigtitle">
+      <i class="fas fa-life-ring"></i>
+      support
+    </div>
+    <p>
+      Thanks to everyone who has supported this project. It would not be
+      possible without you and your continued support.
+    </p>
+    <div class="supportButtons">
+      <button id="supportMeAboutButton">
+        <div class="fas fa-donate"></div>
+        support
+      </button>
+      <!-- <a class="button ads">
+        <div class="fas fa-ad"></div>
+        Ads
+      </a>
+      <a
+        class="button"
+        href="https://ko-fi.com/monkeytype"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div class="fas fa-donate"></div>
+        Ko-Fi
+      </a>
+      <a
+        class="button"
+        href="https://www.patreon.com/monkeytype"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div class="fab fa-patreon"></div>
+        Patreon
+      </a>
+      <a
+        class="button"
+        href="https://monkeytype.store"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div class="fas fa-tshirt"></div>
+        Merch
+      </a> -->
+    </div>
+  </div>
+  <div></div>
+  <div class="section">
+    <div class="bigtitle">
+      <i class="fas fa-envelope"></i>
+      contact
+    </div>
+    <p>
+      If you encounter a bug, have a feature request or just want to say hi -
+      here are the different ways you can contact me directly.
+    </p>
+    <div class="contactButtons">
+      <button id="contactPopupButton2">
+        <div class="fas fa-envelope"></div>
+        mail
+      </button>
+      <a
+        class="button"
+        href="https://x.com/monkeytype"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="fab fa-twitter"></div>
+        twitter
+      </a>
+      <a
+        class="button"
+        href="https://discord.gg/monkeytype"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="fab fa-discord"></div>
+        discord
+      </a>
+      <a
+        class="button"
+        href="https://github.com/monkeytypegame/monkeytype"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <div class="fab fa-github"></div>
+        github
+      </a>
+    </div>
+  </div>
+  <div></div>
+  <div class="section">
+    <div class="bigtitle">
+      <i class="fas fa-users"></i>
+      credits
+    </div>
+    <p>
+      <a
+        href="https://www.reddit.com/user/montydrei"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Montydrei
+      </a>
+      &nbsp;for the name suggestion
+    </p>
+    <p>
+      <a
+        href="https://www.reddit.com/r/MechanicalKeyboards/comments/gc6wx3/experimenting_with_a_completely_new_type_of/"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Everyone
+      </a>
+      &nbsp;who provided valuable feedback on the original reddit post for the
+      prototype of this website
+    </p>
+    <p>
+      <a href="#supporters_title">Supporters</a>
+      who helped financially by donating, enabling optional ads or buying merch
+    </p>
+    <p>
+      <a
+        href="https://github.com/monkeytypegame/monkeytype/graphs/contributors"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        Contributors
+      </a>
+      &nbsp;on GitHub that have helped with implementing various features,
+      adding themes and more
+    </p>
+  </div>
+  <div id="ad-about-2-wrapper" class="ad full-width advertisement ad-h">
+    <div class="icon"><i class="fas fa-ad"></i></div>
+    <div id="ad-about-2"></div>
+  </div>
+  <div id="ad-about-2-small-wrapper" class="ad advertisement ad-h-s">
+    <div class="icon small"><i class="fas fa-ad"></i></div>
+    <div id="ad-about-2-small"></div>
+  </div>
+  <div></div>
+  <div class="section">
+    <div id="supporters_title" class="bigtitle">
+      <i class="fas fa-hand-holding-usd"></i>
+      top supporters
+    </div>
+    <div class="supporters"></div>
+  </div>
+  <div></div>
+  <div class="section">
+    <div id="contributors_title" class="bigtitle">
+      <i class="fas fa-code-branch"></i>
+      contributors
+    </div>
+    <div class="contributors"></div>
+  </div>
+</div>
+
+        <div class="page pageSettings hidden full-width content-grid" id="pageSettings">
+  <div class="scrollToTopButton invisible">
+    <i class="fas fa-angle-double-up"></i>
+  </div>
+  <div class="tip">
+    tip: You can also change all these settings quickly using the command line (
+    <key>ctrl/cmd</key>
+    +
+    <key>shift</key>
+    +
+    <key>p</key>
+    or
+    <key>esc</key>
+    )
+  </div>
+  <div class="settingsGroup quickNav">
+    <div class="links">
+      <a class="textButton accountTitleLink" href="#group_account">account</a>
+      <a class="textButton" href="#group_behavior">behavior</a>
+      <a class="textButton" href="#group_input">input</a>
+      <a class="textButton" href="#group_sound">sound</a>
+      <a class="textButton" href="#group_caret">caret</a>
+      <a class="textButton" href="#group_appearance">appearance</a>
+      <a class="textButton" href="#group_theme">theme</a>
+      <a class="textButton" href="#group_hideElements">hide elements</a>
+      <a class="textButton" href="#group_dangerZone">danger zone</a>
+    </div>
+  </div>
+
+  <div id="ad-settings-1-wrapper" class="ad full-width advertisement ad-h">
+    <div class="icon"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-1"></div>
+  </div>
+  <div id="ad-settings-1-small-wrapper" class="ad advertisement ad-h-s">
+    <div class="icon small"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-1-small"></div>
+  </div>
+
+  <button
+    id="group_account"
+    class="text sectionGroupTitle hidden"
+    group="account"
+  >
+    <i class="fas fa-chevron-down"></i>
+    <span>account</span>
+  </button>
+  <div class="settingsGroup account hidden">
+    <div class="section discordIntegration">
+      <div class="groupTitle">
+        <i class="fab fa-discord"></i>
+        <span>discord integration</span>
+      </div>
+      <div class="text">
+        When you connect your monkeytype account to your Discord account, you
+        will be automatically assigned a new role every time you achieve a new
+        personal best in a 60 second test. If you link your accounts before
+        joining the Discord server, the bot
+        <i>will not</i>
+        give you a role.
+      </div>
+      <div class="buttons">
+        <button class="getLinkAndGoToOauth">link</button>
+      </div>
+      <div class="info hidden">
+        <div>
+          <i class="fas fa-check"></i>
+          Your accounts are linked!
+        </div>
+        <div id="discordButtonGroup">
+          <button
+            id="updateDiscordAvatarButton"
+            class="textButton getLinkAndGoToOauth"
+          >
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+            Update avatar
+          </button>
+          <button id="unlinkDiscordButton" class="textButton">
+            <i class="fas fa-unlink" aria-hidden="true"></i>
+            Unlink
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="section tags">
+      <div class="groupTitle">
+        <i class="fas fa-tag"></i>
+        <span>tags</span>
+      </div>
+      <div class="text">
+        With tags, you can compare how fast you're typing in different
+        situations. You can see your active tags above the test words. They will
+        remain active until you deactivate them, or refresh the page.
+      </div>
+      <div class="tagsListAndButton">
+        <div class="tagsList"></div>
+        <button class="addTagButton fullWidth">add tag</button>
+      </div>
+    </div>
+    <div class="section presets">
+      <div class="groupTitle">
+        <i class="fas fa-sliders-h"></i>
+        <span>presets</span>
+      </div>
+      <div class="text">
+        Create settings presets that can be applied with one click. Remember to
+        edit your preset if you make any changes - they don't save on their own.
+      </div>
+      <div class="presetsListAndButton">
+        <div class="presetsList"></div>
+        <button class="addPresetButton fullWidth">add preset</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="groupTitle">
+        <i class="fas fa-user"></i>
+        <span>more account settings</span>
+      </div>
+      <div class="text">
+        You can access more account settings (such as changing your name,
+        password, resetting or deleting your account) in the danger zone
+        section.
+      </div>
+      <div class="buttons">
+        <a class="button" href="#group_dangerZone">go to the danger zone</a>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <button id="group_behavior" class="text sectionGroupTitle" group="behavior">
+    <i class="fas fa-chevron-down"></i>
+    <span>behavior</span>
+  </button>
+  <div class="settingsGroup behavior">
+    <div class="section" data-config-name="difficulty">
+      <div class="groupTitle">
+        <i class="fas fa-star"></i>
+        <span>test difficulty</span>
+      </div>
+      <div class="text">
+        Normal is the classic type test experience. Expert fails the test if you
+        submit (press space) an incorrect word. Master fails if you press a
+        single incorrect key (meaning you have to achieve 100% accuracy).
+      </div>
+      <div class="buttons">
+        <button data-config-value="normal">normal</button>
+        <button data-config-value="expert">expert</button>
+        <button data-config-value="master">master</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="quickRestart">
+      <div class="groupTitle">
+        <i class="fas fa-redo-alt"></i>
+        <span>quick restart</span>
+      </div>
+      <div class="text">
+        Press
+        <key>tab</key>
+        ,
+        <key>esc</key>
+        or
+        <key>enter</key>
+        to quickly restart the test, or to quickly jump to the test page. These
+        options disable tab navigation on most parts of the website. Using the
+        "esc" option will move opening the commandline to the
+        <key>tab</key>
+        key.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="tab">tab</button>
+        <button data-config-value="esc">esc</button>
+        <button data-config-value="enter">enter</button>
+      </div>
+    </div>
+
+    <div class="section" data-config-name="repeatQuotes">
+      <div class="groupTitle">
+        <i class="fas fa-sync-alt"></i>
+        <span>repeat quotes</span>
+      </div>
+      <div class="text">
+        This setting changes the restarting behavior when typing in quote mode.
+        Changing it to 'typing' will repeat the quote if you restart while
+        typing.
+      </div>
+      <!-- , and 'always' will always repeat the quote (you will need to press <key>shift + tab</key> to move on to the next quote). -->
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="typing">typing</button>
+        <!-- <div class="button" repeatQuotes="always" tabindex="0" onclick="this.blur();">
+          always
+        </div> -->
+      </div>
+    </div>
+
+    <div class="section" data-config-name="blindMode">
+      <div class="groupTitle">
+        <i class="fas fa-eye-slash"></i>
+        <span>blind mode</span>
+      </div>
+      <div class="text">
+        No errors or incorrect words are highlighted. Helps you to focus on raw
+        speed. If enabled, quick end is recommended.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">
+          ⠀
+          <!-- On is missing on purpose. -->
+        </button>
+      </div>
+    </div>
+    <div class="section" data-config-name="alwaysShowWordsHistory">
+      <div class="groupTitle">
+        <i class="fas fa-align-left"></i>
+        <span>always show words history</span>
+      </div>
+      <div class="text">
+        This option will automatically show the words history at the end of the
+        test. Can cause slight lag with a lot of words.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="singleListCommandLine">
+      <div class="groupTitle">
+        <i class="fas fa-list"></i>
+        <span>single list command line</span>
+      </div>
+      <div class="text">
+        When enabled, it will show the command line with all commands in a
+        single list instead of submenu arrangements. Selecting 'manual' will
+        expose all commands only after typing
+        <key>></key>
+        .
+      </div>
+      <div class="buttons">
+        <button data-config-value="manual">manual</button>
+        <button data-config-value="on">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="minWpm">
+      <div class="groupTitle">
+        <i class="fas fa-bomb"></i>
+        <span>min speed</span>
+      </div>
+      <div class="text">
+        Automatically fails a test if your speed falls below a threshold.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="min speed"
+            class="input customMinWpmSpeed"
+            tabindex="0"
+            min="0"
+            step="1"
+            value=""
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+        <div class="buttons">
+          <button data-config-value="off">off</button>
+          <button data-config-value="custom">custom</button>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="minAcc">
+      <div class="groupTitle">
+        <i class="fas fa-bomb"></i>
+        <span>min accuracy</span>
+      </div>
+      <div class="text">
+        Automatically fails a test if your accuracy falls below a threshold.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="min accuracy"
+            class="input customMinAcc"
+            tabindex="0"
+            min="0"
+            step="1"
+            value=""
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+        <div class="buttons">
+          <button data-config-value="off">off</button>
+          <button data-config-value="custom">custom</button>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="minBurst">
+      <div class="groupTitle">
+        <i class="fas fa-bomb"></i>
+        <span>min burst</span>
+      </div>
+      <div class="text">
+        Automatically fails a test if your raw for a single word falls below
+        this threshold. Selecting 'flex' allows for this threshold to
+        automatically decrease for longer words.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="min burst"
+            class="input customMinBurst"
+            tabindex="0"
+            min="0"
+            step="1"
+            value=""
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+        <div class="buttons">
+          <button data-config-value="off">off</button>
+          <button data-config-value="fixed">fixed</button>
+          <button data-config-value="flex">flex</button>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="britishEnglish">
+      <div class="groupTitle">
+        <i class="fas fa-language"></i>
+        <span>british english</span>
+      </div>
+      <div class="text">
+        When enabled, the website will use the British spelling instead of
+        American. Note that this might not replace all words correctly. If you
+        find any issues, please let us know.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="language">
+      <div class="groupTitle">
+        <i class="fas fa-language"></i>
+        <span>language</span>
+      </div>
+      <div class="text">Change in which language you want to type.</div>
+      <div class="inputs">
+        <select></select>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="funbox">
+      <div class="groupTitle">
+        <i class="fas fa-gamepad"></i>
+        <span>funbox</span>
+      </div>
+      <div class="text">
+        These are special modes that change the website in some special way (by
+        altering the word generation, behavior of the website or the looks).
+        Give each one of them a try!
+      </div>
+      <div class="buttons"></div>
+    </div>
+    <div class="sectionSpacer"></div>
+    <div class="section" data-config-name="customLayoutfluid">
+      <div class="groupTitle">
+        <i class="fas fa-tint"></i>
+        <span>custom layoutfluid</span>
+      </div>
+      <div class="text">
+        Select which layouts you want the layoutfluid funbox to cycle through.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="text"
+            placeholder="layouts (separated by space)"
+            class="input"
+            tabindex="0"
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+  <button id="group_input" class="text sectionGroupTitle" group="input">
+    <i class="fas fa-chevron-down"></i>
+    input
+  </button>
+  <div class="settingsGroup input">
+    <div class="section" data-config-name="freedomMode">
+      <div class="groupTitle">
+        <i class="fas fa-feather-alt"></i>
+        <span>freedom mode</span>
+      </div>
+      <div class="text">
+        Allows you to delete any word, even if it was typed correctly.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="strictSpace">
+      <div class="groupTitle">
+        <i class="fas fa-minus"></i>
+        <span>strict space</span>
+      </div>
+      <div class="text">
+        Pressing space at the beginning of a word will insert a space character
+        when this mode is enabled.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="oppositeShiftMode">
+      <div class="groupTitle">
+        <i class="fas fa-exchange-alt"></i>
+        <span>opposite shift mode</span>
+      </div>
+      <div class="text">
+        This mode will force you to use opposite
+        <key>shift</key>
+        keys for shifting. Using an incorrect one will count as an error. This
+        feature ignores keys in locations
+        <key>B</key>
+        ,
+        <key>Y</key>
+        , and
+        <key>^</key>
+        because many people use the other hand for those keys. If you're using
+        external software to emulate your layout (including QMK), you should use
+        the "keymap" mode - the standard "on" will not work. This will enforce
+        opposite shift based on the "keymap layout" setting.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="on">on</button>
+        <button data-config-value="keymap">keymap</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="stopOnError">
+      <div class="groupTitle">
+        <i class="fas fa-hand-paper"></i>
+        <span>stop on error</span>
+      </div>
+      <div class="text">
+        Letter mode will stop input when pressing any incorrect letters. Word
+        mode will not allow you to continue to the next word until you correct
+        all mistakes.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="word">word</button>
+        <button data-config-value="letter">letter</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="confidenceMode">
+      <div class="groupTitle">
+        <i class="fas fa-backspace"></i>
+        <span>confidence mode</span>
+      </div>
+      <div class="text">
+        When enabled, you will not be able to go back to previous words to fix
+        mistakes. When turned up to the max, you won't be able to backspace at
+        all.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+
+        <button data-config-value="on">on</button>
+        <button data-config-value="max">max</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="quickEnd">
+      <div class="groupTitle">
+        <i class="fas fa-step-forward"></i>
+        <span>quick end</span>
+      </div>
+      <div class="text">
+        This only applies to the words mode - when enabled, the test will end as
+        soon as the last word has been typed, even if it's incorrect. When
+        disabled, you need to manually confirm the last incorrect entry with a
+        space.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="indicateTypos">
+      <div class="groupTitle">
+        <i class="fas fa-exclamation"></i>
+        <span>indicate typos</span>
+      </div>
+      <div class="text">
+        Shows typos that you've made. Below shows what you typed below the
+        letters and replace will replace the letters with the ones you typed.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="below">below</button>
+        <button data-config-value="replace">replace</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="hideExtraLetters">
+      <div class="groupTitle">
+        <i class="fas fa-eye-slash"></i>
+        <span>hide extra letters</span>
+      </div>
+      <div class="text">
+        Hides extra letters. This will completely avoid words jumping lines (due
+        to changing width), but might feel a bit confusing when you press a key
+        and nothing happens.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="lazyMode">
+      <div class="groupTitle">
+        <i class="fas fa-couch"></i>
+        <span>lazy mode</span>
+      </div>
+      <div class="text">
+        Replaces accents / diacritics / special characters with their normal
+        letter equivalents.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="layout">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>layout emulator</span>
+      </div>
+      <div class="text">
+        With this setting you can emulate other layouts. This setting is best
+        kept off, as it can break things like dead keys and alt layers.
+      </div>
+      <div class="inputs">
+        <select></select>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <div id="ad-settings-2-wrapper" class="ad full-width advertisement ad-h">
+    <div class="icon"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-2"></div>
+  </div>
+  <div id="ad-settings-2-small-wrapper" class="ad advertisement ad-h-s">
+    <div class="icon small"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-2-small"></div>
+  </div>
+
+  <button id="group_sound" class="text sectionGroupTitle" group="sound">
+    <i class="fas fa-chevron-down"></i>
+    sound
+  </button>
+  <div class="settingsGroup sound">
+    <div class="section" data-config-name="soundVolume">
+      <div class="groupTitle">
+        <i class="fas fa-volume-down"></i>
+        <span>sound volume</span>
+      </div>
+      <div class="text">Change the volume of the sound effects.</div>
+      <div class="buttons">
+        <button data-config-value="0.1">quiet</button>
+        <button data-config-value="0.5">medium</button>
+        <button data-config-value="1.0">loud</button>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="playSoundOnClick">
+      <div class="groupTitle">
+        <i class="fas fa-volume-up"></i>
+        <span>play sound on click</span>
+      </div>
+      <div class="text">Plays a short sound when you press a key.</div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="1">click</button>
+        <button data-config-value="2">beep</button>
+        <button data-config-value="3">pop</button>
+        <button data-config-value="4">nk creams</button>
+        <button data-config-value="5">typewriter</button>
+        <button data-config-value="6">osu</button>
+        <button data-config-value="7">hitmarker</button>
+        <button data-config-value="8">sine</button>
+        <button data-config-value="9">sawtooth</button>
+        <button data-config-value="10">square</button>
+        <button data-config-value="11">triangle</button>
+        <button data-config-value="12">pentatonic</button>
+        <button data-config-value="13">wholetone</button>
+        <button data-config-value="14">fist fight</button>
+        <button data-config-value="15">rubber keys</button>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="playSoundOnError">
+      <div class="groupTitle">
+        <i class="fas fa-volume-mute"></i>
+        <span>play sound on error</span>
+      </div>
+      <div class="text">
+        Plays a short sound if you press an incorrect key or press space too
+        early.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="1">damage</button>
+        <button data-config-value="2">triangle</button>
+        <button data-config-value="3">square</button>
+        <button data-config-value="4">missed punch</button>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <button id="group_caret" class="text sectionGroupTitle" group="caret">
+    <i class="fas fa-chevron-down"></i>
+    caret
+  </button>
+  <div class="settingsGroup caret">
+    <div class="section" data-config-name="smoothCaret">
+      <div class="groupTitle">
+        <i class="fas fa-i-cursor"></i>
+        <span>smooth caret</span>
+      </div>
+      <div class="text">
+        The caret will move smoothly between letters and words.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="slow">slow</button>
+        <button data-config-value="medium">medium</button>
+        <button data-config-value="fast">fast</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="caretStyle">
+      <div class="groupTitle">
+        <i class="fas fa-i-cursor"></i>
+        <span>caret style</span>
+      </div>
+      <div class="text">Change the style of the caret during the test.</div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="default">|</button>
+        <button data-config-value="block">▮</button>
+        <button data-config-value="outline">▯</button>
+        <button data-config-value="underline">_</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="paceCaret">
+      <div class="groupTitle">
+        <i class="fas fa-i-cursor"></i>
+        <span>pace caret</span>
+      </div>
+      <div class="text">
+        Displays a second caret that moves at constant speed. The 'average'
+        option averages the speed of last 10 results. The 'daily' option takes
+        the highest speed of the last 24 hours.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="wpm"
+            class="input customPaceCaretSpeed"
+            tabindex="0"
+            min="0"
+            step="1"
+            value=""
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+        <div class="buttons">
+          <button data-config-value="off">off</button>
+          <button data-config-value="average">avg</button>
+          <button data-config-value="pb">pb</button>
+          <button data-config-value="last">last</button>
+          <button data-config-value="daily">daily</button>
+          <button data-config-value="custom">custom</button>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="repeatedPace">
+      <div class="groupTitle">
+        <i class="fas fa-i-cursor"></i>
+        <span>repeated pace</span>
+      </div>
+      <div class="text">
+        When repeating a test, a pace caret will automatically be enabled for
+        one test with the speed of your previous test. It does not override the
+        pace caret if it's already enabled.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="paceCaretStyle">
+      <div class="groupTitle">
+        <i class="fas fa-i-cursor"></i>
+        <span>pace caret style</span>
+      </div>
+      <div class="text">
+        Change the style of the pace caret during the test.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="default">|</button>
+        <button data-config-value="block">▮</button>
+        <button data-config-value="outline">▯</button>
+        <button data-config-value="underline">_</button>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <button
+    id="group_appearance"
+    class="text sectionGroupTitle"
+    group="appearance"
+  >
+    <i class="fas fa-chevron-down"></i>
+    appearance
+  </button>
+  <div class="settingsGroup appearance">
+    <div class="section" data-config-name="timerStyle">
+      <div class="groupTitle">
+        <i class="fas fa-chart-pie"></i>
+        <span>live progress style</span>
+      </div>
+      <div class="text">
+        Change the style of the timer/word count during a test.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="bar">bar</button>
+        <button data-config-value="text">text</button>
+        <button data-config-value="mini">mini</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="liveSpeedStyle">
+      <div class="groupTitle">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>live speed style</span>
+      </div>
+      <div class="text">
+        Change the style of the live speed displayed during the test.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="text">text</button>
+        <button data-config-value="mini">mini</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="liveAccStyle">
+      <div class="groupTitle">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>live accuracy style</span>
+      </div>
+      <div class="text">
+        Change the style of the live accuracy displayed during the test.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="text">text</button>
+        <button data-config-value="mini">mini</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="liveBurstStyle">
+      <div class="groupTitle">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>live burst style</span>
+      </div>
+      <div class="text">
+        Change the style of the live burst speed displayed during the test.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="text">text</button>
+        <button data-config-value="mini">mini</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="timerColor">
+      <div class="groupTitle">
+        <i class="fas fa-chart-pie"></i>
+        <span>live stats color</span>
+      </div>
+      <div class="text">
+        Change the color of the progress, live speed, accuracy and burst text.
+      </div>
+      <div class="buttons">
+        <button data-config-value="black">black</button>
+        <button data-config-value="sub">sub</button>
+        <button data-config-value="text">text</button>
+        <button data-config-value="main">main</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="timerOpacity">
+      <div class="groupTitle">
+        <i class="fas fa-chart-pie"></i>
+        <span>live stats opacity</span>
+      </div>
+      <div class="text">
+        Change the opacity of the progress, live speed, burst and accuracy text.
+      </div>
+      <div class="buttons">
+        <button data-config-value="0.25">0.25</button>
+        <button data-config-value="0.5">0.5</button>
+        <button data-config-value="0.75">0.75</button>
+        <button data-config-value="1">1</button>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="highlightMode">
+      <div class="groupTitle">
+        <i class="fas fa-highlighter"></i>
+        <span>highlight mode</span>
+      </div>
+      <div class="text">Change what is highlighted during the test.</div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="letter">letter</button>
+        <button data-config-value="word">word</button>
+        <button data-config-value="next_word">next word</button>
+        <button data-config-value="next_two_words">next two words</button>
+        <button data-config-value="next_three_words">next three words</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="tapeMode">
+      <div class="groupTitle">
+        <i class="fas fa-tape"></i>
+        <span>tape mode</span>
+      </div>
+      <div class="text">
+        Only shows one line which scrolls horizontally. Setting this to 'word'
+        will make it scroll after every word and 'letter' will scroll after
+        every keypress. Works best with smooth line scroll enabled and a
+        monospace font.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="letter">letter</button>
+        <button data-config-value="word">word</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="smoothLineScroll">
+      <div class="groupTitle">
+        <i class="fas fa-align-left"></i>
+        <span>smooth line scroll</span>
+      </div>
+      <div class="text">
+        When enabled, the line transition will be animated.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="showAllLines">
+      <div class="groupTitle">
+        <i class="fas fa-align-left"></i>
+        <span>show all lines</span>
+      </div>
+      <div class="text">
+        When enabled, the website will show all lines for word, custom and quote
+        mode tests - otherwise the lines will be limited to 3, and will
+        automatically scroll. Using this could cause the timer text and live
+        speed to not be visible.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="alwaysShowDecimalPlaces">
+      <div class="groupTitle">
+        <div class="textIcon">00</div>
+        <span>always show decimal places</span>
+      </div>
+      <div class="text">
+        Always shows decimal places for values on the result page, without the
+        need to hover over the stats.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="typingSpeedUnit">
+      <div class="groupTitle">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>typing speed unit</span>
+      </div>
+      <div class="text">Display typing speed in the specified unit.</div>
+      <div class="buttons">
+        <button data-config-value="wpm">wpm</button>
+        <button data-config-value="cpm">cpm</button>
+        <button data-config-value="wps">wps</button>
+        <button data-config-value="cps">cps</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="startGraphsAtZero">
+      <div class="groupTitle">
+        <i class="fas fa-chart-line"></i>
+        <span>start graphs at zero</span>
+      </div>
+      <div class="text">
+        Force graph axis to always start at zero, no matter what the data is.
+        Turning this off may exaggerate the value changes.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="maxLineWidth">
+      <div class="groupTitle">
+        <i class="fas fa-text-width"></i>
+        <span>max line width</span>
+      </div>
+      <div class="text">
+        Change the maximum width of the typing test, measured in characters.
+        Setting this to 0 will align the words to the edges of the content area.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="max line width"
+            class="input"
+            min="0"
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="fontSize">
+      <div class="groupTitle">
+        <i class="fas fa-font"></i>
+        <span>font size</span>
+      </div>
+      <div class="text">Change the font size of the test words.</div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="number"
+            placeholder="font size"
+            class="input"
+            tabindex="0"
+          />
+          <button class="save no-auto-handle">
+            <i class="fas fa-save fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="fontFamily">
+      <div class="groupTitle">
+        <i class="fas fa-font"></i>
+        <span>font family</span>
+      </div>
+      <!-- <div class="text">Change the font family for the site</div> -->
+      <div class="buttons"></div>
+    </div>
+    <div class="section" data-config-name="keymapMode">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>keymap</span>
+      </div>
+      <div class="text">
+        Displays your current layout while taking a test. React shows what you
+        pressed and Next shows what you need to press next.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="static">static</button>
+        <button data-config-value="react">react</button>
+        <button data-config-value="next">next</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="keymapLayout">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>keymap layout</span>
+      </div>
+      <div class="text">Controls which layout is displayed on the keymap.</div>
+      <div class="inputs">
+        <select></select>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="keymapStyle">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>keymap style</span>
+      </div>
+      <!-- <div class="text">Displays the keymap in a different style.</div> -->
+      <div class="buttons">
+        <button data-config-value="staggered">staggered</button>
+        <button data-config-value="alice">alice</button>
+        <button data-config-value="matrix">matrix</button>
+        <button data-config-value="split">split</button>
+        <button data-config-value="split_matrix">split matrix</button>
+        <button data-config-value="steno">steno</button>
+        <button data-config-value="steno_matrix">steno matrix</button>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="keymapLegendStyle">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>keymap legend style</span>
+      </div>
+      <div class="buttons">
+        <button data-config-value="lowercase">lowercase</button>
+        <button data-config-value="uppercase">uppercase</button>
+        <button data-config-value="blank">blank</button>
+        <button data-config-value="dynamic">dynamic</button>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="keymapShowTopRow">
+      <div class="groupTitle">
+        <i class="fas fa-keyboard"></i>
+        <span>keymap show top row</span>
+      </div>
+      <div class="buttons">
+        <button data-config-value="always">always</button>
+        <button data-config-value="layout">layout dependent</button>
+        <button data-config-value="never">never</button>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <div id="ad-settings-3-wrapper" class="ad full-width advertisement ad-h">
+    <div class="icon"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-3"></div>
+  </div>
+  <div id="ad-settings-3-small-wrapper" class="ad advertisement ad-h-s">
+    <div class="icon small"><i class="fas fa-ad"></i></div>
+    <div id="ad-settings-3-small"></div>
+  </div>
+
+  <button id="group_theme" class="text sectionGroupTitle" group="theme">
+    <i class="fas fa-chevron-down"></i>
+    theme
+  </button>
+  <div class="settingsGroup theme">
+    <div class="section" data-config-name="flipTestColors">
+      <div class="groupTitle">
+        <i class="fas fa-adjust"></i>
+        <span>flip test colors</span>
+      </div>
+      <div class="text">
+        By default, typed text is brighter than the future text. When enabled,
+        the colors will be flipped and the future text will be brighter than the
+        already typed text.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="colorfulMode">
+      <div class="groupTitle">
+        <i class="fas fa-fill-drip"></i>
+        <span>colorful mode</span>
+      </div>
+      <div class="text">
+        When enabled, the test words will use the main color, instead of the
+        text color, making the website more colorful.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="customBackgroundSize">
+      <div class="groupTitle">
+        <i class="fas fa-image"></i>
+        <span>custom background</span>
+      </div>
+      <div class="text">
+        Set an image url to be a custom background image. Cover fits the image
+        to cover the screen. Contain fits the image to be fully visible. Max
+        fits the image corner to corner.
+      </div>
+      <div class="inputs">
+        <div class="inputAndButton">
+          <input
+            type="text"
+            placeholder="image url"
+            class="input"
+            tabindex="0"
+            onClick="this.select();"
+          />
+          <span>
+            <button class="hidden remove no-auto-handle">
+              <i class="fas fa-trash fa-fw"></i>
+            </button>
+            <button class="save no-auto-handle">
+              <i class="fas fa-save fa-fw"></i>
+            </button>
+          </span>
+        </div>
+        <div class="buttons">
+          <button data-config-value="cover">cover</button>
+          <button data-config-value="contain">contain</button>
+          <button data-config-value="max">max</button>
+        </div>
+      </div>
+    </div>
+    <div class="section fullWidth" data-config-name="customBackgroundFilter">
+      <div class="groupTitle">
+        <i class="fas fa-sliders-h"></i>
+        <span>custom background filter</span>
+      </div>
+      <div class="text">Apply various effects to the custom background.</div>
+      <div class="groups">
+        <div class="group blur">
+          <div class="title">blur</div>
+          <div class="value"></div>
+          <input type="range" min="0" max="5" value="0" step="0.1" />
+        </div>
+        <div class="group brightness">
+          <div class="title">brightness</div>
+          <div class="value"></div>
+          <input type="range" min="0" max="2" value="1" step="0.1" />
+        </div>
+        <div class="group saturate">
+          <div class="title">saturate</div>
+          <div class="value"></div>
+          <input type="range" min="0" max="2" value="1" step="0.1" />
+        </div>
+        <div class="group opacity">
+          <div class="title">opacity</div>
+          <div class="value"></div>
+          <input type="range" min="0" max="1" value="1" step="0.1" />
+        </div>
+      </div>
+    </div>
+    <div class="section" data-config-name="autoSwitchTheme">
+      <div class="groupTitle">
+        <i class="fas fa-palette"></i>
+        <span>auto switch theme</span>
+      </div>
+      <div class="text">
+        Enabling this will automatically switch the theme between light and dark
+        depending on the system theme.
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">off</button>
+        <button data-config-value="true">on</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="autoSwitchThemeInputs">
+      <div>light</div>
+      <div><select class="light"></select></div>
+      <div>dark</div>
+      <div><select class="dark"></select></div>
+    </div>
+    <div class="section fullWidth" data-config-name="randomTheme">
+      <div class="groupTitle">
+        <i class="fas fa-random"></i>
+        <span>randomize theme</span>
+      </div>
+      <div class="text">
+        After completing a test, the theme will be set to a random one. The
+        random themes are not saved to your config. If set to 'favorite' only
+        favorite themes will be randomized. If set to 'light' or 'dark', only
+        presets with light or dark background colors will be randomized,
+        respectively. If set to 'custom', custom themes will be randomized.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="on">on</button>
+        <button data-config-value="fav">favorite</button>
+        <button data-config-value="light">light</button>
+        <button data-config-value="dark">dark</button>
+        <button data-config-value="custom">custom</button>
+      </div>
+    </div>
+    <div class="section themes fullWidth">
+      <div class="groupTitle">
+        <i class="fas fa-palette"></i>
+        <span>theme</span>
+      </div>
+      <div class="tabs">
+        <button data-tab="preset">preset</button>
+        <button data-tab="custom">custom</button>
+      </div>
+      <!-- <div class='tabs'>
+        <button tab="preset" class="tab">preset</button>
+        <button tab="custom" class="tab">custom</button>
+      </div> -->
+
+      <!-- Used to convert colors to hex  -->
+      <div class="colorConverter"></div>
+
+      <div class="tabContainer">
+        <div tabContent="custom" class="tabContent customTheme hidden">
+          <div class="allCustomThemes buttons"></div>
+          <div class="customThemeEdit">
+            <div class="customThemeInputs">
+              <label class="colorText">background</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--bg-color-txt"
+                />
+                <label
+                  for="--bg-color"
+                  class="button"
+                  style="
+                    color: var(--text-color);
+                    background: var(--sub-alt-color);
+                  "
+                >
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--bg-color"
+                />
+              </div>
+              <label class="colorText">sub alt</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--sub-alt-color-txt"
+                />
+                <label
+                  for="--sub-alt-color"
+                  class="button"
+                  style="
+                    color: var(--text-color);
+                    background: var(--sub-alt-color);
+                  "
+                >
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--sub-alt-color"
+                />
+              </div>
+              <label class="colorText">main</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--main-color-txt"
+                />
+                <label for="--main-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--main-color"
+                />
+              </div>
+              <label class="colorText">sub</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--sub-color-txt"
+                />
+                <label for="--sub-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--sub-color"
+                />
+              </div>
+              <label class="colorText">caret</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--caret-color-txt"
+                />
+                <label for="--caret-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--caret-color"
+                />
+              </div>
+              <label class="colorText">text</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--text-color-txt"
+                />
+                <label for="--text-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--text-color"
+                />
+              </div>
+
+              <span class="spacer"></span>
+
+              <label class="colorText">error</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--error-color-txt"
+                />
+                <label for="--error-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--error-color"
+                />
+              </div>
+              <label class="colorText">extra error</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--error-extra-color-txt"
+                />
+                <label for="--error-extra-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--error-extra-color"
+                />
+              </div>
+              <label class="colorText">error</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--colorful-error-color-txt"
+                />
+                <label for="--colorful-error-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--colorful-error-color"
+                />
+              </div>
+
+              <label class="colorText">extra error</label>
+              <div class="colorPicker inputAndButton">
+                <input
+                  type="text"
+                  value="#000000"
+                  class="input"
+                  id="--colorful-error-extra-color-txt"
+                />
+                <label for="--colorful-error-extra-color" class="button">
+                  <i class="fas fa-fw fa-palette"></i>
+                </label>
+                <input
+                  type="color"
+                  class="color"
+                  value="#000000"
+                  id="--colorful-error-extra-color"
+                />
+              </div>
+            </div>
+            <div class="customThemeButtons">
+              <button id="loadCustomColorsFromPreset">load from preset</button>
+              <button id="shareCustomThemeButton">share</button>
+              <button id="saveCustomThemeButton">save as new</button>
+            </div>
+          </div>
+        </div>
+        <div tabContent="preset" class="tabContent">
+          <div class="favThemes buttons"></div>
+          <div class="allThemes buttons"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <button
+    id="group_hideElements"
+    class="text sectionGroupTitle"
+    group="hideElements"
+  >
+    <i class="fas fa-chevron-down"></i>
+    hide elements
+  </button>
+  <div class="settingsGroup hideElements">
+    <div class="section" data-config-name="showKeyTips">
+      <div class="groupTitle">
+        <i class="fas fa-question"></i>
+        <span>key tips</span>
+      </div>
+      <div class="text">Shows the keybind tips at the bottom of the page.</div>
+      <div class="buttons">
+        <button data-config-value="false">hide</button>
+        <button data-config-value="true">show</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="showOutOfFocusWarning">
+      <div class="groupTitle">
+        <i class="fas fa-exclamation"></i>
+        <span>out of focus warning</span>
+      </div>
+      <div class="text">
+        Shows an out of focus reminder after 1 second of being 'out of focus'
+        (not being able to type).
+      </div>
+      <div class="buttons">
+        <button data-config-value="false">hide</button>
+        <button data-config-value="true">show</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="capsLockWarning">
+      <div class="groupTitle">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>caps lock warning</span>
+      </div>
+      <div class="text">Displays a warning when caps lock is on.</div>
+      <div class="buttons">
+        <button data-config-value="false">hide</button>
+        <button data-config-value="true">show</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="showAverage">
+      <div class="groupTitle">
+        <i class="fas fa-chart-bar"></i>
+        <span>average</span>
+      </div>
+      <div class="text">
+        Displays your average speed and/or accuracy over the last 10 tests.
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="speed">speed</button>
+        <button data-config-value="acc">acc</button>
+        <button data-config-value="both">both</button>
+      </div>
+    </div>
+    <div class="sectionSpacer"></div>
+  </div>
+
+  <button
+    id="group_dangerZone"
+    class="text sectionGroupTitle"
+    group="dangerZone"
+  >
+    <i class="fas fa-chevron-down"></i>
+    danger zone
+  </button>
+  <div class="settingsGroup dangerZone">
+    <div class="section importexportSettings">
+      <div class="groupTitle">
+        <i class="fas fa-sliders-h"></i>
+        <span>import/export settings</span>
+      </div>
+      <div class="text">Import or export the settings as JSON.</div>
+      <div class="buttons">
+        <button id="importSettingsButton">import</button>
+        <button id="exportSettingsButton">export</button>
+      </div>
+    </div>
+    <div class="section" data-config-name="ads">
+      <div class="groupTitle">
+        <i class="fas fa-ad"></i>
+        <span>ads</span>
+      </div>
+      <div class="text">
+        You can disable or enable ads at any time. "Result" will show one ad on
+        the result page, "on" will add floating vertical banners, and "sellout"
+        will add multiple ads on every page.
+        <br />
+        <br />
+        (changes will take effect after a refresh).
+      </div>
+      <div class="buttons">
+        <button data-config-value="off">off</button>
+        <button data-config-value="result">result</button>
+        <button data-config-value="on">on</button>
+        <button data-config-value="sellout">sellout</button>
+      </div>
+    </div>
+    <div class="section apeKeys needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-key"></i>
+        <span>ape keys</span>
+      </div>
+      <div class="text">
+        Generate Ape Keys to access certain API endpoints
+        <span style="display: inline-flex">
+          (
+          <a
+            href="https://api.monkeytype.com/documentation"
+            target="_blank"
+            rel="noopener"
+          >
+            documentation
+          </a>
+          ).&nbsp;
+        </span>
+        More endpoints will be added in the future.
+      </div>
+      <div class="buttons">
+        <button id="showApeKeysPopup">open</button>
+      </div>
+    </div>
+    <div class="section updateCookiePreferences">
+      <div class="groupTitle">
+        <i class="fas fa-cookie-bite"></i>
+        <span>update cookie preferences</span>
+      </div>
+      <div class="text">
+        If you changed your mind about which cookies you consent to, you can
+        change your preferences here.
+      </div>
+      <div class="buttons">
+        <button>open</button>
+      </div>
+    </div>
+    <div class="section setStreakHourOffset needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-clock"></i>
+        <span>set streak hour offset</span>
+      </div>
+      <div class="text">
+        Streaks reset at midnight UTC by default. If this is not convenient for
+        you (for example if it means that streaks reset in the middle of the
+        day), you can change the hour offset here.
+        <br />
+        <span class="red">You can only do this once!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="setStreakHourOffset">
+          update hour offset
+        </button>
+      </div>
+    </div>
+    <div class="section updateAccountName needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-user"></i>
+        <span>update account name</span>
+      </div>
+      <div class="text">
+        Change the name of your account. You can only do this once every 30
+        days.
+      </div>
+      <div class="buttons">
+        <button class="danger" id="updateAccountName">update name</button>
+      </div>
+    </div>
+    <div class="section passwordAuthSettings needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-lock"></i>
+        <span>password authentication settings</span>
+      </div>
+      <div class="text">
+        Add password authentication, update your password or email.
+      </div>
+      <div class="buttons vertical">
+        <button class="danger" id="addPasswordAuth">
+          add password authentication
+        </button>
+        <button class="danger" id="emailPasswordAuth">update email</button>
+        <button class="danger" id="passPasswordAuth">update password</button>
+        <button class="danger" id="removePasswordAuth">
+          remove password authentication
+        </button>
+      </div>
+    </div>
+    <div class="section googleAuthSettings needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fab fa-google"></i>
+        <span>google authentication settings</span>
+      </div>
+      <div class="text">Add or remove Google authentication.</div>
+      <div class="buttons vertical">
+        <button class="danger" id="addGoogleAuth">
+          add google authentication
+        </button>
+        <button class="danger" id="removeGoogleAuth">
+          remove google authentication
+        </button>
+      </div>
+    </div>
+    <div class="section githubAuthSettings needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fab fa-github"></i>
+        <span>github authentication settings</span>
+      </div>
+      <div class="text">Add or remove GitHub authentication.</div>
+      <div class="buttons vertical">
+        <button class="danger" id="addGithubAuth">
+          add github authentication
+        </button>
+        <button class="danger" id="removeGithubAuth">
+          remove github authentication
+        </button>
+      </div>
+    </div>
+    <div class="section revokeAllTokens needsAccount">
+      <div class="groupTitle">
+        <i class="fas fa-user-slash"></i>
+        <span>revoke all tokens</span>
+      </div>
+      <div class="text">
+        Revokes all tokens connected to your account. Do this if you think
+        someone else has access to your account.
+        <br />
+        <span class="red">This will log you out of all devices.</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="revokeAllTokens">revoke all tokens</button>
+      </div>
+    </div>
+    <div class="section resetSettings">
+      <div class="groupTitle">
+        <i class="fas fa-redo-alt"></i>
+        <span>reset settings</span>
+      </div>
+      <div class="text">
+        Resets settings to the default (but doesn't touch your tags).
+        <br />
+        <span class="red">You can't undo this action!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="resetSettingsButton">reset settings</button>
+      </div>
+    </div>
+    <div class="section resetPersonalBests needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-crown"></i>
+        <span>reset personal bests</span>
+      </div>
+      <div class="text">
+        Resets all your personal bests (but doesn't delete any tests from your
+        history).
+        <br />
+        <span class="red">You can't undo this action!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="resetPersonalBestsButton">
+          reset personal bests
+        </button>
+      </div>
+    </div>
+    <div class="section optOutOfLeaderboards needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-crown"></i>
+        <span>opt out of leaderboards</span>
+      </div>
+      <div class="text">
+        Use this if you frequently trigger the anticheat (for example if using
+        stenography) to opt out of leaderboards.
+        <br />
+        <span class="red">You can't undo this action!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="optOutOfLeaderboardsButton">opt out</button>
+      </div>
+    </div>
+    <div class="section resetAccount needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-redo-alt"></i>
+        <span>reset account</span>
+      </div>
+      <div class="text">
+        Completely resets your account to a blank state.
+        <br />
+        <span class="red">You can't undo this action!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="resetAccount">reset account</button>
+      </div>
+    </div>
+    <div class="section deleteAccount needsAccount hidden">
+      <div class="groupTitle">
+        <i class="fas fa-trash"></i>
+        <span>delete account</span>
+      </div>
+      <div class="text">
+        Deletes your account and all data connected to it.
+        <br />
+        <span class="red">You can't undo this action!</span>
+      </div>
+      <div class="buttons">
+        <button class="danger" id="deleteAccount">delete account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="page pageLogin hidden" id="pageLogin">
+  <div class="preloader hidden">
+    <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+  </div>
+  <div class="disabledNotification hidden">
+    <p>Login/Signup is disabled or the server is down/under maintenance.</p>
+  </div>
+  <div class="register side">
+    <div class="title">
+      <i class="fas fa-user-plus"></i>
+      register
+    </div>
+    <form action="" autocomplete="nope">
+      <input
+        type="text"
+        class="usernameInput"
+        placeholder="username"
+        autocomplete="new-username"
+      />
+      <input
+        type="email"
+        class="emailInput"
+        placeholder="email"
+        autocomplete="new-email"
+      />
+      <input
+        type="email"
+        class="verifyEmailInput"
+        placeholder="verify email"
+        autocomplete="verify-email"
+      />
+      <input
+        type="password"
+        class="passwordInput"
+        placeholder="password"
+        autocomplete="new-password"
+        name="new-password"
+      />
+      <input
+        type="password"
+        class="verifyPasswordInput"
+        placeholder="verify password"
+        autocomplete="verify-password"
+        name="verify-password"
+      />
+      <button type="submit" disabled>
+        <i class="fas fa-user-plus"></i>
+        sign up
+      </button>
+    </form>
+  </div>
+  <div class="login side">
+    <div class="title">
+      <i class="fas fa-sign-in-alt"></i>
+      login
+    </div>
+    <div class="providers">
+      <button class="signInWithGoogle">
+        <i class="fab fa-google"></i>
+        <!-- google sign In -->
+        <!-- google -->
+      </button>
+      <button class="signInWithGitHub">
+        <i class="fab fa-github"></i>
+        <!-- github sign In -->
+        <!-- github -->
+      </button>
+    </div>
+    <form action="">
+      <div class="orWithLine">
+        <div class="line"></div>
+        <div class="text">or</div>
+        <div class="line"></div>
+      </div>
+      <input
+        name="current-email"
+        type="email"
+        placeholder="email"
+        autocomplete="current-email"
+      />
+      <input
+        name="current-password"
+        type="password"
+        placeholder="password"
+        autocomplete="current-password"
+      />
+      <div>
+        <label id="rememberMe" class="checkbox">
+          <input type="checkbox" checked />
+          <div>remember me</div>
+        </label>
+      </div>
+      <button type="submit" class="signIn">
+        <i class="fas fa-sign-in-alt"></i>
+        sign in
+      </button>
+    </form>
+    <button class="text" id="forgotPasswordButton">forgot password?</button>
+  </div>
+</div>
+
+        <div class="page pageAccount hidden full-width" id="pageAccount">
+  <div class="scrollToTopButton invisible">
+    <i class="fas fa-angle-double-up"></i>
+  </div>
+  <div class="preloader hidden">
+    <div class="icon">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div>
+    <div class="barWrapper hidden">
+      <div class="bar">
+        <div class="fill"></div>
+      </div>
+      <div class="text">‎</div>
+    </div>
+  </div>
+  <div class="content full-width content-grid">
+    <div class="miniResultChartWrapper">
+      <canvas id="miniResultChart"></canvas>
+    </div>
+    <div class="miniResultChartBg"></div>
+
+    <div class="profile">
+      <div class="details both">
+        <div class="avatarAndName">
+          <div class="avatars">
+            <div class="placeholderAvatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="avatar"></div>
+          </div>
+          <div>
+            <div class="user">
+              <div class="name">-</div>
+              <div class="userFlags"></div>
+            </div>
+            <div class="badges"></div>
+            <div class="allBadges"></div>
+            <div class="joined" data-balloon-pos="right">-</div>
+            <div
+              class="streak"
+              data-balloon-pos="right"
+              data-balloon-length="large"
+            >
+              -
+            </div>
+          </div>
+          <div class="levelAndBar">
+            <div class="level" data-balloon-pos="up">-</div>
+            <div class="xpBar" data-balloon-pos="up">
+              <div class="bar" style="width: 0%"></div>
+            </div>
+            <div class="xp" data-balloon-pos="up">-/-</div>
+          </div>
+        </div>
+        <div class="separator sep1"></div>
+        <div class="typingStats vertical">
+          <div class="started">
+            <div class="title">tests started</div>
+            <div class="value">-</div>
+          </div>
+          <div class="completed">
+            <div class="title">tests completed</div>
+            <div class="value">-</div>
+          </div>
+          <div class="timeTyping">
+            <div class="title">time typing</div>
+            <div class="value">-</div>
+          </div>
+        </div>
+        <div class="separator sep2"></div>
+
+        <div class="bioAndKeyboard vertical">
+          <div class="bio">
+            <div class="title">bio</div>
+            <div class="value">-</div>
+          </div>
+          <div class="keyboard">
+            <div class="title">keyboard</div>
+            <div class="value">-</div>
+          </div>
+        </div>
+        <div class="separator sep3"></div>
+
+        <div class="socials big">
+          <div class="title">socials</div>
+          <div class="value">-</div>
+        </div>
+        <div class="buttonGroup">
+          <button
+            class="editProfileButton"
+            data-balloon-pos="left"
+            aria-label="Edit profile"
+            role="button"
+          >
+            <i class="fas fa-pen"></i>
+          </button>
+          <button
+            class="copyLink button"
+            data-balloon-pos="left"
+            aria-label="Copy public link"
+            role="button"
+          >
+            <i class="fas fa-link"></i>
+          </button>
+        </div>
+      </div>
+      <div class="leaderboardsPositions">
+        <div class="title">All-Time English Leaderboards</div>
+        <div class="group t15">
+          <div class="testType">15 seconds</div>
+          <div class="pos">-</div>
+          <div class="topPercentage">-</div>
+        </div>
+        <div class="group t60">
+          <div class="testType">60 seconds</div>
+          <div class="pos">-</div>
+          <div class="topPercentage">-</div>
+        </div>
+      </div>
+      <div class="pbsTime">
+        <div class="group">
+          <div class="quick">
+            <div class="test">15 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">30 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">60 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">120 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="buttonGroup">
+          <div
+            class="showAllButton"
+            data-balloon-pos="left"
+            aria-label="Show all personal bests"
+            role="button"
+          >
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+        </div>
+      </div>
+      <div class="pbsWords">
+        <div class="group">
+          <div class="quick">
+            <div class="test">10 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">25 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">50 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">100 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="buttonGroup">
+          <div
+            class="showAllButton"
+            data-balloon-pos="left"
+            aria-label="Show all personal bests"
+            role="button"
+          >
+            <i class="fas fa-ellipsis-v"></i>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="group personalBestTables">
+        <div class="title">personal bests</div>
+        <div class="tables">
+          <div class="titleAndTable timePbTable">
+            <table width="100%">
+              <thead>
+                <tr>
+                  <td width="1%">time</td>
+                  <td width="33%">
+                    wpm
+                    <br />
+                    <span class="sub">accuracy</span>
+                  </td>
+                  <td width="33%">
+                    raw
+                    <br />
+                    <span class="sub">consistency</span>
+                  </td>
+                  <td width="33%">date</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>15</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>30</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>60</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>120</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="button showAllTimePbs">show all</div>
+          </div>
+          <div class="titleAndTable wordsPbTable">
+            <table width="100%">
+              <thead>
+                <tr>
+                  <td width="1%">words</td>
+                  <td width="33%">
+                    wpm
+                    <br />
+                    <span class="sub">accuracy</span>
+                  </td>
+                  <td width="33%">
+                    raw
+                    <br />
+                    <span class="sub">consistency</span>
+                  </td>
+                  <td width="33%">date</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>10</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>25</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>50</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>100</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="button showAllWordsPbs">show all</div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <!-- <div class="group createdDate">Account created on -</div> -->
+
+    <div id="testActivity" class="hidden">
+      <div class="wrapper">
+        <div class="top">
+          <div class="year"><select class="yearSelect"></select></div>
+          <div class="title"></div>
+          <div class="legend">
+            <span>less</span>
+            <div data-level="0"></div>
+            <div data-level="1"></div>
+            <div data-level="2"></div>
+            <div data-level="3"></div>
+            <div data-level="4"></div>
+            <span>more</span>
+          </div>
+        </div>
+        <div class="activity"></div>
+        <div class="months"></div>
+        <div class="daysFull">
+          <div></div>
+          <div><div class="text">monday</div></div>
+          <div></div>
+          <div><div class="text">wednesday</div></div>
+          <div></div>
+          <div><div class="text">friday</div></div>
+          <div></div>
+        </div>
+        <div class="days">
+          <div></div>
+          <div><div class="text">mon</div></div>
+          <div></div>
+          <div><div class="text">wed</div></div>
+          <div></div>
+          <div><div class="text">fri</div></div>
+          <div></div>
+        </div>
+        <div class="nodata hidden">No data found.</div>
+      </div>
+    </div>
+
+    <div id="ad-account-1-wrapper" class="ad full-width advertisement ad-h">
+      <div class="icon"><i class="fas fa-ad"></i></div>
+      <div id="ad-account-1"></div>
+    </div>
+    <div id="ad-account-1-small-wrapper" class="ad advertisement ad-h-s">
+      <div class="icon small"><i class="fas fa-ad"></i></div>
+      <div id="ad-account-1-small"></div>
+    </div>
+
+    <div class="group resultBatches hidden">
+      <!-- <div class="title">result history</div> -->
+      <div class="bars">
+        <div class="leftText downloaded">Result history:</div>
+        <div class="bar downloaded">
+          <div class="fill"></div>
+        </div>
+        <div class="rightText downloaded">-</div>
+        <div class="leftText limit">Result limit:</div>
+        <div class="bar limit">
+          <div class="fill"></div>
+          <!-- <div class="indicator">
+            <div class="text">completed tests</div>
+            <div class="line"></div>
+          </div> -->
+        </div>
+        <div class="rightText limit">-</div>
+      </div>
+      <div class="text"></div>
+      <button class="loadMoreResults">load more</button>
+    </div>
+
+    <div class="group presetFilterButtons hidden">
+      <div class="buttonsAndTitle">
+        <div class="title">filter presets</div>
+        <div class="buttons filterBtns" style="grid-column: 1/3"></div>
+      </div>
+    </div>
+    <div class="group topFilters">
+      <!-- <div
+        class="button"
+        id="currentConfigFilter"
+        style="grid-column: 1/3;"
+      >
+        set filters to current settings
+      </div> -->
+      <div class="buttonsAndTitle" style="grid-column: 1/3">
+        <div class="title">filters</div>
+        <div class="buttons">
+          <button class="allFilters">all</button>
+          <button class="currentConfigFilter">current settings</button>
+          <button class="toggleAdvancedFilters">advanced</button>
+          <button class="createFilterPresetBtn">save as preset</button>
+        </div>
+      </div>
+      <div
+        class="buttonsAndTitle testDate"
+        style="grid-column: 1/3; margin-top: 1rem"
+      >
+        <!-- <div class="title">date</div> -->
+        <div class="buttons filterGroup" group="date">
+          <button filter="last_day">last day</button>
+          <button filter="last_week">last week</button>
+          <button filter="last_month">last month</button>
+          <button filter="last_3months">last 3 months</button>
+          <button filter="all">all time</button>
+        </div>
+      </div>
+    </div>
+    <div class="group filterButtons" style="display: none">
+      <div class="buttonsAndTitle" style="grid-column: 1/-1">
+        <div class="title">advanced filters</div>
+        <div class="buttons">
+          <button class="noFilters">clear filters</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">difficulty</div>
+        <div class="buttons filterGroup" group="difficulty">
+          <button filter="normal">normal</button>
+          <button filter="expert">expert</button>
+          <button filter="master">master</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">personal best</div>
+        <div class="buttons filterGroup" group="pb">
+          <button filter="no">no</button>
+          <button filter="yes">yes</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">mode</div>
+        <div class="buttons filterGroup" group="mode">
+          <button filter="words">words</button>
+          <button filter="time">time</button>
+          <button filter="quote">quote</button>
+          <button filter="zen">zen</button>
+          <button filter="custom">custom</button>
+          <button filter="easy">easy</button>
+          <button filter="medium">medium</button>
+          <button filter="onerandom">onerandom</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">quote length</div>
+        <div class="buttons filterGroup" group="quoteLength">
+          <button filter="short">short</button>
+          <button filter="medium">medium</button>
+          <button filter="long">long</button>
+          <button filter="thicc">thicc</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">words</div>
+        <div class="buttons filterGroup" group="words">
+          <button filter="10">10</button>
+          <button filter="25">25</button>
+          <button filter="50">50</button>
+          <button filter="100">100</button>
+          <button filter="custom">custom</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">time</div>
+        <div class="buttons filterGroup" group="time">
+          <button filter="15">15</button>
+          <button filter="30">30</button>
+          <button filter="60">60</button>
+          <button filter="120">120</button>
+          <button filter="custom">custom</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">punctuation</div>
+        <div class="buttons filterGroup" group="punctuation">
+          <button filter="on">on</button>
+          <button filter="off">off</button>
+        </div>
+      </div>
+      <div class="buttonsAndTitle">
+        <div class="title">numbers</div>
+        <div class="buttons filterGroup" group="numbers">
+          <button filter="on">on</button>
+          <button filter="off">off</button>
+        </div>
+      </div>
+      <div class="tripleSelectsColumn">
+        <div class="buttonsAndTitle tags">
+          <div class="title">tags</div>
+          <div class="select filterGroup" group="tags"></div>
+        </div>
+        <div class="buttonsAndTitle funbox">
+          <div class="title">funbox</div>
+          <div class="select filterGroup" group="funbox"></div>
+        </div>
+        <div class="buttonsAndTitle languages">
+          <div class="title">language</div>
+          <div class="select filterGroup" group="language"></div>
+        </div>
+      </div>
+    </div>
+    <div class="group noDataError hidden">
+      No data found. Check your filters.
+    </div>
+    <div class="group chart">
+      <!-- <div class="chartPreloader">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div> -->
+      <div class="above"></div>
+      <div class="chart">
+        <canvas id="accountHistoryChart"></canvas>
+      </div>
+
+      <div class="below">
+        <div class="text"></div>
+        <div class="buttons">
+          <button class="toggleResultsOnChart">
+            <i class="fas fa-keyboard"></i>
+            Results
+          </button>
+          <button class="toggleAccuracyOnChart">
+            <i class="fas fa-bullseye"></i>
+            Accuracy
+          </button>
+          <button class="toggleAverage10OnChart">
+            <i class="fas fa-chart-line"></i>
+            Avg of 10
+          </button>
+          <button class="toggleAverage100OnChart">
+            <i class="fas fa-chart-line"></i>
+            Avg of 100
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="group histogramChart">
+      <div class="chart" style="height: 200px">
+        <canvas id="accountHistogramChart"></canvas>
+      </div>
+    </div>
+    <div class="group dailyActivityChart">
+      <div class="chart" style="height: 200px">
+        <canvas id="accountActivityChart"></canvas>
+      </div>
+    </div>
+    <div class="group estimatedWordsTyped">
+      <div class="title">estimated words typed</div>
+      <div class="val">-</div>
+    </div>
+    <div class="triplegroup stats">
+      <div class="group testsStarted">
+        <div class="title">tests started</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group testsCompleted">
+        <div class="title">
+          tests completed
+          <span
+            data-balloon-length="xlarge"
+            data-balloon-pos="up"
+            aria-label="Due to the increasing number of results in the database, you can now only see your last 1000 results in detail. Total time spent typing, started and completed tests stats will still be up to date at the top of the page, above the filters."
+            role="alertdialog"
+          >
+            <i class="fas fa-question-circle"></i>
+          </span>
+        </div>
+        <div class="val">-</div>
+        <div class="avgres">-</div>
+      </div>
+      <div class="group timeTotalFiltered">
+        <div class="title">time typing</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group highestWpm">
+        <div class="title">highest wpm</div>
+        <div class="val">-</div>
+        <div class="mode"></div>
+      </div>
+      <div class="group averageWpm">
+        <div class="title">average wpm</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group averageWpm10">
+        <div class="title">
+          average wpm
+          <br />
+          (last 10 tests)
+        </div>
+        <div class="val">-</div>
+      </div>
+
+      <div class="group highestRaw">
+        <div class="title">highest raw wpm</div>
+        <div class="val">-</div>
+        <div class="mode"></div>
+      </div>
+      <div class="group averageRaw">
+        <div class="title">average raw wpm</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group averageRaw10">
+        <div class="title">
+          average raw wpm
+          <br />
+          (last 10 tests)
+        </div>
+        <div class="val">-</div>
+      </div>
+      <div class="group highestAcc">
+        <div class="title">highest accuracy</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group avgAcc">
+        <div class="title">avg accuracy</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group avgAcc10">
+        <div class="title">
+          avg accuracy
+          <br />
+          (last 10 tests)
+        </div>
+        <div class="val">-</div>
+      </div>
+      <div class="group highestCons">
+        <div class="title">highest consistency</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group avgCons">
+        <div class="title">avg consistency</div>
+        <div class="val">-</div>
+      </div>
+      <div class="group avgCons10">
+        <div class="title">
+          avg consistency
+          <br />
+          (last 10 tests)
+        </div>
+        <div class="val">-</div>
+      </div>
+      <!-- <div class="group favouriteTest">
+      <div class="title">favourite test</div>
+      <div class="val">words 10</div>
+    </div> -->
+    </div>
+    <div class="group aboveHistory">
+      <div class="button exportCSV">
+        <i class="fas fa-file-csv"></i>
+        Export CSV
+      </div>
+    </div>
+    <div id="ad-account-2-wrapper" class="ad full-width advertisement ad-h">
+      <div class="icon"><i class="fas fa-ad"></i></div>
+      <div id="ad-account-2"></div>
+    </div>
+    <div id="ad-account-2-small-wrapper" class="ad advertisement ad-h-s">
+      <div class="icon small"><i class="fas fa-ad"></i></div>
+      <div id="ad-account-2-small"></div>
+    </div>
+    <div class="group history">
+      <!-- <div class="title">result history</div> -->
+      <table width="100%">
+        <thead>
+          <tr>
+            <td></td>
+            <td type="button" class="sortable history-wpm-header">wpm</td>
+            <td type="button" class="sortable history-raw-header">raw</td>
+            <td type="button" class="sortable history-acc-header">accuracy</td>
+            <td type="button" class="sortable history-consistency-header">
+              consistency
+            </td>
+            <td
+              aria-label="correct/incorrect/extra/missed"
+              data-balloon-pos="up"
+            >
+              chars
+            </td>
+            <td>mode</td>
+            <!-- <td>punctuation</td> -->
+            <td>info</td>
+            <td>tags</td>
+            <td type="button" class="sortable history-date-header">
+              date
+              <i class="fas fa-sort-down" aria-hidden="true"></i>
+            </td>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="loadMoreButton">load more</div>
+    </div>
+  </div>
+</div>
+
+        <div class="page pageProfileSearch hidden" id="pageProfileSearch">
+  <form class="search">
+    <div class="title">Profile lookup</div>
+    <input class="username" type="text" placeholder="username" />
+    <button type="submit">
+      <i class="fas fa-fw fa-chevron-right"></i>
+    </button>
+  </form>
+</div>
+
+<div class="page pageProfile hidden" id="pageProfile">
+  <div class="content">
+    <div class="preloader">
+      <i class="fas fa-fw fa-spin fa-circle-notch"></i>
+    </div>
+    <div class="error hidden">
+      <i class="fas fa-times"></i>
+      <div class="message"></div>
+    </div>
+    <div class="profile">
+      <div class="details none">
+        <div class="avatarAndName">
+          <div class="avatars">
+            <div class="placeholderAvatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="avatar"></div>
+          </div>
+          <div>
+            <div class="user">
+              <div class="name">-</div>
+              <div class="userFlags"></div>
+            </div>
+            <div class="badges"></div>
+            <div class="allBadges"></div>
+            <div class="joined" data-balloon-pos="up">-</div>
+            <div class="streak" data-balloon-pos="up">-</div>
+          </div>
+          <div class="levelAndBar">
+            <div class="level" data-balloon-pos="up">-</div>
+            <div class="xpBar" data-balloon-pos="up">
+              <div class="bar" style="width: 0%"></div>
+            </div>
+            <div class="xp" data-balloon-pos="up">-/-</div>
+          </div>
+        </div>
+        <div class="separator sep1"></div>
+        <div class="typingStats vertical">
+          <div class="started">
+            <div class="title">tests started</div>
+            <div class="value">-</div>
+          </div>
+          <div class="completed">
+            <div class="title">tests completed</div>
+            <div class="value">-</div>
+          </div>
+          <div class="timeTyping">
+            <div class="title">time typing</div>
+            <div class="value">-</div>
+          </div>
+        </div>
+        <div class="separator sep2 hidden"></div>
+
+        <div class="bioAndKeyboard vertical hidden">
+          <div class="bio">
+            <div class="title">bio</div>
+            <div class="value">-</div>
+          </div>
+          <div class="keyboard hidden">
+            <div class="title">keyboard</div>
+            <div class="value">-</div>
+          </div>
+        </div>
+        <div class="separator sep3 hidden"></div>
+
+        <div class="socials big hidden">
+          <div class="title">socials</div>
+          <div class="value">-</div>
+        </div>
+        <div class="buttonGroup">
+          <button
+            class="userReportButton"
+            data-balloon-pos="left"
+            aria-label="Report user"
+            role="button"
+          >
+            <i class="fas fa-flag"></i>
+          </button>
+        </div>
+      </div>
+      <div class="leaderboardsPositions">
+        <div class="title">All-Time English Leaderboards</div>
+        <div class="group t15">
+          <div class="testType">15 seconds</div>
+          <div class="pos">-</div>
+          <div class="topPercentage">-</div>
+        </div>
+        <div class="group t60">
+          <div class="testType">60 seconds</div>
+          <div class="pos">-</div>
+          <div class="topPercentage">-</div>
+        </div>
+      </div>
+      <div class="pbsWords">
+        <div class="group">
+          <div class="quick">
+            <div class="test">10 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">25 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">50 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">100 words</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="pbsTime">
+        <div class="group">
+          <div class="quick">
+            <div class="test">15 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">30 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">60 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+        <div class="group">
+          <div class="quick">
+            <div class="test">120 seconds</div>
+            <div class="wpm">-</div>
+            <div class="acc">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="lbOptOutReminder hidden"></div>
+    </div>
+  </div>
+</div>
+
+        <div class="page pageTest hidden full-width content-grid">
+  <div id="testConfig" class="full-width">
+    <div class="row">
+      <div class="puncAndNum">
+        <button class="textButton punctuationMode">
+          <i class="fas fa-fw fa-at"></i>
+          punctuation
+        </button>
+        <button class="textButton numbersMode">
+          <i class="fas fa-fw fa-hashtag"></i>
+          numbers
+        </button>
+      </div>
+
+      <div class="spacer leftSpacer"></div>
+
+      <div class="mode">
+        <button class="textButton" mode="time">
+          <i class="fas fa-fw fa-clock"></i>
+          time
+        </button>
+        <button class="textButton" mode="words">
+          <i class="fas fa-fw fa-font"></i>
+          words
+        </button>
+        <button class="textButton" mode="quote">
+          <i class="fas fa-fw fa-quote-left"></i>
+          quote
+        </button>
+        <button class="textButton" mode="zen">
+          <i class="fas fa-fw fa-mountain"></i>
+          zen
+        </button>
+        <button class="textButton" mode="custom">
+          <i class="fas fa-fw fa-wrench"></i>
+          custom
+        </button>
+        <button class="textButton" mode="easy">
+          <i class="fas fa-fw fa-leaf"></i>
+          easy
+        </button>
+        <button class="textButton" mode="medium">
+          <i class="fas fa-fw fa-leaf"></i>
+          medium
+        </button>
+        <button class="textButton" mode="onerandom">
+          <i class="fas fa-fw fa-leaf"></i>
+          onerandom
+        </button>
+      </div>
+
+      <div class="spacer rightSpacer"></div>
+
+      <div class="time">
+        <button class="textButton" timeConfig="15"><span>15</span></button>
+        <button class="textButton" timeConfig="30"><span>30</span></button>
+        <button class="textButton" timeConfig="60"><span>60</span></button>
+        <button class="textButton" timeConfig="120"><span>120</span></button>
+        <button class="textButton" timeConfig="custom">
+          <i class="fas fa-fw fa-tools"></i>
+        </button>
+      </div>
+
+      <div class="wordCount">
+        <button class="textButton" wordCount="10"><span>10</span></button>
+        <button class="textButton" wordCount="25"><span>25</span></button>
+        <button class="textButton" wordCount="50"><span>50</span></button>
+        <button class="textButton" wordCount="100"><span>100</span></button>
+        <button class="textButton" wordCount="custom">
+          <i class="fas fa-fw fa-tools"></i>
+        </button>
+      </div>
+
+      <div class="quoteLength">
+        <button class="textButton" quotelength="-1">all</button>
+        <button class="textButton" quotelength="0">short</button>
+        <button class="textButton" quotelength="1">medium</button>
+        <button class="textButton" quotelength="2">long</button>
+        <button class="textButton" quotelength="3">thicc</button>
+        <button class="textButton favorite hidden" quotelength="-3">
+          <i class="fas fa-heart"></i>
+        </button>
+        <button class="textButton" quotelength="-2">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <div class="zen">
+        <div
+          class="textButton"
+          style="
+            width: 0;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+          "
+        >
+           
+        </div>
+      </div>
+
+      <div class="customText">
+        <button class="textButton">change</button>
+      </div>
+    </div>
+  </div>
+  <div id="mobileTestConfigButton">
+    <button>
+      <i class="fas fa-fw fa-cog"></i>
+      Test settings
+    </button>
+  </div>
+  <div id="typingTest" class="content-grid full-width-padding">
+    <div id="capsWarning" class="hidden">
+      <i class="fas fa-lock"></i>
+      Caps Lock
+    </div>
+    <div id="memoryTimer">Time left to memorise all words: 0s</div>
+    <div id="layoutfluidTimer">Time left to memorise all words: 0s</div>
+    <div id="testModesNotice"></div>
+    <div id="liveStatsTextTop" class="timerMain">
+      <div class="wrapper">
+        <div class="timerProgress hidden">1:00</div>
+      </div>
+    </div>
+    <div id="liveStatsMini" class="full-width timerMain">
+      <div class="time hidden">1:00</div>
+      <div class="speed hidden">60</div>
+      <div class="acc hidden">100%</div>
+      <div class="burst hidden">1</div>
+    </div>
+    <div id="wordsWrapper" class="content-grid full-width" translate="no">
+      <input
+        id="wordsInput"
+        class="full-width"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        autocapitalize="none"
+        autocorrect="off"
+        data-gramm="false"
+        data-gramm_editor="false"
+        data-enable-grammarly="false"
+        list="autocompleteOff"
+        spellcheck="false"
+      />
+      <div class="outOfFocusWarning hidden">
+        <i class="fas fa-fw fa-mouse-pointer"></i>
+        Click here or press any key to focus
+      </div>
+      <div id="paceCaret" class="full-width default hidden"></div>
+      <div id="caret" class="full-width default"></div>
+      <div id="words" class="full-width"></div>
+    </div>
+
+    <div id="koInputVisualContainer" style="display: none">
+      <div id="koInputVisual" aria-label="Korean Input Visual" class=""></div>
+    </div>
+
+    <div id="keymap" class="hidden"></div>
+
+    <button
+      id="restartTestButton"
+      aria-label="Restart Test"
+      data-balloon-pos="down"
+      class="text"
+      onclick="this.blur();"
+    >
+      <i class="fas fa-fw fa-redo-alt"></i>
+    </button>
+    <div id="liveStatsTextBottom" class="timerMain">
+      <div class="wrapper">
+        <div class="liveSpeed hidden">123</div>
+        <div class="liveAcc hidden">100%%</div>
+        <div class="liveBurst hidden">1</div>
+      </div>
+    </div>
+    <div id="monkey" class="hidden">
+      <div class="up"></div>
+      <div class="left hidden"></div>
+      <div class="right hidden"></div>
+      <div class="both hidden"></div>
+      <div class="fast">
+        <div class="up"></div>
+        <div class="left hidden"></div>
+        <div class="right hidden"></div>
+        <div class="both hidden"></div>
+      </div>
+    </div>
+    <div id="premidTestMode" class="hidden"></div>
+    <div id="premidSecondsLeft" class="hidden"></div>
+  </div>
+  <div id="result" class="content-grid full-width hidden" tabindex="-1">
+    <div class="wrapper">
+      <div class="stats">
+        <!-- <div class="info">words 10<br>punctuation</div> -->
+
+        <div class="group wpm">
+          <div class="top">
+            <div class="text">wpm</div>
+            <div
+              class="crown hidden"
+              aria-label=""
+              data-balloon-pos="up"
+              data-balloon-length="medium"
+            >
+              <i class="fas fa-question"></i>
+              <i class="fas fa-crown"></i>
+              <i class="fas fa-slash"></i>
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+          </div>
+          <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
+        </div>
+        <div class="group acc">
+          <div class="top">acc</div>
+          <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
+        </div>
+      </div>
+      <div class="stats morestats">
+        <div class="group testType">
+          <div class="top">test type</div>
+          <div class="bottom">-</div>
+          <div class="tags hidden" style="margin-top: 0.5rem">
+            <div class="top">
+              <span>tags</span>
+              <div
+                class="textButton editTagsButton"
+                result-id=""
+                active-tag-ids=""
+                aria-label="Edit tags"
+                role="button"
+                data-balloon-pos="right"
+              >
+                <i class="fas fa-pen fa-fw"></i>
+              </div>
+            </div>
+            <div class="bottom">-</div>
+          </div>
+        </div>
+        <!-- <div class="group infoAndTags"> -->
+        <div class="group info">
+          <div class="top">other</div>
+          <div class="bottom">-</div>
+        </div>
+
+        <!-- </div> -->
+        <!-- <div class="subgroup"> -->
+        <div class="group raw">
+          <div class="top">raw</div>
+          <div class="bottom" aria-label="" data-balloon-pos="up">-</div>
+        </div>
+        <div class="group key">
+          <div class="top">characters</div>
+          <div
+            class="bottom"
+            aria-label="correct, incorrect, extra, and missed"
+            data-balloon-break=""
+            data-balloon-pos="up"
+          >
+            -
+          </div>
+        </div>
+
+        <!-- </div> -->
+
+        <!-- <div class="subgroup"> -->
+        <div class="group flat consistency">
+          <div class="top">consistency</div>
+          <div class="bottom" aria-label="" data-balloon-pos="up">2 -</div>
+        </div>
+        <div class="group time">
+          <div class="top">time</div>
+          <div class="bottom" aria-label="" data-balloon-pos="up">
+            <div class="text">-</div>
+            <div class="afk"></div>
+            <div class="timeToday"></div>
+          </div>
+        </div>
+        <!-- </div> -->
+
+        <div class="group dailyLeaderboard hidden">
+          <div class="top">daily leaderboard</div>
+          <div class="bottom">-</div>
+        </div>
+
+        <div class="group source hidden">
+          <div class="top">
+            <span style="margin-right: 0.5em">source</span>
+            <span
+              id="reportQuoteButton"
+              class="textButton hidden"
+              aria-label="Report quote"
+              data-balloon-pos="up"
+              style="display: inline-block"
+            >
+              <i class="icon fas fa-fw fa-flag"></i>
+            </span>
+            <span
+              id="favoriteQuoteButton"
+              class="textButton hidden"
+              aria-label="Favorite quote"
+              data-balloon-pos="up"
+              style="display: inline-block"
+            >
+              <i class="icon far fa-fw fa-heart"></i>
+            </span>
+            <span
+              id="rateQuoteButton"
+              class="textButton hidden"
+              aria-label="Rate quote"
+              data-balloon-pos="up"
+            >
+              <i class="icon far fa-fw fa-star"></i>
+              <span class="rating"></span>
+            </span>
+          </div>
+          <div class="bottom">-</div>
+        </div>
+      </div>
+      <div class="chart">
+        <!-- <div class="title">wpm over time</div> -->
+        <canvas id="wpmChart"></canvas>
+      </div>
+      <div class="bottom">
+        <div id="resultWordsHistory" class="hidden">
+          <div class="title">
+            <span>input history</span>
+            <button
+              id="copyWordsListButton"
+              class="textButton"
+              aria-label="Copy words list"
+              data-balloon-pos="up"
+              style="display: inline-block"
+              tabindex="-1"
+            >
+              <i class="fas fa-fw fa-align-left"></i>
+            </button>
+            <button
+              id="copyMissedWordsListButton"
+              class="textButton"
+              aria-label="Copy missed words list"
+              data-balloon-pos="up"
+              tabindex="-1"
+            >
+              <i class="fas fa-fw fa-times"></i>
+            </button>
+            <button
+              id="toggleBurstHeatmap"
+              class="textButton"
+              aria-label="Toggle burst heatmap"
+              data-balloon-pos="up"
+              style="display: inline-block"
+              tabindex="-1"
+            >
+              <i class="fas fa-fw fa-fire-alt"></i>
+            </button>
+            <div class="heatmapLegend hidden">
+              <div class="boxes">
+                <div class="box box0"></div>
+                <div class="box box1"></div>
+                <div class="box box2"></div>
+                <div class="box box3"></div>
+                <div class="box box4"></div>
+              </div>
+            </div>
+          </div>
+          <div class="words"></div>
+        </div>
+        <div id="resultReplay" class="hidden">
+          <div class="title">
+            watch replay
+            <button
+              id="playpauseReplayButton"
+              class="textButton"
+              aria-label="Start replay"
+              data-balloon-pos="up"
+              style="display: inline-block"
+              tabindex="-1"
+            >
+              <i class="fas fa-play"></i>
+            </button>
+            <p id="replayStats">0s</p>
+          </div>
+          <div id="wordsWrapper">
+            <div id="replayWords" class="words"></div>
+          </div>
+        </div>
+        <button
+          id="retrySavingResultButton"
+          class="danger hidden"
+          onclick="this.blur();"
+        >
+          <i class="fas fa-redo"></i>
+          Retry saving result
+        </button>
+        <div class="buttons">
+          <button
+            class="text"
+            id="nextTestButton"
+            aria-label="Next test"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </button>
+          <button
+            class="text"
+            id="restartTestButtonWithSameWordset"
+            aria-label="Repeat test"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="fas fa-fw fa-sync-alt"></i>
+          </button>
+          <button
+            class="text"
+            id="practiseWordsButton"
+            aria-label="Practice words"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="fas fa-fw fa-exclamation-triangle"></i>
+          </button>
+          <button
+            class="text"
+            id="showWordHistoryButton"
+            aria-label="Toggle words history"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="fas fa-fw fa-align-left"></i>
+          </button>
+          <button
+            class="text"
+            id="watchReplayButton"
+            aria-label="Watch replay"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="fas fa-fw fa-backward"></i>
+          </button>
+          <button
+            class="text"
+            id="saveScreenshotButton"
+            aria-label="Copy screenshot to clipboard"
+            role="button"
+            data-balloon-pos="down"
+            onclick="this.blur();"
+          >
+            <i class="far fa-fw fa-image"></i>
+          </button>
+          <!-- <button
+          class="text"
+          id="watchVideoAdButton"
+          aria-label="Watch video ad"
+          role="button"
+          data-balloon-pos="down"
+          onclick="this.blur();"
+        >
+          <i class="fas fa-fw fa-ad"></i>
+        </button> -->
+        </div>
+      </div>
+      <div class="loginTip">
+        <a href="/login" router-link>Sign in</a>
+        to save your result
+      </div>
+      <div class="ssWatermark hidden">monkeytype.com</div>
+    </div>
+    <div class="full-width" style="margin-top: 1rem">
+      <div id="ad-result-wrapper" class="ad full-width advertisement ad-h">
+        <div class="iconAndText">
+          <div class="icon"><i class="fas fa-ad"></i></div>
+          <div class="text textRight"></div>
+        </div>
+        <div id="ad-result"></div>
+      </div>
+      <div id="ad-result-small-wrapper" class="ad advertisement ad-h-s">
+        <div class="icon small"><i class="fas fa-ad"></i></div>
+        <div id="ad-result-small"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="page page404 hidden" id="page404">
+  <div class="content">
+    <div class="image"></div>
+    <div class="side">
+      <div class="title">404</div>
+      <div>Ooops! Looks like this page or resource doesn't exist.</div>
+      <a href="/" class="button" router-link>
+        <i class="fas fa-home"></i>
+        Go Home
+      </a>
+    </div>
+  </div>
+</div>
+
+      </main>
+      <footer>
+  <div id="commandLineMobileButton">
+    <i class="fas fa-terminal"></i>
+  </div>
+  <div class="keyTips">
+    <key>tab</key>
+    and
+    <key>enter</key>
+    - Restart Test
+    <br />
+    <key>ctrl/cmd</key>
+    +
+    <key>shift</key>
+    +
+    <key>p</key>
+    or
+    <key>esc</key>
+    - Command Line
+  </div>
+  <div class="leftright">
+    <div class="left">
+      <button class="textButton" id="contactPopupButton">
+        <i class="fas fa-fw fa-envelope"></i>
+        <div class="text">contact</div>
+      </button>
+      <button id="supportMeButton" class="textButton">
+        <i class="fas fa-fw fa-donate"></i>
+        <div class="text">support</div>
+      </button>
+      <a
+        href="https://github.com/lugvitc/lugtype"
+        class="textButton"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <i class="fas fa-fw fa-code"></i>
+        <div class="text">github</div>
+      </a>
+      <a
+        href="https://www.discord.gg/monkeytype"
+        class="textButton"
+        target="_blank"
+        rel="noreferrer noopener"
+        class="discordLink"
+      >
+        <i class="fab fa-fw fa-discord"></i>
+        <div class="text">discord</div>
+      </a>
+      <a
+        href="https://x.com/lugvitc"
+        class="textButton"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <i class="fab fa-fw fa-twitter"></i>
+        <div class="text">twitter</div>
+      </a>
+      <a href="/terms-of-service.html" class="textButton" target="_blank">
+        <i class="fas fa-fw fa-file-contract"></i>
+        <div class="text">terms</div>
+      </a>
+      <a href="/security-policy.html" class="textButton" target="_blank">
+        <i class="fas fa-fw fa-shield-alt"></i>
+        <div class="text">security</div>
+      </a>
+      <a href="/privacy-policy.html" class="textButton" target="_blank">
+        <i class="fas fa-fw fa-lock"></i>
+        <div class="text">privacy</div>
+      </a>
+    </div>
+    <div class="right">
+      <button
+        class="current-theme textButton"
+        aria-label="Shift-click to toggle custom theme"
+        data-balloon-pos="left"
+      >
+        <i class="fas fa-fw fa-palette"></i>
+        <div class="text">serika dark</div>
+      </button>
+      <button class="currentVersion textButton">
+        <i class="fas fa-fw fa-code-branch"></i>
+        <div class="text">version</div>
+        <key id="newVersionIndicator" class="hidden">new</key>
+      </button>
+      <!-- <div>
+        <i class="fas fa-file"></i>
+        Terms & Conditions
+      </div> -->
+    </div>
+  </div>
+</footer>
+
+      <div
+        id="ad-footer-wrapper"
+        class="full-width ad advertisement ad-h focus"
+      >
+        <div class="icon"><i class="fas fa-ad"></i></div>
+        <div id="ad-footer"></div>
+      </div>
+      <div id="ad-footer-small-wrapper" class="ad advertisement ad-h-s focus">
+        <div class="icon small"><i class="fas fa-ad"></i></div>
+        <div id="ad-footer-small"></div>
+      </div>
+    </div>
+    <script
+      src="https://www.google.com/recaptcha/api.js?render=explicit"
+      async
+      defer
+    ></script>
+    <link rel="stylesheet" href="/themes/lugvitc.css" id="currentTheme" />
+    <link rel="stylesheet" href="" id="funBoxTheme" />
+    <link rel="stylesheet" href="" id="globalFunBoxTheme" type="text/css" />
+  </body>
+</html>
